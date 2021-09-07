@@ -7,6 +7,7 @@ import Nav_bar from './components/Nav_bar'
 import { BrowserRouter, Route } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 
+
 function App() {
   const [name, setName] = useState('')
 

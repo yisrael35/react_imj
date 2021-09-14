@@ -4,9 +4,11 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import NavBar from './components/NavBar'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import React, { useState } from 'react'
-
+import { Provider } from 'react-redux'
+import store from './redux/index'
+import PrivateRoute from './components/PrivateRoutes'
 function App() {
   const [name, setName] = useState('')
 
@@ -26,17 +28,22 @@ function App() {
   // })
 
   return (
-    <div className='App'>
-      <BrowserRouter>
-        <NavBar name={name} setName={setName} />
+    <Provider store={store}>
+      <div className='App'>
+        <Router>
+          <NavBar name={name} setName={setName} />
 
-        <main className='form-signin'>
-          <Route path='/' exact component={() => <Home name={name} />} />
-          <Route path='/login' component={() => <Login setName={setName} />} />
-          <Route path='/register' component={Register} />
-        </main>
-      </BrowserRouter>
-    </div>
+          <main className='form-signin'>
+            <Switch>
+              <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
+              <Route path='/Login' component={() => <Login setName={setName} />} />
+              <PrivateRoute path='/register' component={Register} />
+              <PrivateRoute path="/*" component={Login} />
+            </Switch>
+          </main>
+        </Router>
+      </div>
+    </Provider>
   )
 }
 

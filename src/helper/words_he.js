@@ -1,6 +1,6 @@
 const words_he = {
   welcome: 'ברוכים הבאים למוזיאון ישראל',
-  login: 'התחברות',
+  login: 'כניסה',
   hello: 'שלום',
   please_sign_in: 'אנא התחבר/י',
   home: 'בית',
@@ -8,7 +8,9 @@ const words_he = {
   logout: 'התנתקות',
   name: 'שם',
   email: 'כתובת מייל',
-  password: 'סיסמא',
+  username: 'שם משתמש',
+  password: 'סיסמה',
+  forgot_password: 'שכחתי סיסמה',
 }
 
 module.exports = {

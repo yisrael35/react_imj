@@ -19,7 +19,7 @@ const Nav = (props) => {
     menu = (
       <ul className='navbar-nav me-auto mb-2 mb-md-0'>
         <li className='nav-item active'>
-          <Link to='/login' className='nav-link'>
+          <Link to='Login' className='nav-link'>
             {words_he['login']}
           </Link>
         </li>
@@ -45,7 +45,7 @@ const Nav = (props) => {
   return (
     <nav className='navbar navbar-expand-md navbar-dark bg-dark mb-4'>
       <div className='container-fluid'>
-        <Link to='/' className='navbar-brand'>
+        <Link to='Home' className='navbar-brand'>
           {words_he['home']}
         </Link>
 

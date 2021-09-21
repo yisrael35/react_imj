@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-const words_he = require('../helper/words_he').words_he
+const words_he = require('../utils/words_he').words_he
 
 const Register = () => {
   const [name, setName] = useState('')

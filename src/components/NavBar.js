@@ -1,21 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-const words_he = require('../helper/words_he').words_he
+import { useSelector, useDispatch } from 'react-redux'
+import * as authActions from '../redux/Auth/action'
+const words_he = require('../utils/words_he').words_he
 
 const Nav = (props) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const dispatch = useDispatch()
   const logout = async () => {
-    await fetch(process.env.REACT_APP_REST_IMJ_URL + '/auth', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    })
-
-    props.setName('')
+    dispatch(authActions.logout())
   }
-
   let menu
-
-  if (props.name === '') {
+  if (!isAuthenticated) {
     menu = (
       <ul className='navbar-nav me-auto mb-2 mb-md-0'>
         <li className='nav-item active'>

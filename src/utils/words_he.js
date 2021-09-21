@@ -10,7 +10,11 @@ const words_he = {
   email: 'כתובת מייל',
   username: 'שם משתמש',
   password: 'סיסמה',
+  new_password: 'סיסמה חדשה',
+  confirm_password: 'סיסמה בשנית',
   forgot_password: 'שכחתי סיסמה',
+  send: 'שלח',
+  reset_password: 'איפוס סיסמה',
 }
 
 module.exports = {

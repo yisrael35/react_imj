@@ -1,47 +1,28 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
 import { Redirect } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
-const words_he = require('../helper/words_he').words_he
+const words_he = require('../utils/words_he').words_he
 
 const Login = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [redirect, setRedirect] = useState(false)
   const dispatch = useDispatch()
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
 
   const submit = async (e) => {
     e.preventDefault()
     dispatch(authActions.login(username, password))
-    // console.log(process.env.REACT_APP_REST_IMJ_URL)
-    // console.log({
-    //   username: username,
-    //   password,
-    // })
-    // const response = await fetch(process.env.REACT_APP_REST_IMJ_URL + '/auth', {
-    //   method: 'PUT',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   // credentials: 'include',
-    //   body: JSON.stringify({
-    //     username: username,
-    //     password,
-    //   }),
-    // })
-
-    // const content = await response.json()
-
-    // console.log(content.user.name)
-    // setRedirect(true)
-    // props.setName(content.user.name)
-    // //need to save the token
   }
 
-  // if (redirect) {
-  //   return <Redirect to='/' />
-  // }
+  //TODO - NOT WOTKING
+  const forgot_password = () => {
+    console.log("login -> forgot");
+    window.location.replace('http://localhost:3000/ForgotPassword')
+
+    return <Redirect to='ForgotPassword'/>
+  }
 
   if (isAuthenticated) {
     return <Redirect to='Home' />
@@ -55,11 +36,13 @@ const Login = (props) => {
 
         <input type='password' className='form-control' placeholder={words_he['password']} required onChange={(e) => setPassword(e.target.value)} />
 
-        <button className='w-100 btn btn-lg btn-primary' type='submit'>
+        <button className='w-100 btn btn-lg btn-success' type='submit'>
           {words_he['login']}
         </button>
       </form>
-      {/* <button onClick={<Redirect to='/forgot_password' />}>{words_he['forgot_password']}</button> */}
+      <button className='w-30 btn btn-sm btn-primary m-3' onClick={forgot_password}>
+        {words_he['forgot_password']}
+      </button>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-const words_he = require('../helper/words_he').words_he
+const words_he = require('../utils/words_he').words_he
 
 const Home = (props) => {
   return (

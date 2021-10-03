@@ -1,74 +1,42 @@
-// import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import * as authActions from '../redux/Auth/action'
+import { Redirect, Link } from 'react-router-dom'
 
-// const Login = () => {
-//   return (
-//     <form>
-//       <h1 className='h3 mb-3 fw-normal'>Please sign in</h1>
-//       <div className='form-floating'>
-//         <input type='email' className='form-control' id='floatingInput' placeholder='name@example.com' />
-//         <label for='floatingInput'>Email address</label>
-//       </div>
-//       <div className='form-floating'>
-//         <input type='password' className='form-control' id='floatingPassword' placeholder='Password' />
-//         <label for='floatingPassword'>Password</label>
-//       </div>
-//       <div className='checkbox mb-3'>
-//         <label>
-//           <input type='checkbox' value='remember-me' /> Remember me
-//         </label>
-//       </div>
-//       <button className='w-100 btn btn-lg btn-primary' type='submit'>
-//         Sign in
-//       </button>
-//       <p className='mt-5 mb-3 text-muted'>© 2017–2021</p>
-//     </form>
-//   )
-// }
-
-// export default Login
-import React, { SyntheticEvent, useState } from 'react'
-import { Redirect } from 'react-router-dom'
+const words_he = require('../utils/words_he').words_he
 
 const Login = (props) => {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [redirect, setRedirect] = useState(false)
+
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
 
   const submit = async (e) => {
     e.preventDefault()
-
-    const response = await fetch(process.env.REACT_APP_REST_IMJ_URL + '/auth', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({
-        username: 'yisraelb',
-        password,
-      }),
-    })
-
-    const content = await response.json()
-    console.log(content)
-    setRedirect(true)
-    props.setName(content.name)
+    dispatch(authActions.login(username, password))
   }
 
-  if (redirect) {
-    return <Redirect to='/' />
+  if (isAuthenticated) {
+    return <Redirect to='Home' />
   }
 
   return (
-    <form onSubmit={submit}>
-      <h1 className='h3 mb-3 fw-normal'>Please sign in</h1>
-      <input type='email' className='form-control' placeholder='Email address' required onChange={(e) => setEmail(e.target.value)} />
+    <div className='form-signin' >
+      <form onSubmit={submit}>
+        <h1 className='h3 mb-3 fw-normal'>{words_he['please_sign_in']}</h1>
+        <input type='text' className='form-control' placeholder={words_he['username']} required onChange={(e) => setUsername(e.target.value)} />
 
-      <input type='password' className='form-control' placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
+        <input type='password' className='form-control' placeholder={words_he['password']} required onChange={(e) => setPassword(e.target.value)} />
 
-      <button className='w-100 btn btn-lg btn-primary' type='submit'>
-        Sign in
-      </button>
-    </form>
+        <button className='w-100 btn btn-lg btn-success' type='submit'>
+          {words_he['login']}
+        </button>
+      </form>
+      <Link to='ForgotPassword' className='nav-link'>
+        <button className='w-30 btn btn-sm btn-primary m-3'>{words_he['forgot_password']}</button>{' '}
+      </Link>
+    </div>
   )
 }
-
 export default Login

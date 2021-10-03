@@ -1,39 +1,46 @@
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Home from './pages/Home'
-import Nav_bar from './components/Nav_bar'
-import { BrowserRouter, Route } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
+import './css/App.css'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Provider } from 'react-redux'
+import store from './redux/index'
 
+//pages
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Users from './pages/Users'
+import Register from './pages/Register'
+import ResetPassword from './pages/ResetPassword'
+import ForgotPassword from './pages/ForgotPassword'
+
+//components
+import NavBar from './components/NavBar'
+import SnackBar from './components/SnackBar'
+import PrivateRoute from './components/PrivateRoutes'
 
 function App() {
   const [name, setName] = useState('')
-
-  useEffect(() => {
-    ;(async () => {
-      const response = await fetch(process.env.REACT_APP_REST_IMJ_URL + '/user', {
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      })
-      const content = await response.json()
-      setName(content.name)
-    })()
-  })
-
   return (
-    <div className='App'>
-      <BrowserRouter>
-        <Nav_bar name={name} setName={setName} />
-
-        <main className='form-signin'>
-          <Route path='/' exact component={() => <Home name={name} />} />
-          <Route path='/login' component={() => <Login setName={setName} />} />
-          <Route path='/register' component={Register} />
-        </main>
-      </BrowserRouter>
-    </div>
+    <Provider store={store}>
+      <div className='App'>
+        <Router>
+          <NavBar name={name} setName={setName} />
+          <SnackBar />
+          <main >
+            <Switch>
+              <Route path='/Login' component={() => <Login /> } />
+              <Route path='/ForgotPassword' component={() => <ForgotPassword />} />
+              <Route path='/ResetPassword/:token' component={() => <ResetPassword />} />
+              <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
+              {/* <PrivateRoute path='/Users' component={() => <Users />} /> */}
+              <PrivateRoute path='/register' component={Register} />
+              <PrivateRoute path='/Users' component={Users} />
+              <PrivateRoute path='/*' component={Login} />
+            </Switch>
+          </main>
+        </Router>
+      </div>
+    </Provider>
   )
 }
 

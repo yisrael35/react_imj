@@ -1,5 +1,6 @@
-import React, { SyntheticEvent, useState } from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
+const words_he = require('../utils/words_he').words_he
 
 const Register = () => {
   const [name, setName] = useState('')
@@ -9,8 +10,8 @@ const Register = () => {
 
   const submit = async (e) => {
     e.preventDefault()
-
-    await fetch( process.env.REACT_APP_REST_IMJ_URL + '/register', {
+    //TODO -- need to remove
+    await fetch(process.env.REACT_APP_REST_IMJ_URL + '/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -28,17 +29,17 @@ const Register = () => {
   }
 
   return (
-    <form onSubmit={submit}>
-      <h1 className='h3 mb-3 fw-normal'>Please register</h1>
+    <form onSubmit={submit} className='form-signin'>
+      <h1 className='h3 mb-3 fw-normal'> {words_he['register']}</h1>
 
-      <input className='form-control' placeholder='Name' required onChange={(e) => setName(e.target.value)} />
+      <input className='form-control' placeholder={words_he['name']} required onChange={(e) => setName(e.target.value)} />
 
-      <input type='email' className='form-control' placeholder='Email address' required onChange={(e) => setEmail(e.target.value)} />
+      <input type='email' className='form-control' placeholder={words_he['email']} required onChange={(e) => setEmail(e.target.value)} />
 
-      <input type='password' className='form-control' placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
+      <input type='password' className='form-control' placeholder={words_he['password']} required onChange={(e) => setPassword(e.target.value)} />
 
       <button className='w-100 btn btn-lg btn-primary' type='submit'>
-        Submit
+        {words_he['register']}
       </button>
     </form>
   )

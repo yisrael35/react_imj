@@ -6,6 +6,7 @@ const words_he = require('../utils/words_he').words_he
 
 const Nav = (props) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const permissions = useSelector((state) => state.auth.permissions)
   const dispatch = useDispatch()
   const logout = async () => {
     dispatch(authActions.logout())
@@ -19,23 +20,44 @@ const Nav = (props) => {
             {words_he['login']}
           </Link>
         </li>
-        <li className='nav-item active'>
-          <Link to='/register' className='nav-link'>
-            {words_he['register']}
-          </Link>
-        </li>
       </ul>
     )
   } else {
-    menu = (
-      <ul className='navbar-nav me-auto mb-2 mb-md-0'>
-        <li className='nav-item active'>
-          <Link to='/login' className='nav-link' onClick={logout}>
-            {words_he['logout']}
-          </Link>
-        </li>
-      </ul>
-    )
+    if(permissions === 1){
+      
+      menu = (
+        <ul className='navbar-nav me-auto mb-2 mb-md-0'>
+          <li className='nav-item active'>
+            <Link to='/login' className='nav-link' onClick={logout}>
+              {words_he['logout']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/register' className='nav-link'>
+              {words_he['register']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/Users' className='nav-link'>
+              {words_he['users']}
+            </Link>
+          </li>
+        </ul>
+      )
+    }else if(permissions === 2){
+      menu = (
+        <ul className='navbar-nav me-auto mb-2 mb-md-0'>
+          <li className='nav-item active'>
+            <Link to='/login' className='nav-link' onClick={logout}>
+              {words_he['logout']}
+            </Link>
+          </li>
+         
+        </ul>
+      )
+    }
+
+
   }
 
   return (

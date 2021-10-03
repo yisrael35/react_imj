@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import * as authActions from '../redux/Auth/action'
@@ -7,23 +7,14 @@ const words_he = require('../utils/words_he').words_he
 
 const ForgotPassword = (props) => {
   const [username, setUsername] = useState('')
-  const [redirect, setRedirect] = useState(false)
   const dispatch = useDispatch()
 
   const submit = async (e) => {
     e.preventDefault()
     dispatch(authActions.forgotPassword(username))
-      setRedirect(true)
+    props.history.push('/Home')
   }
 
-  if (redirect) {
-    //TODO -display on screen message
-
-    setTimeout(() => {
-      console.log('This will run after 3 second! => it will go to home page')
-      return <Redirect to='Home' />
-    }, 3000)
-  }
   return (
     <div>
       <form onSubmit={submit}>
@@ -37,4 +28,5 @@ const ForgotPassword = (props) => {
   )
 }
 
-export default ForgotPassword
+// export default ForgotPassword
+export default withRouter(ForgotPassword)

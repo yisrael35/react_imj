@@ -27,12 +27,12 @@ export const forgotPassword = (username) => (dispatch) => {
   axios
     .post(process.env.REACT_APP_REST_IMJ_URL + '/forgot_password', { username })
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       dispatch(actionSnackBar.setSnackBar('success', 'Sent to email successfully', 2000))
     })
     .catch((error) => {
-      console.log(error.response.data.message)
-      dispatch(actionSnackBar.setSnackBar('error', error.response.data.message, 3000))
+      // console.log(error.response)
+      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
     })
 }
 
@@ -41,22 +41,26 @@ export const reset_password = (password, token) => (dispatch) => {
   axios
     .put(process.env.REACT_APP_REST_IMJ_URL + '/forgot_password', { password }, { headers: { Authorization: 'Bearer ' + token } })
     .then((res) => {
-      console.log(res.data)
-      dispatch(actionSnackBar.setSnackBar('success', res.data.message, 2000))
-      let host = window.location.hostname
-      if (host === 'localhost') {
-        window.location.replace('http://' + host + ':3000')
-      } else {
-        window.location.replace('https://' + host)
-      }
+      console.log(res)
+      dispatch(actionSnackBar.setSnackBar('success', res.statusText, 2000))
+      setTimeout(redirect_to_home, 2000)
     })
     .catch((error) => {
-      console.log(error.response.data.message)
-      dispatch(actionSnackBar.setSnackBar('error', error.response.data.message, 3000))
+      console.log(error.response)
+      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
       dispatch({ type: SET_LOADING_INDICATOR_AUTH, payload: false })
+      setTimeout(redirect_to_home, 3000)
     })
 }
 
+const redirect_to_home = () => {
+  let host = window.location.hostname
+  if (host === 'localhost') {
+    window.location.replace('http://' + host + ':3000')
+  } else {
+    window.location.replace('https://' + host)
+  }
+}
 // export const changePassword = (current_password, new_password, callBack) => (dispatch) => {
 //   const config = {
 //     headers: {

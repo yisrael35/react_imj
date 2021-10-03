@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS, SET_LOADING_INDICATOR_AUTH } from './constants'
 
 const initialState = {

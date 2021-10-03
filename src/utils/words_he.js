@@ -15,6 +15,16 @@ const words_he = {
   forgot_password: 'שכחתי סיסמה',
   send: 'שלח',
   reset_password: 'איפוס סיסמה',
+  users: 'משתמשים',
+  user: 'משתמש',
+  admin: 'מנהל',
+  active: 'פעיל',
+  not_active: 'לא פעיל',
+  edit: 'ערוך',
+  delete: 'מחק',
+  status: 'סטטוס',
+  permissions: 'הרשאות',
+  update_at: 'עודכן בתאריך',
 }
 
 module.exports = {

@@ -10,7 +10,7 @@ const Register = () => {
 
   const submit = async (e) => {
     e.preventDefault()
-
+    //TODO -- need to remove
     await fetch(process.env.REACT_APP_REST_IMJ_URL + '/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -29,7 +29,7 @@ const Register = () => {
   }
 
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={submit} className='form-signin'>
       <h1 className='h3 mb-3 fw-normal'> {words_he['register']}</h1>
 
       <input className='form-control' placeholder={words_he['name']} required onChange={(e) => setName(e.target.value)} />

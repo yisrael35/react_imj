@@ -26,12 +26,11 @@ const ForgotPassword = (props) => {
     //TODO -display on screen message
 
     setTimeout(() => {
-      // console.log('This will run after 3 second! => it will go to login page')
       return <Redirect to='Home' />
     }, 3000)
   }
   return (
-    <div>
+    <div  className='form-signin'>
       <form onSubmit={submit}>
         <h1 className='h3 mb-3 fw-normal'>{words_he['reset_password']}</h1>
 

@@ -5,6 +5,7 @@ const words_he = {
   please_sign_in: 'אנא התחבר/י',
   home: 'בית',
   register: 'הרשמה',
+  create_new_user: 'יצירת משתמש',
   logout: 'התנתקות',
   name: 'שם',
   email: 'כתובת מייל',
@@ -23,8 +24,12 @@ const words_he = {
   edit: 'ערוך',
   delete: 'מחק',
   status: 'סטטוס',
-  permissions: 'הרשאות',
   update_at: 'עודכן בתאריך',
+  phone: 'מספר פלאפון',
+  new_bid: 'הצעת מחיר חדשה',
+  permissions: 'הרשאות',
+  first_name: 'שם פרטי',
+  last_name: 'שם משפחה',
 }
 
 module.exports = {

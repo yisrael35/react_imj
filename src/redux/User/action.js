@@ -24,3 +24,26 @@ export const delete_user = (user_id) => (dispatch) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
     })
 }
+export const create_user = (data) => (dispatch) => {
+  axios
+    .post(process.env.REACT_APP_REST_IMJ_URL + `/user`,data)
+    .then((res) => {
+      get_users()
+      dispatch(actionSnackBar.setSnackBar('success', 'create user successfully', 2000))
+    })
+    .catch((error) => {
+      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+    })
+}
+
+export const update_user = (data, id) => (dispatch) => {
+  axios
+    .put(process.env.REACT_APP_REST_IMJ_URL + `/user/${id}`,data)
+    .then((res) => {
+      get_users()
+      dispatch(actionSnackBar.setSnackBar('success', 'update user successfully', 2000))
+    })
+    .catch((error) => {
+      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+    })
+}

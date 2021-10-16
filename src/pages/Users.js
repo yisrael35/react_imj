@@ -18,7 +18,7 @@ const Users = (props) => {
 
   return (
     <div >
-      <div >
+      <div className='user_page'>
         <h5 className='card-title text-uppercase mb-0'> {words_he['users']}</h5>
         <table className='table user-table mb-0' >
           <thead>
@@ -49,7 +49,7 @@ const Users = (props) => {
           <tbody>
             {/* {this.props.items.length === 0 ? ' - There is no results' : ''} */}
             {users.map((user, index) => (
-              <User user={user} counter={index}  key={user.id}/>
+              <User user={user} counter={index+1}  key={user.id}/>
             ))}
           </tbody>
         </table>

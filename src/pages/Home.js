@@ -5,7 +5,7 @@ const Home = (props) => {
   return (
     <div style={{ textAlign: 'center' }}>
       <p>{words_he['welcome']}</p>
-      {props.name ? `${words_he['hello']} ` + props.name : `${words_he['please_sign_in']}`}
+      {/* {props.name ? `${words_he['hello']} ` + props.name : `${words_he['please_sign_in']}`} */}
     </div>
   )
 }

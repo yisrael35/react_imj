@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
@@ -11,6 +11,16 @@ const Nav = (props) => {
   const logout = async () => {
     dispatch(authActions.logout())
   }
+  
+  useEffect(() => {
+    const token = localStorage.getItem('TokenAccess')
+    if (token) {
+      dispatch(authActions.check_if_token_exist(token))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
   let menu
   if (!isAuthenticated) {
     menu = (

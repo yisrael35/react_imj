@@ -1,49 +1,49 @@
 import React, { useState } from 'react'
 
 export default function TableRow({ index, schedule_time_event, schedule_time_event_array }) {
-  const [from, setFrom] = useState(schedule_time_event.from)
-  const [to, setTo] = useState(schedule_time_event.to)
-  const [describe, setDescribe] = useState(schedule_time_event.describe)
+  const [start_time, setStartTime] = useState(schedule_time_event.start_time)
+  const [end_time, setEndTime] = useState(schedule_time_event.end_time)
+  const [activity_description, setActivityDescription] = useState(schedule_time_event.activity_description)
 
-  const handle_from = (e) => {
-    setFrom(e)
-    schedule_time_event_array[index].from = e
+  const handle_start_time = (e) => {
+    setStartTime(e)
+    schedule_time_event_array[index].start_time = e
   }
-  const handle_to = (e) => {
-    setTo(e)
-    schedule_time_event_array[index].to = e
+  const handle_end_time = (e) => {
+    setEndTime(e)
+    schedule_time_event_array[index].end_time = e
   }
-  const handle_describe = (e) => {
-    setDescribe(e)
-    schedule_time_event_array[index].describe = e
+  const handle_activity_description = (e) => {
+    setActivityDescription(e)
+    schedule_time_event_array[index].activity_description = e
   }
 
   return (
     <tr>
       <td>
         <input
-          type='text'
-          value={from}
+          type='time'
+          value={start_time}
           onChange={(e) => {
-            handle_from(e.target.value)
+            handle_start_time(e.target.value)
+          }}
+        />
+      </td>
+      <td>
+        <input
+          type='time'
+          value={end_time}
+          onChange={(e) => {
+            handle_end_time(e.target.value)
           }}
         />
       </td>
       <td>
         <input
           type='text'
-          value={to}
+          value={activity_description}
           onChange={(e) => {
-            handle_to(e.target.value)
-          }}
-        />
-      </td>
-      <td>
-        <input
-          type='text'
-          value={describe}
-          onChange={(e) => {
-            handle_describe(e.target.value)
+            handle_activity_description(e.target.value)
           }}
         />
       </td>

@@ -35,7 +35,7 @@ function App() {
               <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
               <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />
-              <PrivateRoute path='/Bid' component={() => <Bid />} />
+              <PrivateRoute path='/Bid' component={Bid} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>
           </main>

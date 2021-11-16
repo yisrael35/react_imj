@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import MyDatePicker from '../components/DatePicker'
 import moment from 'moment'
@@ -6,8 +6,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import '../css/bid.css'
 import TableScheduleTimeEvent from '../components/TableScheduleTimeEvent'
 import TableCosts from '../components/TableCosts'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as action_bid from '../redux/Bid/action'
+import * as action_utils from '../redux/Utils/action'
 
 const words_he = require('../utils/words_he').words_he
 const useStyles = makeStyles((theme) => ({
@@ -25,32 +26,83 @@ const useStyles = makeStyles((theme) => ({
 const Bid = (props) => {
   const classes = useStyles()
 
-  let data = {}
-  const [date, setDate] = useState(moment().format(`yyyy-MM-DD`))
+  const locations = useSelector((state) => state.utils.locations)
+  const events_type = useSelector((state) => state.utils.events_type)
+  const user = useSelector((state) => state.auth.userContent)
+  const dispatch = useDispatch()
+
+  const [date, setDate] = useState(moment().format(`YYYY-MM-DD`))
   const [event_type, setEventType] = useState('')
   const [location, setLocation] = useState('')
-  const [language, setlanguages] = useState('')
+  const [language, setLanguage] = useState('he')
+  const [status, setStatus] = useState('')
+  const [currency, setCurrency] = useState('nis')
   const [client_name, setClientName] = useState('')
   const [event_name, setEventName] = useState('')
+  const [event_comment, setEventComment] = useState(undefined)
   const [max_participants, setMaxParticipants] = useState()
-  const [min_participants, setMinParticipants] = useState()
-  const [schedule_time_event, setScheduleTimeEvent] = useState([{ from: '', to: '', describe: '' }])
+  const [min_participants, setMinParticipants] = useState(0)
+  const [schedule_time_event, setScheduleTimeEvent] = useState([{ start_time: '', end_time: '', activity_description: '' }])
   const [costs, setCosts] = useState([{ description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' }])
   //for the calculation
   const [total_b_discount, setTotalBDiscount] = useState(0)
   const [total_a_discount, setTotalADiscounts] = useState(0)
-  const [discount, setDiscount] = useState(0)
+  const [total_discount, setDiscount] = useState(0)
 
-  data = { date, event_type, location, client_name, event_name, language, schedule_time_event, costs, max_participants, min_participants }
-  console.log(data)
+  useEffect(() => {
+    dispatch(action_utils.get_utils())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  useEffect(() => {
+    //TODO -- calculation
+    console.log('im here 2')
+    let total_cost = 0
+    let discount = 0
+    for (const cost of costs) {
+      total_cost += Number(cost.total_cost)
+      discount += Number(cost.discount)
+    }
+    setDiscount(Number(discount).toFixed(2))
+    setTotalBDiscount(Number(total_cost).toFixed(2))
+    setTotalADiscounts(Number(total_cost - discount).toFixed(2))
+  }, [costs])
+  let req = {
+    bid: {
+      event_type,
+      location,
+      user: user.id,
+      event_date: date,
+      event_comment,
+      client_name,
+      event_name,
+      max_participants,
+      min_participants,
+      total_b_discount,
+      total_a_discount,
+      total_discount,
+      currency,
+      status,
+    },
+    schedule_event: schedule_time_event,
+    costs,
+    // language,
+  }
+  if (language === 'he') {
+    //TODO --USER TEXT HAVE TO BE IN he
+  } else {
+    //TODO --USER TEXT HAVE TO BE IN en
+  }
+  console.log(req)
   const handle_clear = () => {
-    setDate(moment().format(`yyyy-MM-DD`))
+    setDate(moment().format(`YYYY-MM-DD`))
     setEventType('')
     setLocation('')
-    setlanguages('')
+    setLanguage('')
+    setStatus('')
+    setCurrency('nis')
     setClientName('')
     setEventName('')
-    setMaxParticipants(0)
+    setMaxParticipants(undefined)
     setMinParticipants(0)
     setScheduleTimeEvent([{ from: '', to: '', describe: '' }])
     setCosts([{ description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' }])
@@ -58,16 +110,21 @@ const Bid = (props) => {
     setTotalADiscounts(0)
     setDiscount(0)
   }
-  const dispatch = useDispatch()
   const handle_save = () => {
     //TODO -- validate data
-    // dispatch(action_bid.create_new_bid(data))
+    dispatch(action_bid.create_new_bid(req))
+    // props.history.push('/Home')
   }
   const handle_cancel_and_exit = () => {
     //TODO make a window pop with a message
   }
-  const handle_email = () => {}
-  const handle_pdf = () => {}
+  // const handle_email = () => {
+  //   //TODO
+  // }
+  // const handle_pdf = () => {
+  //   //TODO
+  // }
+
   return (
     <div style={{ padding: '30px' }}>
       <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
@@ -76,28 +133,30 @@ const Bid = (props) => {
           <Select
             className={classes.textField}
             // style={{'width:40px'}}
-            placeholder={'languages'}
+            placeholder={words_he['languages']}
             options={languages}
             id='languages'
-            label='languages'
+            label={words_he['languages']}
             onChange={(e) => {
-              setlanguages(e.value)
+              setLanguage(e.value)
             }}
           />
-          <button type='button' className='btn btn-info' onClick={handle_pdf}>
+          {/* <button type='button' className='btn btn-info' onClick={handle_pdf}>
             pdf
           </button>
           <button type='button' className='btn btn-info' onClick={handle_email}>
             email
-          </button>
+          </button> */}
         </div>
-        <div> </div>
-        <title> {words_he['new_bid']}</title>
-        <p>bid id: 5353526</p>
+
+        <h3> {words_he['new_bid']} </h3>
+        {/* <p>
+          {words_he['bid_id']}: {bid_counter}{' '}
+        </p> */}
+
         <Select
           className={classes.textField}
-          // style={{'width:40px'}}
-          placeholder={'event type'}
+          placeholder={words_he['event_type']}
           options={events_type}
           id='event_type'
           label='event type'
@@ -108,7 +167,7 @@ const Bid = (props) => {
         <Select
           className={classes.textField}
           // style={{'width:40px'}}
-          placeholder={'location'}
+          placeholder={words_he['location']}
           options={locations}
           id='location'
           label='location'
@@ -118,7 +177,7 @@ const Bid = (props) => {
         />
         <div>
           <label>
-            client Name:
+            {words_he['client_name']}
             <input
               type='text'
               name='client_Name'
@@ -131,7 +190,7 @@ const Bid = (props) => {
 
         <div>
           <label>
-            event Name:
+            {words_he['event_name']}
             <input
               type='text'
               name='event_Name'
@@ -142,11 +201,11 @@ const Bid = (props) => {
           </label>
         </div>
         <label>
-          amount prticipnts
+          {words_he['prticipnts_amount']}
           <input
             min='0'
             type='number'
-            placeholder='minimum'
+            placeholder={words_he['minimum']}
             onChange={(e) => {
               setMinParticipants(e.target.value)
             }}
@@ -154,7 +213,7 @@ const Bid = (props) => {
           <input
             min='0'
             type='number'
-            placeholder='maximum '
+            placeholder={words_he['maximum']}
             onChange={(e) => {
               setMaxParticipants(e.target.value)
             }}
@@ -162,49 +221,70 @@ const Bid = (props) => {
         </label>
         <div>
           <label>
-            comments
-            <textarea></textarea>
+            {words_he['comments']}
+            <textarea
+              onChange={(e) => {
+                setEventComment(e.target.value)
+              }}
+            ></textarea>
           </label>
         </div>
 
         <div></div>
       </form>
       <TableScheduleTimeEvent setScheduleTimeEvent={setScheduleTimeEvent} schedule_time_event={schedule_time_event} />
-      <TableCosts setCosts={setCosts} costs={costs} />
+      <TableCosts
+        setCosts={setCosts}
+        costs={costs}
+        calculation={{
+          total_b_discount,
+          total_a_discount,
+          total_discount,
+          setTotalBDiscount,
+          setTotalADiscounts,
+          setDiscount,
+        }}
+      />
       <Select
         className={classes.textField}
-        placeholder={'currency'}
+        placeholder={words_he['currency']}
         options={currencies}
         id='currency'
         label='currency'
         onChange={(e) => {
-          setlanguages(e.value)
+          setCurrency(e.value)
         }}
       />
       <Select
         className={classes.textField}
-        placeholder={'bid_status'}
+        placeholder={words_he['bid_status']}
         options={bid_status}
         id='bid_status'
         label='bid_status'
         onChange={(e) => {
-          setlanguages(e.value)
+          setStatus(e.value)
         }}
       />
       <div>
-        <div>total before discount {total_b_discount} nis</div>
-        <div>total discount {discount} nis</div>
-        <div>total after discount {total_a_discount} nis</div>
+        <div>
+          {words_he['total_cost_before_discount']} {total_b_discount} {words_he['nis']}
+        </div>
+        <div>
+          {words_he['total_discount']} {total_discount} {words_he['nis']}
+        </div>
+        <div>
+          {words_he['total_cost_after_discount']} {total_a_discount} {words_he['nis']}
+        </div>
       </div>
       <div>
         <button type='button' className='btn btn-info' onClick={handle_clear}>
-          clear all
+          {words_he['clear_all']}
         </button>
         <button type='button' className='btn btn-info' onClick={handle_save}>
-          save
+          {words_he['save']}
         </button>
         <button type='button' className='btn btn-info' onClick={handle_cancel_and_exit}>
-          cancel and exit
+          {words_he['cencel_and_exit']}
         </button>
       </div>
     </div>
@@ -213,26 +293,41 @@ const Bid = (props) => {
 
 export default Bid
 
-const events_type = [
-  { value: 'id1', label: 'public' },
-  { value: 'id2', label: 'private' },
-  { value: 'id3', label: 'inside' },
-  { value: 'id3', label: 'photoshot' },
-]
-const locations = [
-  { value: 'il', label: 'israel' },
-  { value: 'usa', label: 'usa' },
-  { value: 'br', label: 'brasil' },
-]
 const languages = [
-  { value: 'he', label: 'hebrew' },
-  { value: 'en', label: 'english' },
+  { value: 'he', label: words_he['hebrew'] },
+  { value: 'en', label: 'English' },
 ]
 const currencies = [
-  { value: 'nis', label: 'nis' },
-  { value: 'usd', label: 'usd' },
+  { value: 'nis', label: words_he['nis'] },
+  { value: 'usd', label: words_he['dollar'] },
 ]
 const bid_status = [
-  { value: 'approved', label: 'approved' },
-  { value: 'pendding', label: 'pendding' },
+  { value: 'draft', label: words_he['draft'] },
+  { value: 'sent', label: words_he['sent'] },
+  { value: 'approved', label: words_he['approved'] },
 ]
+// let bid_counter = '0000001'
+
+// {
+//   "bid": {
+//       "bid_num": "12345678",
+//       "event_type": "1",
+//       "location": "1",
+//       "user": "1",
+//       "event_date": "29-10-2021",
+//       "event_comment": "29-10-2021",
+//       "client_name": "eli",
+//       "event_name": "intel",
+//       "max_participants": "500",
+//       "min_participants": "0",
+//       "total_b_discount": "1600",
+//       "total_a_discount": "1500",
+//       "total_discount": "100",
+//       "currency": "nis",
+//       "status": "approved"
+//   },
+//   "schedule_event":[{ "start_time": "1", "end_time":"2", "activity_description": "3" },
+//   { "start_time": "12", "end_time":"32", "activity_description": "34" }
+//   ],
+//   "costs": [{ "description": "4", "amount": "5", "unit_cost": "6", "total_cost": "7", "discount":"8", "comment": "9" }]
+// }

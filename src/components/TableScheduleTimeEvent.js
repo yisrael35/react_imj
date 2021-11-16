@@ -1,19 +1,20 @@
 import TableRow from './TableRowScheduleTimeEvent'
+const words_he = require('../utils/words_he').words_he
 
 export default function ScheduleTimeEvent({ schedule_time_event, setScheduleTimeEvent }) {
   const handle_add_row = () => {
-    setScheduleTimeEvent([...schedule_time_event, { from: '', to: '', describe: '' }])
+    setScheduleTimeEvent([...schedule_time_event, { start_time: '', end_time: '', activity_description: '' }])
   }
 
   return (
     <div>
-      schedule event time:
+      {words_he['time_schedule_for_event']}
       <table>
-        <thead>
+        <thead className='table_header'>
           <tr>
-            <th>from</th>
-            <th>to</th>
-            <th>describe the activty</th>
+            <th>  {words_he['start_time']}</th>
+            <th>  {words_he['end_time']}</th>
+            <th>  {words_he['activity_description']}</th>
           </tr>
         </thead>
         <tbody>

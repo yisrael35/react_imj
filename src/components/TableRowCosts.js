@@ -1,35 +1,30 @@
-import React, { useState } from 'react'
-export default function TableRow({ index, costs, costs_array }) {
-  const [description, setDescription] = useState(costs.description)
-  const [amount, setAmount] = useState(costs.amount)
-  const [unit_cost, setUnitCost] = useState(costs.unit_cost)
-  const [total_costs, setTotalCosts] = useState(costs.total_costs)
-  const [discount, setDiscount] = useState(costs.discount)
-  const [comment, setComment] = useState(costs.comment)
-
+import React from 'react'
+export default function TableRow({ index, costs_array, setCosts }) {
   const handle_description = (e) => {
-    setDescription(e)
     costs_array[index].description = e
+    setCosts([...costs_array])
   }
   const handle_amount = (e) => {
-    setAmount(e)
     costs_array[index].amount = e
+    costs_array[index].total_cost = Number(e) * Number(costs_array[index].unit_cost)
+    setCosts([...costs_array])
   }
   const handle_unit_cost = (e) => {
-    setUnitCost(e)
     costs_array[index].unit_cost = e
+    costs_array[index].total_cost = Number(e) * Number(costs_array[index].amount)
+    setCosts([...costs_array])
   }
-  const handle_total_costs = (e) => {
-    setTotalCosts(e)
-    costs_array[index].total_costs = e
-  }
+  // const handle_total_cost = (e) => {
+  //   costs_array[index].total_cost = e
+  //   setCosts([...costs_array])
+  // }
   const handle_discount = (e) => {
-    setDiscount(e)
     costs_array[index].discount = e
+    setCosts([...costs_array])
   }
   const handle_comment = (e) => {
-    setComment(e)
     costs_array[index].comment = e
+    setCosts([...costs_array])
   }
 
   return (
@@ -37,7 +32,7 @@ export default function TableRow({ index, costs, costs_array }) {
       <td>
         <input
           type='text'
-          value={description}
+          value={costs_array[index].description}
           onChange={(e) => {
             handle_description(e.target.value)
           }}
@@ -45,8 +40,10 @@ export default function TableRow({ index, costs, costs_array }) {
       </td>
       <td>
         <input
-          type='text'
-          value={amount}
+          type='number'
+          min='0'
+          step='any'
+          value={costs_array[index].amount}
           onChange={(e) => {
             handle_amount(e.target.value)
           }}
@@ -54,8 +51,10 @@ export default function TableRow({ index, costs, costs_array }) {
       </td>
       <td>
         <input
-          type='text'
-          value={unit_cost}
+          type='number'
+          min='0'
+          step='any'
+          value={costs_array[index].unit_cost}
           onChange={(e) => {
             handle_unit_cost(e.target.value)
           }}
@@ -63,17 +62,21 @@ export default function TableRow({ index, costs, costs_array }) {
       </td>
       <td>
         <input
-          type='text'
-          value={total_costs}
+          type='number'
+          min='0'
+          step='any'
+          value={costs_array[index].total_cost}
           onChange={(e) => {
-            handle_total_costs(e.target.value)
+            // handle_total_cost(e.target.value)
           }}
         />
       </td>
       <td>
         <input
-          type='text'
-          value={discount}
+          type='number'
+          min='0'
+          step='any'
+          value={costs_array[index].discount}
           onChange={(e) => {
             handle_discount(e.target.value)
           }}
@@ -82,7 +85,7 @@ export default function TableRow({ index, costs, costs_array }) {
       <td>
         <input
           type='text'
-          value={comment}
+          value={costs_array[index].comment}
           onChange={(e) => {
             handle_comment(e.target.value)
           }}

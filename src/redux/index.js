@@ -5,6 +5,9 @@ import authReducer from './Auth/reducer'
 import snackBarReduder from './SnackBar/reducer'
 import userReduder from './User/reducer'
 import bidReduder from './Bid/reducer'
+import locationReduder from './Location/reducer'
+import eventTypeReduder from './EventType/reducer'
+import utilsReduder from './Utils/reducer'
 
 const initionState = {}
 const middleware = [thunk]
@@ -13,6 +16,9 @@ const rootReducer = combineReducers({
   snackBar: snackBarReduder,
   user: userReduder,
   bid: bidReduder,
+  location: locationReduder,
+  eventType: eventTypeReduder,
+  utils: utilsReduder,
 })
 
 const store = createStore(rootReducer, initionState, composeWithDevTools(applyMiddleware(...middleware)))

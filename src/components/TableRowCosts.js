@@ -6,12 +6,12 @@ export default function TableRow({ index, costs_array, setCosts }) {
   }
   const handle_amount = (e) => {
     costs_array[index].amount = e
-    costs_array[index].total_cost = Number(e) * Number(costs_array[index].unit_cost)
+    costs_array[index].total_cost = (Number(e) * Number(costs_array[index].unit_cost)).toFixed(2)
     setCosts([...costs_array])
   }
   const handle_unit_cost = (e) => {
     costs_array[index].unit_cost = e
-    costs_array[index].total_cost = Number(e) * Number(costs_array[index].amount)
+    costs_array[index].total_cost = (Number(e) * Number(costs_array[index].amount)).toFixed(2)
     setCosts([...costs_array])
   }
   // const handle_total_cost = (e) => {

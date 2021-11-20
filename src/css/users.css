@@ -43,6 +43,10 @@ ul {
   list-style-type: none;
 }
 
-.user_page{
+.user_page {
   padding: 20px;
+}
+
+.select {
+  width: 230px;
 }

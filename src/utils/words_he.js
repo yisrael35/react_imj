@@ -66,6 +66,9 @@ const words_he = {
   sent: 'נשלח',
   approved: 'אושר',
   bid_status: 'סטטוס הצעה',
+  search: 'חיפוש...',
+  sum_rows: 'סך התוצאות: ',
+  rows_to_display: 'מספר שורות להציג',
 }
 
 module.exports = {

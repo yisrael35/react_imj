@@ -3,6 +3,9 @@ import { GET_USERS } from './constants'
 
 const initialState = {
   users: [],
+  limit: 4,
+  offset: 0,
+  meta_data: {},
 }
 
 export default (state = initialState, action) => {
@@ -10,7 +13,8 @@ export default (state = initialState, action) => {
     case GET_USERS: {
       return {
         ...state,
-        users: action.payload,
+        users: action.payload.users,
+        meta_data: action.payload.meta_data,
       }
     }
 

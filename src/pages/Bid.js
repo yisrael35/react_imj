@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import MyDatePicker from '../components/DatePicker'
 import moment from 'moment'
-import { makeStyles } from '@material-ui/core/styles'
+// import { makeStyles } from '@material-ui/core/styles'
 import '../css/bid.css'
 import TableScheduleTimeEvent from '../components/TableScheduleTimeEvent'
 import TableCosts from '../components/TableCosts'
@@ -11,20 +11,20 @@ import * as action_bid from '../redux/Bid/action'
 import * as action_utils from '../redux/Utils/action'
 
 const words_he = require('../utils/words_he').words_he
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}))
+// const useStyles = makeStyles((theme) => ({
+//   container: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//   },
+//   textField: {
+//     marginLeft: theme.spacing(1),
+//     marginRight: theme.spacing(1),
+//     width: 200,
+//   },
+// }))
 
 const Bid = (props) => {
-  const classes = useStyles()
+  // const classes = useStyles()
 
   const locations = useSelector((state) => state.utils.locations)
   const events_type = useSelector((state) => state.utils.events_type)
@@ -54,8 +54,6 @@ const Bid = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
-    //TODO -- calculation
-    console.log('im here 2')
     let total_cost = 0
     let discount = 0
     for (const cost of costs) {
@@ -131,8 +129,7 @@ const Bid = (props) => {
       <form>
         <div>
           <Select
-            className={classes.textField}
-            // style={{'width:40px'}}
+            className={'select'}
             placeholder={words_he['languages']}
             options={languages}
             id='languages'
@@ -150,12 +147,8 @@ const Bid = (props) => {
         </div>
 
         <h3> {words_he['new_bid']} </h3>
-        {/* <p>
-          {words_he['bid_id']}: {bid_counter}{' '}
-        </p> */}
-
         <Select
-          className={classes.textField}
+          className={'select'}
           placeholder={words_he['event_type']}
           options={events_type}
           id='event_type'
@@ -165,8 +158,7 @@ const Bid = (props) => {
           }}
         />
         <Select
-          className={classes.textField}
-          // style={{'width:40px'}}
+          className={'select'}
           placeholder={words_he['location']}
           options={locations}
           id='location'
@@ -246,7 +238,7 @@ const Bid = (props) => {
         }}
       />
       <Select
-        className={classes.textField}
+        className={'select'}
         placeholder={words_he['currency']}
         options={currencies}
         id='currency'
@@ -256,7 +248,8 @@ const Bid = (props) => {
         }}
       />
       <Select
-        className={classes.textField}
+        // className={classes.textField}
+        className={'select'}
         placeholder={words_he['bid_status']}
         options={bid_status}
         id='bid_status'

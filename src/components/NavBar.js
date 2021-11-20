@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
@@ -11,6 +11,16 @@ const Nav = (props) => {
   const logout = async () => {
     dispatch(authActions.logout())
   }
+  
+  useEffect(() => {
+    const token = localStorage.getItem('TokenAccess')
+    if (token) {
+      dispatch(authActions.check_if_token_exist(token))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
   let menu
   if (!isAuthenticated) {
     menu = (
@@ -23,18 +33,17 @@ const Nav = (props) => {
       </ul>
     )
   } else {
-    if(permissions === 1){
-      
+    if (permissions === 1) {
       menu = (
         <ul className='navbar-nav me-auto mb-2 mb-md-0'>
           <li className='nav-item active'>
-            <Link to='/login' className='nav-link' onClick={logout}>
-              {words_he['logout']}
+            <Link to='/Bid' className='nav-link'>
+              {words_he['new_bid']}
             </Link>
           </li>
           <li className='nav-item active'>
-            <Link to='/register' className='nav-link'>
-              {words_he['register']}
+            <Link to='/Register' className='nav-link'>
+              {words_he['create_new_user']}
             </Link>
           </li>
           <li className='nav-item active'>
@@ -42,22 +51,29 @@ const Nav = (props) => {
               {words_he['users']}
             </Link>
           </li>
+          <li className='nav-item active'>
+            <Link to='/Login' className='nav-link' onClick={logout}>
+              {words_he['logout']}
+            </Link>
+          </li>
         </ul>
       )
-    }else if(permissions === 2){
+    } else if (permissions === 2) {
       menu = (
         <ul className='navbar-nav me-auto mb-2 mb-md-0'>
+          <li className='nav-item active'>
+            <Link to='/Bid' className='nav-link'>
+              {words_he['new_bid']}
+            </Link>
+          </li>
           <li className='nav-item active'>
             <Link to='/login' className='nav-link' onClick={logout}>
               {words_he['logout']}
             </Link>
           </li>
-         
         </ul>
       )
     }
-
-
   }
 
   return (

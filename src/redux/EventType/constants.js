@@ -1,0 +1,2 @@
+export const GET_EVENTS_TYPE = 'GET_EVENT_TYPE'
+

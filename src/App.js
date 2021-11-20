@@ -7,6 +7,7 @@ import store from './redux/index'
 
 //pages
 import Home from './pages/Home'
+import Bid from './pages/Bid'
 import Login from './pages/Login'
 import Users from './pages/Users'
 import Register from './pages/Register'
@@ -26,15 +27,15 @@ function App() {
         <Router>
           <NavBar name={name} setName={setName} />
           <SnackBar />
-          <main >
+          <main>
             <Switch>
-              <Route path='/Login' component={() => <Login /> } />
+              <Route path='/Login' component={() => <Login />} />
               <Route path='/ForgotPassword' component={() => <ForgotPassword />} />
               <Route path='/ResetPassword/:token' component={() => <ResetPassword />} />
               <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
-              {/* <PrivateRoute path='/Users' component={() => <Users />} /> */}
-              <PrivateRoute path='/register' component={Register} />
+              <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />
+              <PrivateRoute path='/Bid' component={Bid} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>
           </main>

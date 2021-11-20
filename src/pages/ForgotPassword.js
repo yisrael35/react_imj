@@ -16,7 +16,7 @@ const ForgotPassword = (props) => {
   }
 
   return (
-    <div>
+    <div  className='form-signin'>
       <form onSubmit={submit}>
         <h1 className='h3 mb-3 fw-normal'>{words_he['forgot_password']}</h1>
         <input type='text' className='form-control' placeholder={words_he['username']} required onChange={(e) => setUsername(e.target.value)} />

@@ -2,12 +2,36 @@ import { LOGIN_SUCCESS, LOGOUT_SUCCESS, SET_LOADING_INDICATOR_AUTH } from './con
 import axios from 'axios'
 import { setAuthToken } from '../../utils/constans'
 import * as actionSnackBar from '../SnackBar/action'
+import jwtDecode from 'jwt-decode'
 
 export const login = (username, password) => async (dispatch, getState) => {
   try {
     const response = await axios.put(process.env.REACT_APP_REST_IMJ_URL + '/auth', { username, password })
     setAuthToken(response.data.token) // Set token to Axios default header.
+    //store user data and token
+    localStorage.setItem('UserName', response.data.user.name)
+    localStorage.setItem('UserLevel', response.data.user.level)
+    localStorage.setItem('UserId', response.data.user.id)
+    localStorage.setItem('TokenAccess', response.data.token)
     dispatch({ type: LOGIN_SUCCESS, payload: response.data })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const check_if_token_exist = (token) => async (dispatch) => {
+  try {
+    if (jwtDecode(token).exp < Date.now() / 1000) {
+      localStorage.removeItem('TokenAccess')
+      return
+    }
+
+    const name = localStorage.getItem('UserName')
+    const level = localStorage.getItem('UserLevel')
+    const id = localStorage.getItem('UserId')
+    const user_data = { user: { name, level: Number(level), id }, token }
+    setAuthToken(token) // Set token to Axios default header.
+    dispatch({ type: LOGIN_SUCCESS, payload: user_data })
   } catch (error) {
     console.log(error)
   }
@@ -17,6 +41,7 @@ export const logout = () => async (dispatch, getState) => {
   try {
     const response = await axios.delete(process.env.REACT_APP_REST_IMJ_URL + '/auth')
     setAuthToken() // Set '' to Axios default header.
+    localStorage.removeItem('TokenAccess')
     dispatch({ type: LOGOUT_SUCCESS, payload: response })
   } catch (error) {
     console.log(error)

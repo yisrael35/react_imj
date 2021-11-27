@@ -1,6 +1,7 @@
 import { GET_USERS } from './constants'
 import axios from 'axios'
 import * as actionSnackBar from '../SnackBar/action'
+const words_he = require('../../utils/words_he').words_he
 
 export const get_users = (limit, offset, search) => (dispatch) => {
   const query = { limit, offset, search }
@@ -10,7 +11,8 @@ export const get_users = (limit, offset, search) => (dispatch) => {
       dispatch({ type: GET_USERS, payload: res.data })
     })
     .catch((error) => {
-      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+      console.log(error);
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
     })
 }
 

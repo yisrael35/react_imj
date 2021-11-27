@@ -1,6 +1,7 @@
 import { GET_LOCATIONS } from './constants'
 import axios from 'axios'
 import * as actionSnackBar from '../SnackBar/action'
+const words_he = require('../../utils/words_he').words_he
 
 export const get_locations = () => (dispatch) => {
  
@@ -16,7 +17,7 @@ export const get_locations = () => (dispatch) => {
       dispatch({ type: GET_LOCATIONS, payload: locations })
     })
     .catch((error) => {
-      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
     })
 }
 

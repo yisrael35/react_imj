@@ -299,11 +299,9 @@ const bid_status = [
   { value: 'sent', label: words_he['sent'] },
   { value: 'approved', label: words_he['approved'] },
 ]
-// let bid_counter = '0000001'
 
 // {
 //   "bid": {
-//       "bid_num": "12345678",
 //       "event_type": "1",
 //       "location": "1",
 //       "user": "1",

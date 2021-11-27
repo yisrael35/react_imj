@@ -69,6 +69,9 @@ const words_he = {
   search: 'חיפוש...',
   sum_rows: 'סך התוצאות: ',
   rows_to_display: 'מספר שורות להציג',
+  server_error: 'שגיאת שרת',
+  failed_load_data: 'נכשל לטעון מידע',
+  
 }
 
 module.exports = {

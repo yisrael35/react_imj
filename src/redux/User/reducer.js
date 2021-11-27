@@ -5,7 +5,7 @@ const initialState = {
   users: [],
   limit: 4,
   offset: 0,
-  meta_data: {},
+  meta_data: {sum_rows:0},
 }
 
 export default (state = initialState, action) => {

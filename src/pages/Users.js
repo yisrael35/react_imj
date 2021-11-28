@@ -4,6 +4,7 @@ import '../css/users.css'
 import { useDispatch, useSelector } from 'react-redux'
 import * as action_user from '../redux/User/action'
 import Select from 'react-select'
+import { DebounceInput } from 'react-debounce-input'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -36,7 +37,9 @@ const Users = (props) => {
       <div className='user_page'>
         <h5 className='card-title text-uppercase mb-0'> {words_he['users']}</h5>
         <div>
-          <input type='search' placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+          <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+
+          {/* <input type='search' placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} /> */}
           <Select
             className={'select'}
             placeholder={words_he['rows_to_display'] + `: ${limit}`}

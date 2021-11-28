@@ -6,9 +6,11 @@ import moment from 'moment'
 import '../css/bid.css'
 import TableScheduleTimeEvent from '../components/TableScheduleTimeEvent'
 import TableCosts from '../components/TableCosts'
+import EmailAndDownload from '../components/EmailAndDownload'
 import { useDispatch, useSelector } from 'react-redux'
 import * as action_bid from '../redux/Bid/action'
 import * as action_utils from '../redux/Utils/action'
+import * as action_popUp from '../redux/PopUp/action'
 
 const words_he = require('../utils/words_he').words_he
 // const useStyles = makeStyles((theme) => ({
@@ -108,20 +110,22 @@ const Bid = (props) => {
     setTotalADiscounts(0)
     setDiscount(0)
   }
-  const handle_save = () => {
+
+  const handle_save = async () => {
     //TODO -- validate data
-    dispatch(action_bid.create_new_bid(req))
-    // props.history.push('/Home')
+    const bid_id = await dispatch(action_bid.create_new_bid(req))
+    if (bid_id && typeof bid_id === 'number') {
+      console.log(bid_id)
+      //TODO - make a window pop with {bid_number: res_bid, download pdf, send client email with the pdf, close)
+      const content = <EmailAndDownload message={` bid number: ${bid_id} create successfully `} bid_id={bid_id} />
+      dispatch(action_popUp.setPopUp(content))
+    }
+    props.history.push('/Home')
   }
   const handle_cancel_and_exit = () => {
     //TODO make a window pop with a message
   }
-  // const handle_email = () => {
-  //   //TODO
-  // }
-  // const handle_pdf = () => {
-  //   //TODO
-  // }
+
 
   return (
     <div style={{ padding: '30px' }}>

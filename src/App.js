@@ -18,8 +18,10 @@ import ForgotPassword from './pages/ForgotPassword'
 import NavBar from './components/NavBar'
 import SnackBar from './components/SnackBar'
 import PrivateRoute from './components/PrivateRoutes'
+import PopUp from './components/PopUp'
 
 function App() {
+ 
   const [name, setName] = useState('')
   return (
     <Provider store={store}>
@@ -27,6 +29,7 @@ function App() {
         <Router>
           <NavBar name={name} setName={setName} />
           <SnackBar />
+          <PopUp/>
           <main>
             <Switch>
               <Route path='/Login' component={() => <Login />} />

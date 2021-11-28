@@ -1,2 +1,2 @@
-export const NEW_BID = 'NEW_BID'
+export const GET_BIDS = 'GET_BIDS'
 

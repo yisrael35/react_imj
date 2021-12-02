@@ -7,9 +7,10 @@ import store from './redux/index'
 
 //pages
 import Home from './pages/Home'
-import Bid from './pages/CreateBid'
 import Login from './pages/Login'
 import Users from './pages/Users'
+import CreateBid from './pages/CreateBid'
+// import Bids from './pages/Bids'
 import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
@@ -21,7 +22,6 @@ import PrivateRoute from './components/PrivateRoutes'
 import PopUp from './components/PopUp'
 
 function App() {
- 
   const [name, setName] = useState('')
   return (
     <Provider store={store}>
@@ -29,7 +29,7 @@ function App() {
         <Router>
           <NavBar name={name} setName={setName} />
           <SnackBar />
-          <PopUp/>
+          <PopUp />
           <main>
             <Switch>
               <Route path='/Login' component={() => <Login />} />
@@ -38,7 +38,8 @@ function App() {
               <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
               <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />
-              <PrivateRoute path='/CreateBid' component={Bid} />
+              {/* <PrivateRoute path='/Bids' component={Bids} /> */}
+              <PrivateRoute path='/CreateBid' component={CreateBid} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>
           </main>

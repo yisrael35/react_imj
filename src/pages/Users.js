@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import User from '../components/User'
-import '../css/users.css'
 import { useDispatch, useSelector } from 'react-redux'
-import * as action_user from '../redux/User/action'
-import Select from 'react-select'
 import { DebounceInput } from 'react-debounce-input'
+import Select from 'react-select'
+
+import TableBuilder from '../components/TableBuilder'
+import PaginationBottom from '../components/PaginationBottom'
+import UpdateUser from '../components/UpdateUser'
+
+import * as action_popUp from '../redux/PopUp/action'
+import * as action_user from '../redux/User/action'
 
 const words_he = require('../utils/words_he').words_he
 
 const Users = (props) => {
-  const users = useSelector((state) => state.user.users)
-  const user_limit = useSelector((state) => state.user.limit)
-  const user_offset = useSelector((state) => state.user.offset)
+  const items = useSelector((state) => state.user.users)
   const meta_data = useSelector((state) => state.user.meta_data)
-  const [limit, setLimit] = useState(user_limit)
-  const [offset, setOffset] = useState(user_offset)
+  const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
+  const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -23,78 +25,70 @@ const Users = (props) => {
   }, [limit, offset, search])
 
   const previous_page = () => {
-    let new_offset = offset - limit
+    let new_offset = Number(offset) - Number(limit)
     new_offset = new_offset > 0 ? new_offset : 0
     setOffset(new_offset)
   }
 
   const next_page = () => {
-    let new_offset = offset + limit
+    let new_offset = Number(offset) + Number(limit)
     setOffset(new_offset)
   }
+  const handle_edit = (id, index) => {
+    let user
+    for (const item of items) {
+      if (item['id'] === id) {
+        user = item
+        break
+      }
+    }
+    //TODO
+    const content = <UpdateUser user={user} counter={index } key={user.id} />
+
+    // const content = <EmailAndDownload message={` bid number: ${bid_id} create successfully `} bid_id={bid_id} />
+    dispatch(action_popUp.setPopUp(content))
+  }
+
+  for (const item of items) {
+    item['is_active'] = item['is_active'] ? words_he['active'] : words_he['not_active']
+    item['level'] = item['level'] === 1 ? words_he['admin'] : words_he['user']
+  }
+
   return (
     <div>
-      <div className='user_page'>
-        <h5 className='card-title text-uppercase mb-0'> {words_he['users']}</h5>
-        <div>
-          <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      {/* search */}
+      <span style={{ float: 'left', margin: '10px' }}>
+        <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      </span>
+      {/* Pagination Top */}
+      <Select
+        className={'select'}
+        placeholder={words_he['rows_to_display'] + `: ${limit}`}
+        options={limits}
+        id='limits'
+        label='limits'
+        onChange={(e) => {
+          setOffset(0)
+          setLimit(e.value)
+        }}
+      />
+      <TableBuilder
+        items={items}
+        cols={['username', 'email', 'first_name', 'last_name', 'is_active', 'level']}
+        headers={{
+          username: words_he['username'],
+          first_name: words_he['first_name'],
+          last_name: words_he['last_name'],
+          email: words_he['email'],
+          is_active: words_he['status'],
+          level: words_he['permissions'],
+        }}
+        title={words_he['users']}
+        offset={offset}
+        handle_edit={handle_edit}
+      />
 
-          {/* <input type='search' placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} /> */}
-          <Select
-            className={'select'}
-            placeholder={words_he['rows_to_display'] + `: ${limit}`}
-            options={limits}
-            id='limits'
-            label='limits'
-            onChange={(e) => {
-              setLimit(e.value)
-            }}
-          />
-          <span>{words_he['sum_rows'] + meta_data.sum_rows}</span>
-        </div>
-        <table className='table user-table mb-0'>
-          <thead>
-            <tr>
-              <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-                #
-              </th>
-              <th scope='col' className='border-0 text-uppercase font-medium'>
-                {words_he['name']}
-              </th>
-              <th scope='col' className='border-0 text-uppercase font-medium'>
-                {words_he['email']}
-              </th>
-              <th scope='col' className='border-0 text-uppercase font-medium'>
-                {words_he['update_at']}
-              </th>
-              <th scope='col' className='border-0 text-uppercase font-medium'>
-                {words_he['permissions']}
-              </th>
-              <th scope='col' className='border-0 text-uppercase font-medium'>
-                {words_he['is_active']}
-              </th>
-              <th scope='col' className='border-0 text-uppercase font-medium'>
-                {words_he['status']}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {this.props.items.length === 0 ? ' - There is no results' : ''} */}
-            {users.map((user, index) => (
-              <User user={user} counter={index + 1} key={user.id} />
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* Pagination */}
-      <div style={{ textAlign: 'center' }}>
-        <button onClick={previous_page} disabled={offset === 0}>
-          {'<'}
-        </button>
-        <button onClick={next_page} disabled={meta_data.sum_rows <= offset}>
-          {'>'}
-        </button>
-      </div>
+      <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
     </div>
   )
 }

@@ -126,7 +126,6 @@ const Bid = (props) => {
     //TODO make a window pop with a message
   }
 
-
   return (
     <div style={{ padding: '30px' }}>
       <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
@@ -264,13 +263,13 @@ const Bid = (props) => {
       />
       <div>
         <div>
-          {words_he['total_cost_before_discount']} {total_b_discount} {words_he['nis']}
+          {words_he['total_cost_before_discount']} {total_b_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
         </div>
         <div>
-          {words_he['total_discount']} {total_discount} {words_he['nis']}
+          {words_he['total_discount']} {total_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
         </div>
         <div>
-          {words_he['total_cost_after_discount']} {total_a_discount} {words_he['nis']}
+          {words_he['total_cost_after_discount']} {total_a_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
         </div>
       </div>
       <div>

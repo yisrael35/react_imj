@@ -25,10 +25,9 @@
   border-top-right-radius: 0;
 }
 
-body {
+html {
   direction: rtl;
 }
-
 
 /* Popup style */
 .popup-box {

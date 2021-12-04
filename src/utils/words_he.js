@@ -71,7 +71,11 @@ const words_he = {
   rows_to_display: 'מספר שורות להציג',
   server_error: 'שגיאת שרת',
   failed_load_data: 'נכשל לטעון מידע',
-  
+  type_in_en: 'הקלד באנגלית',
+  type_number: 'הקלד מספר',
+  yes: 'כן',
+  no: 'לא',
+  cancel_exit: 'אתה בטוח שאתה רוצה לצאת?',
 }
 
 module.exports = {

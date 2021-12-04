@@ -23,8 +23,6 @@ const ForgotPassword = (props) => {
   }
 
   if (redirect) {
-    //TODO -display on screen message
-
     setTimeout(() => {
       return <Redirect to='Home' />
     }, 3000)

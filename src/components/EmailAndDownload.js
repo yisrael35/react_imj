@@ -9,12 +9,12 @@ const EmailAndDownload = (props) => {
   const dispatch = useDispatch()
   const handle_send_email = () => {
     //TODO
-    // dispatch(action_event_type.get_events_type({ bid_id, event_id },clientEmail))
+    dispatch(action_event_type.get_events_type({ bid_id, event_id },clientEmail))
     console.log('im in send email')
   }
   const handle_get_pdf = () => {
     //TODO
-    // dispatch(action_event_type.get_events_type({ bid_id, event_id }))
+    dispatch(action_event_type.get_events_type({ bid_id, event_id }))
     console.log('im in get pdf')
   }
 

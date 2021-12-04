@@ -42,10 +42,7 @@ const Users = (props) => {
         break
       }
     }
-    //TODO
-    const content = <UpdateUser user={user} counter={index } key={user.id} />
-
-    // const content = <EmailAndDownload message={` bid number: ${bid_id} create successfully `} bid_id={bid_id} />
+    const content = <UpdateUser user={user} counter={index} key={user.id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
 

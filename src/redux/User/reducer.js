@@ -3,8 +3,6 @@ import { GET_USERS, GET_USER} from './constants'
 
 const initialState = {
   users: [],
-  limit: 4,
-  offset: 0,
   user:{},
   meta_data: {sum_rows:0},
 }
@@ -21,7 +19,7 @@ export default (state = initialState, action) => {
     case GET_USER: {
       return {
         ...state,
-        user: action.payload.user,
+        user: action.payload,
       }
     }
 

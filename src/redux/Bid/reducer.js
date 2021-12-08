@@ -3,8 +3,6 @@ import { GET_BIDS } from './constants'
 
 const initialState = {
   bids: [],
-  limit: 4,
-  offset: 0,
   meta_data: { sum_rows: 0 },
 }
 

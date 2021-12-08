@@ -1,7 +1,6 @@
 import { GET_USERS, GET_USER } from './constants'
 import axios from 'axios'
 import * as actionSnackBar from '../SnackBar/action'
-import { useSelector } from 'react-redux'
 const words_he = require('../../utils/words_he').words_he
 
 export const get_users = (limit, offset, search) => (dispatch) => {
@@ -17,13 +16,11 @@ export const get_users = (limit, offset, search) => (dispatch) => {
     })
 }
 
-export const get_user = () => (dispatch) => {
-  const userContent = useSelector((state) => state.auth.userContent)
-  console.log(userContent)
-  const { id: user_id } = userContent
+export const get_user = (user_id) => (dispatch) => {
   axios
     .get(process.env.REACT_APP_REST_IMJ_URL + '/user/' + user_id)
     .then((res) => {
+      console.log({ res })
       dispatch({ type: GET_USER, payload: res.data })
     })
     .catch((error) => {

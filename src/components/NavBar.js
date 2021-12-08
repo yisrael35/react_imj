@@ -37,6 +37,11 @@ const Nav = (props) => {
       menu = (
         <ul className='navbar-nav me-auto mb-2 mb-md-0'>
           <li className='nav-item active'>
+            <Link to='/ProfileSettings' className='nav-link'>
+              {words_he['profile_settings']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
             <Link to='/Bids' className='nav-link'>
               {words_he['bids']}
             </Link>
@@ -66,6 +71,11 @@ const Nav = (props) => {
     } else if (permissions === 2) {
       menu = (
         <ul className='navbar-nav me-auto mb-2 mb-md-0'>
+          <li className='nav-item active'>
+            <Link to='/ProfileSettings' className='nav-link'>
+              {words_he['profile_settings']}
+            </Link>
+          </li>
           <li className='nav-item active'>
             <Link to='/CreateBid' className='nav-link'>
               {words_he['new_bid']}

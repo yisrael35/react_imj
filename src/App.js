@@ -14,6 +14,7 @@ import Bids from './pages/Bids'
 import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
+import ProfileSettings from './pages/ProfileSettings'
 
 //components
 import NavBar from './components/NavBar'
@@ -40,6 +41,7 @@ function App() {
               <PrivateRoute path='/Users' component={Users} />
               <PrivateRoute path='/Bids' component={Bids} />
               <PrivateRoute path='/CreateBid' component={CreateBid} />
+              <PrivateRoute path='/ProfileSettings' component={ProfileSettings} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>
           </main>

@@ -76,6 +76,7 @@ const words_he = {
   yes: 'כן',
   no: 'לא',
   cancel_exit: 'אתה בטוח שאתה רוצה לצאת?',
+  bids: 'הצעות מחיר',
 }
 
 module.exports = {

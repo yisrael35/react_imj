@@ -10,7 +10,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Users from './pages/Users'
 import CreateBid from './pages/CreateBid'
-// import Bids from './pages/Bids'
+import Bids from './pages/Bids'
 import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
@@ -38,7 +38,7 @@ function App() {
               <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
               <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />
-              {/* <PrivateRoute path='/Bids' component={Bids} /> */}
+              <PrivateRoute path='/Bids' component={Bids} />
               <PrivateRoute path='/CreateBid' component={CreateBid} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>

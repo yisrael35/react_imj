@@ -16,11 +16,12 @@ export const get_users = (limit, offset, search) => (dispatch) => {
     })
 }
 
-export const get_user = (user_id) => (dispatch) => {
+export const get_user = () => (dispatch, getState) => {
+  const store = getState()
+  const user_id = store.auth.userContent.id
   axios
     .get(process.env.REACT_APP_REST_IMJ_URL + '/user/' + user_id)
     .then((res) => {
-      console.log({ res })
       dispatch({ type: GET_USER, payload: res.data })
     })
     .catch((error) => {

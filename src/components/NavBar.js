@@ -1,4 +1,4 @@
-import React ,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
@@ -11,7 +11,7 @@ const Nav = (props) => {
   const logout = async () => {
     dispatch(authActions.logout())
   }
-  
+
   useEffect(() => {
     const token = localStorage.getItem('TokenAccess')
     if (token) {
@@ -19,7 +19,6 @@ const Nav = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
 
   let menu
   if (!isAuthenticated) {
@@ -79,6 +78,21 @@ const Nav = (props) => {
           <li className='nav-item active'>
             <Link to='/CreateBid' className='nav-link'>
               {words_he['new_bid']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/login' className='nav-link' onClick={logout}>
+              {words_he['logout']}
+            </Link>
+          </li>
+        </ul>
+      )
+    } else if (permissions === 3) {
+      menu = (
+        <ul className='navbar-nav me-auto mb-2 mb-md-0'>
+          <li className='nav-item active'>
+            <Link to='/ProfileSettings' className='nav-link'>
+              {words_he['profile_settings']}
             </Link>
           </li>
           <li className='nav-item active'>

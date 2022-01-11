@@ -22,7 +22,15 @@ export const get_user = () => (dispatch, getState) => {
   axios
     .get(process.env.REACT_APP_REST_IMJ_URL + '/user/' + user_id)
     .then((res) => {
-      dispatch({ type: GET_USER, payload: res.data })
+      const data = {
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        phone: res.data.phone || '',
+        password: '',
+        confirm_password: '',
+      }
+      console.log(data)
+      dispatch({ type: GET_USER, payload: data })
     })
     .catch((error) => {
       console.log(error)
@@ -53,9 +61,11 @@ export const create_user = (data) => (dispatch) => {
     })
 }
 
-export const update_user = (data, id) => (dispatch) => {
+export const update_user = (data) => (dispatch, getState) => {
+  const store = getState()
+  const user_id = store.auth.userContent.id
   axios
-    .put(process.env.REACT_APP_REST_IMJ_URL + `/user/${id}`, data)
+    .put(process.env.REACT_APP_REST_IMJ_URL + `/user/${user_id}`, data)
     .then((res) => {
       get_users()
       dispatch(actionSnackBar.setSnackBar('success', 'update user successfully', 2000))

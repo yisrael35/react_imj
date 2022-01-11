@@ -78,6 +78,7 @@ const words_he = {
   cancel_exit: 'אתה בטוח שאתה רוצה לצאת?',
   bids: 'הצעות מחיר',
   profile_settings:'הגדרות פרופיל',
+  password_not_matched: 'הסיסמאות אינן תואמות',
 }
 
 module.exports = {

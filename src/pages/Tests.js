@@ -25,11 +25,11 @@ const TestWebsocket = (props) => {
 
   const test_websocket = async () => {
     const data = {
-      message: 'test the websocket to see what is happening',
+      type:'init-connection',
     }
     workerInstances.connectWS(token)
     workerInstances.sendEvent(data, token)
-    console.log('test_websocket', data.message)
+    console.log('test_websocket', data)
   }
   return (
     <div>

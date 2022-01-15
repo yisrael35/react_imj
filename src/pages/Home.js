@@ -1,20 +1,67 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'moment/locale/he'
-// moment().locale('he')
+import * as action_home from '../redux/Home/action'
+import * as actionSnackBar from '../redux/SnackBar/action'
+import workerInstances from '../services'
 
 const localizer = momentLocalizer(moment)
 // const words_he = require('../utils/words_he').words_he
 const Home = (props) => {
+  const events = useSelector((state) => state.home.events)
+  const token = useSelector((state) => state.auth.token)
+
+  const dispatch = useDispatch()
+  //connect to the ws
+  useEffect(() => {
+    const data = {
+      type: 'init-connection',
+    }
+    workerInstances.connectWS(token)
+    workerInstances.sendEvent(data, token)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  //receive message from the ws
+  useEffect(() => {
+    const receiveData = (message) => {
+      if ((message?.data?.type === 'login' || message?.data?.type === 'notification') && !message?.data?.error) {
+        const response = { ...message.data }
+        console.log(response)
+        dispatch(actionSnackBar.setSnackBar('success', response.content, 2000))
+      } else if (message?.data?.type === 'events' && !message?.data?.error) {
+        const response = { ...message.data }
+        console.log(response)
+        dispatch(action_home.set_events(response.content))
+      } else {
+        const response = { ...message.data }
+        console.log(response)
+      }
+    }
+    workerInstances.addEventListener('message', receiveData)
+    return () => {
+      workerInstances.removeEventListener('message', receiveData)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div style={{ textAlign: 'center' }}>
       {/* <a href='http://localhost:3001/assets/README.md'>readme</a> */}
       {/* <p>{words_he['welcome']}</p> */}
+      <button
+        onClick={() => {
+          dispatch(action_home.get_events())
+        }}
+      >
+        test - get event
+      </button>
       <Calendar
         localizer={localizer}
-        events={myEventsList}
+        events={events}
         // views={['month']}
         startAccessor='start'
         endAccessor='end'
@@ -23,73 +70,5 @@ const Home = (props) => {
     </div>
   )
 }
-
-const myEventsList = [
-  {
-    title: 'All Day Event very long title',
-    color: '#ff7f50',
-    allDay: true,
-    start: '2022-01-01',
-    end: '2022-01-01',
-  },
-  {
-    title: 'Long Event',
-    start: '2022-01-06',
-    end: '2022-01-06',
-  },
-  {
-    title: 'DTS STARTS',
-    bgColor: '#dc143c',
-    start: '2022-01-08',
-    end: '2022-01-10',
-  },
-
-  {
-    title: 'DTS ENDS',
-    bgColor: '#ff8c00',
-    start: '2022-02-16',
-    end: '2022-02-16',
-  },
-
-  {
-    title: 'Some Event',
-    bgColor: '#9932cc',
-    start: '2022-02-26',
-    end: '2022-02-26',
-  },
-  {
-    title: 'Conference',
-    bgColor: '#e9967a',
-    start: '2022-02-26',
-    end: '2022-02-26',
-    desc: 'Big conference for important people',
-  },
-  {
-    title: 'Meeting',
-    bgColor: '#8fbc8f',
-    start: '2022-03-26',
-    end: '2022-03-26',
-    desc: 'Pre-meeting meeting, to prepare for the meeting',
-  },
-  {
-    title: 'Lunch',
-    bgColor: '#cd5c5c',
-    start: '2022-01-26',
-    end: '2022-01-26',
-    desc: 'Power lunch',
-  },
-  {
-    title: 'Happy Hour',
-    start: '2022-02-13',
-    end: '2022-02-13',
-    desc: 'Power lunch happy hour',
-  },
-  {
-    title: 'Meeting',
-    bgColor: '#da70d6',
-    start: '2022-02-12',
-    end: '2022-02-12',
-  },
-]
 
 export default Home

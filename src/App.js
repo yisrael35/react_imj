@@ -15,7 +15,7 @@ import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
 import ProfileSettings from './pages/ProfileSettings' 
-import TestWebsocket from './pages/TestWebsocket' 
+import Tests from './pages/Tests' 
 
 //components
 import NavBar from './components/NavBar'
@@ -43,7 +43,7 @@ function App() {
               <PrivateRoute path='/Bids' component={Bids} />
               <PrivateRoute path='/CreateBid' component={CreateBid} />
               <PrivateRoute path='/ProfileSettings' component={ProfileSettings} />
-              <PrivateRoute path='/TestWebsocket' component={TestWebsocket} />
+              <PrivateRoute path='/Tests' component={Tests} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>
           </main>

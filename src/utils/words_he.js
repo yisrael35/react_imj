@@ -79,6 +79,7 @@ const words_he = {
   bids: 'הצעות מחיר',
   profile_settings:'הגדרות פרופיל',
   password_not_matched: 'הסיסמאות אינן תואמות',
+  guest: 'אורח',
 }
 
 module.exports = {

@@ -1,9 +1,14 @@
 export let ws = null
 let messages = []
-export const connectWS = (token) => {
+let token
+export const connectWS = (incoming_token) => {
+  if (incoming_token) {
+    token = incoming_token
+  }
   if ((ws === null || ws.readyState === 3) && token) {
     ws = new WebSocket(`${process.env.REACT_APP_WS_IMJ_URL}/?token=${token}`)
   }
+
   messages = []
 }
 
@@ -27,7 +32,11 @@ export const sendEvent = (data, token) => {
         postMessage(response)
       }
     }
-    ws.onclose = () => {}
+    ws.onclose = () => {
+      setTimeout(function () {
+        connectWS()
+      }, 2000)
+    }
     ws.onerror = (err) => {
       if (ws.code !== 4000) {
         setTimeout(function () {
@@ -49,4 +58,3 @@ export const closeWS = (token) => {
     }
   }
 }
-

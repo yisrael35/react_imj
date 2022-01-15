@@ -9,9 +9,11 @@ export const get_locations = () => (dispatch) => {
     .get(process.env.REACT_APP_REST_IMJ_URL + '/location')
     .then((res) => {
       let locations = []
+      let counter = 0;
       if (res.data) {
         for (const location of res.data) {
-          locations.push({value: location.id,  label: location.name_he})
+          locations.push({value: location.id,  label: location.name_he, id: counter})
+          counter++        
         }
       }
       dispatch({ type: GET_LOCATIONS, payload: locations })

@@ -35,6 +35,11 @@ const Nav = (props) => {
     if (permissions === 1) {
       menu = (
         <ul className='navbar-nav me-auto mb-2 mb-md-0'>
+            <li className='nav-item active'>
+            <Link to='/Clients' className='nav-link'>
+              {words_he['clients']}
+            </Link>
+          </li>
           <li className='nav-item active'>
             <Link to='/TestWebsocket' className='nav-link'>
             TestWebsocket

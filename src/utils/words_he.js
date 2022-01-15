@@ -77,8 +77,18 @@ const words_he = {
   no: 'לא',
   cancel_exit: 'אתה בטוח שאתה רוצה לצאת?',
   bids: 'הצעות מחיר',
-  profile_settings:'הגדרות פרופיל',
+  profile_settings: 'הגדרות פרופיל',
   password_not_matched: 'הסיסמאות אינן תואמות',
+  user_name: 'שם משתמש',
+  permission_level: 'רמת הרשאה',
+  change_password: 'שינוי סיסמה',
+  old_password: 'סיסמה נוכחית',
+  locatin_name: 'שם מיקום',
+  clients: 'לקוחות',
+  private: 'פרטי',
+  type: 'סוג',
+  departmment: 'מחלקה',
+  company: 'חברה',
 }
 
 module.exports = {

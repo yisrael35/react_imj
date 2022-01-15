@@ -3,6 +3,7 @@ import axios from 'axios'
 import { setAuthToken } from '../../utils/constans'
 import * as actionSnackBar from '../SnackBar/action'
 import jwtDecode from 'jwt-decode'
+const words_he = require('../../utils/words_he').words_he
 
 export const login = (username, password) => async (dispatch, getState) => {
   try {
@@ -16,6 +17,8 @@ export const login = (username, password) => async (dispatch, getState) => {
     dispatch({ type: LOGIN_SUCCESS, payload: response.data })
   } catch (error) {
     console.log(error)
+    dispatch(actionSnackBar.setSnackBar('error', `${words_he['login_error']}`, 3000))
+
   }
 }
 

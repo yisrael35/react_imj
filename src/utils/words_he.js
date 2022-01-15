@@ -70,6 +70,7 @@ const words_he = {
   sum_rows: 'סך התוצאות: ',
   rows_to_display: 'מספר שורות להציג',
   server_error: 'שגיאת שרת',
+  login_error: 'שם משתמש או סיסמא לא נכונים',
   failed_load_data: 'נכשל לטעון מידע',
   type_in_en: 'הקלד באנגלית',
   type_number: 'הקלד מספר',

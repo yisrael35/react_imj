@@ -41,8 +41,8 @@ const Nav = (props) => {
             </Link>
           </li>
           <li className='nav-item active'>
-            <Link to='/TestWebsocket' className='nav-link'>
-            TestWebsocket
+            <Link to='/Tests' className='nav-link'>
+            Tests
             </Link>
           </li>
           <li className='nav-item active'>

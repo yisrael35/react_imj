@@ -74,3 +74,15 @@ export const update_user = (data) => (dispatch, getState) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
     })
 }
+
+export const update_user_by_id = (data, user_id) => (dispatch, getState) => {
+  axios
+    .put(process.env.REACT_APP_REST_IMJ_URL + `/user/${user_id}`, data)
+    .then((res) => {
+      get_users()
+      dispatch(actionSnackBar.setSnackBar('success', 'update user successfully', 2000))
+    })
+    .catch((error) => {
+      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+    })
+}

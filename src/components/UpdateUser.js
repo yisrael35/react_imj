@@ -7,7 +7,7 @@ const words_he = require('../utils/words_he').words_he
 
 const UpdateUser = (props) => {
   const [is_active, setIsActive] = useState(props.user.is_active === words_he['active'] ? 1 : 0)
-  const [level, setLevel] = useState(props.user.level === words_he['admin'] ? 1 : 2)
+  const [level, setLevel] = useState(props.user.level)
   const dispatch = useDispatch()
   const handle_status = (val) => {
     setIsActive(Number(val))
@@ -17,7 +17,7 @@ const UpdateUser = (props) => {
   }
   const handle_save = () => {
     const data = { level, is_active }
-    dispatch(action_user.update_user(data, props.user.id))
+    dispatch(action_user.update_user_by_id(data, props.user.id))
     const limit = props.limit
     const offset = props.offset
     dispatch(action_user.get_users(limit, offset))
@@ -46,10 +46,13 @@ const UpdateUser = (props) => {
           <td>
             <ul>
               <li>
-                <input type='radio' value='1' name={'level'} checked={level === 1} onChange={(e) => handle_level(e.target.value)} /> {words_he['admin']}
+                <input type='radio' value='1' name={'level'} checked={level === 1} onChange={(e) => handle_level(1)} /> {words_he['admin']}
               </li>
               <li>
-                <input type='radio' value='2 ' name={'level'} checked={level === 2} onChange={(e) => handle_level(e.target.value)} /> {words_he['user']}
+                <input type='radio' value='2' name={'level'} checked={level === 2} onChange={(e) => handle_level(2)} /> {words_he['user']}
+              </li>
+              <li>
+                <input type='radio' value='3' name={'level'} checked={level === 3} onChange={(e) => handle_level(3)} /> {words_he['guest']}
               </li>
             </ul>
           </td>

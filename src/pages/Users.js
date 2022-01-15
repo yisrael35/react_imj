@@ -42,13 +42,27 @@ const Users = (props) => {
         break
       }
     }
+
+    if (user['level'] === words_he['admin']) {
+      user['level'] = 1
+    } else if (user['level'] === words_he['user']) {
+      user['level'] = 2
+    } else if (user['level'] === words_he['guest']) {
+      user['level'] = 3
+    }
     const content = <UpdateUser user={user} counter={index} key={user.id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
 
   for (const item of items) {
     item['is_active'] = item['is_active'] ? words_he['active'] : words_he['not_active']
-    item['level'] = item['level'] === 1 ? words_he['admin'] : words_he['user']
+    if (item['level'] === 1) {
+      item['level'] = words_he['admin']
+    } else if (item['level'] === 2) {
+      item['level'] = words_he['user']
+    } else if (item['level'] === 3) {
+      item['level'] = words_he['guest']
+    }
   }
 
   return (

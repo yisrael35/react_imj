@@ -91,6 +91,8 @@ const words_he = {
   departmment: 'מחלקה',
   company: 'חברה',
   guest: 'אורח',
+  new_client: 'לקוח חדש',
+  add_client: 'הוספת לקוח',
 }
 
 module.exports = {

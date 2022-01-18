@@ -6,6 +6,7 @@ import Select from 'react-select'
 import TableBuilder from '../components/TableBuilder'
 import PaginationBottom from '../components/PaginationBottom'
 import UpdateClient from '../components/UpdateClient'
+import CreateClient from '../components/CreateClient'
 
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_client from '../redux/Client/action'
@@ -43,6 +44,11 @@ const Clients = (props) => {
     }
     const content = <UpdateClient client={client} counter={index} key={client.id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
+  }
+
+  const handle_create = () => {
+    const new_client = <CreateClient />
+    dispatch(action_popUp.setPopUp(new_client))
   }
 
   for (const item of items) {
@@ -92,8 +98,8 @@ const Clients = (props) => {
         offset={offset}
         handle_edit={handle_edit}
       />
-
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
+      <button  type='button' className='btn btn-info' onClick={handle_create}>{words_he['add_client']}</button>
     </div>
   )
 }

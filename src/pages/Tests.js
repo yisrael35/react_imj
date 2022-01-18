@@ -1,41 +1,16 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import workerInstances from '../services'
-import * as actionSnackBar from '../redux/SnackBar/action'
+import React from 'react'
+// import { useDispatch, useSelector } from 'react-redux'
 
 const TestWebsocket = (props) => {
-  const dispatch = useDispatch()
-  const token = useSelector((state) => state.auth.token)
+  // const dispatch = useDispatch()
 
-  useEffect(() => {
-    const receiveData = (message) => {
-      // console.log(message)
-      if (message?.data?.content) {
-        const response = { ...message.data }
-        console.log(response)
-        dispatch(actionSnackBar.setSnackBar('success', response.content, 2000))
-      }
-    }
-    workerInstances.addEventListener('message', receiveData)
-    return () => {
-      workerInstances.removeEventListener('message', receiveData)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const test_websocket = async () => {
-    const data = {
-      type:'init-connection',
-    }
-    workerInstances.connectWS(token)
-    workerInstances.sendEvent(data, token)
-    console.log('test_websocket', data)
+  const test = async () => {
   }
   return (
     <div>
       {' '}
-      <button className='w-45 btn m-2 btn-primary' onClick={test_websocket}>
-        test_websocket
+      <button className='w-45 btn m-2 btn-primary' onClick={test}>
+        test
       </button>
     </div>
   )

@@ -134,7 +134,10 @@ const Bid = (props) => {
 
   return (
     <div style={{ padding: '30px' }}>
-      <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
+      <label>
+        {words_he['event_date']}
+        <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
+      </label>
       <form>
         <div>
           <Select

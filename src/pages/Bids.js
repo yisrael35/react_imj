@@ -5,9 +5,9 @@ import Select from 'react-select'
 
 import TableBuilder from '../components/TableBuilder'
 import PaginationBottom from '../components/PaginationBottom'
-// import UpdateUser from '../components/UpdateUser'
+import UpdateBid from '../components/UpdateBid'
 
-// import * as action_popUp from '../redux/PopUp/action'
+import * as action_popUp from '../redux/PopUp/action'
 import * as action_bid from '../redux/Bid/action'
 
 const words_he = require('../utils/words_he').words_he
@@ -35,9 +35,15 @@ const Bids = (props) => {
     setOffset(new_offset)
   }
   const handle_edit = (id, index) => {
-   
-    // const content = <UpdateBid bid={bid} counter={index} key={bid.id} limit={limit} offset={offset} />
-    // dispatch(action_popUp.setPopUp(content))
+    // let bid
+    // for (const item of items) {
+    //   if (item['id'] === id) {
+    //     bid = item
+    //     break
+    //   }
+    // }
+    const content = <UpdateBid  counter={index} id={id} limit={limit} offset={offset} />
+    dispatch(action_popUp.setPopUp(content))
   }
 
 

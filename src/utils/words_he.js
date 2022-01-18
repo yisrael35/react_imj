@@ -81,6 +81,7 @@ const words_he = {
   profile_settings:'הגדרות פרופיל',
   password_not_matched: 'הסיסמאות אינן תואמות',
   guest: 'אורח',
+  event_date: 'תאריך האירוע',
 }
 
 module.exports = {

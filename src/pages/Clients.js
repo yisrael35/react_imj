@@ -22,7 +22,7 @@ const Clients = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_client.get_clients(limit, offset, search))
-  }, [limit, offset, search, items])
+  }, [limit, offset, search])
 
   const previous_page = () => {
     let new_offset = Number(offset) - Number(limit)

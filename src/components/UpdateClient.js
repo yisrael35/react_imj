@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../css/clients.css'
 import { useDispatch } from 'react-redux'
 import * as action_client from '../redux/Client/action'
+import * as action_popUp from '../redux/PopUp/action'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -37,6 +38,10 @@ const UpdateClient = (props) => {
   const handle_save = () => {
     const data = get_data(client_info)
     dispatch(action_client.update_client(data, props.client.uuid))
+    dispatch(action_client.get_clients())
+    setTimeout(() => {
+      dispatch(action_popUp.disablePopUp())
+    }, 1000)
   }
 
   return (

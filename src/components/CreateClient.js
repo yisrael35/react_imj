@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../css/clients.css'
 import { useDispatch } from 'react-redux'
 import * as action_client from '../redux/Client/action'
+import * as action_popUp from '../redux/PopUp/action'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -25,7 +26,6 @@ const CreateClient = () => {
   const get_data = (client_info) => {
     let data = {}
     for (let key in client_info) {
-      console.log(client_info[key])
       if (client_info[key] != null) {
         data[key] = client_info[key]
       }
@@ -36,6 +36,10 @@ const CreateClient = () => {
   const handle_save = () => {
     const data = get_data(client_info)
     dispatch(action_client.create_client(data))
+    dispatch(action_client.get_clients())
+    setTimeout(() => {
+      dispatch(action_popUp.disablePopUp())
+    }, 1000)
   }
 
   return (

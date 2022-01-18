@@ -33,9 +33,7 @@ export const sendEvent = (data, token) => {
       }
     }
     ws.onclose = () => {
-      setTimeout(function () {
-        connectWS()
-      }, 2000)
+      console.log("closing ws connection");
     }
     ws.onerror = (err) => {
       if (ws.code !== 4000) {

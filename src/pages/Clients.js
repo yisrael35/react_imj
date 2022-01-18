@@ -5,7 +5,7 @@ import Select from 'react-select'
 
 import TableBuilder from '../components/TableBuilder'
 import PaginationBottom from '../components/PaginationBottom'
-import UpdateUser from '../components/UpdateUser'
+import UpdateClient from '../components/UpdateClient'
 
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_client from '../redux/Client/action'
@@ -21,8 +21,7 @@ const Clients = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_client.get_clients(limit, offset, search))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [limit, offset, search])
+  }, [limit, offset, search, items])
 
   const previous_page = () => {
     let new_offset = Number(offset) - Number(limit)
@@ -42,8 +41,8 @@ const Clients = (props) => {
         break
       }
     }
-    // const content = <UpdateUser user={user} counter={index} key={user.id} limit={limit} offset={offset} />
-    // dispatch(action_popUp.setPopUp(content))
+    const content = <UpdateClient client={client} counter={index} key={client.id} limit={limit} offset={offset} />
+    dispatch(action_popUp.setPopUp(content))
   }
 
   for (const item of items) {

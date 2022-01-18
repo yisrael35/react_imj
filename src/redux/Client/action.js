@@ -38,9 +38,7 @@ export const create_client = (data) => (dispatch) => {
     })
 }
 
-export const update_client = (data) => (dispatch, getState) => {
-  const store = getState()
-  const client_id = store.auth.clientContent.id
+export const update_client = (data, client_id) => (dispatch, getState) => {
   axios
     .put(process.env.REACT_APP_REST_IMJ_URL + `/client/${client_id}`, data)
     .then((res) => {

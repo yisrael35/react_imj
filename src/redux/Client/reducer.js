@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import {GET_CLIENTS, GET_CLIENT} from './constants'
+import {GET_CLIENTS} from './constants'
 
 const initialState = {
   clients: [],

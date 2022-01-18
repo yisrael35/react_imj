@@ -88,7 +88,7 @@ const words_he = {
   clients: 'לקוחות',
   private: 'פרטי',
   type: 'סוג',
-  departmment: 'מחלקה',
+  department: 'מחלקה',
   company: 'חברה',
   guest: 'אורח',
   event_date: 'תאריך האירוע',

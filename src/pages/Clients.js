@@ -59,8 +59,8 @@ const Clients = (props) => {
       case 'company':
         item['type'] = words_he['company']
         break
-      case 'departmment':
-        item['type'] = words_he['departmment']
+      case 'department':
+        item['type'] = words_he['department']
         break
       default:
         break

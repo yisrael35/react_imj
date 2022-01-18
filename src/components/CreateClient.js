@@ -15,8 +15,8 @@ const CreateClient = () => {
         return 'private'
       case words_he['company']:
         return 'company'
-      case words_he['departmment']:
-        return 'departmment'
+      case words_he['department']:
+        return 'department'
       default:
         break
     }
@@ -88,12 +88,12 @@ const CreateClient = () => {
                 <li>
                   <input
                     type='radio'
-                    value={words_he['departmment']}
+                    value={words_he['department']}
                     name={'type'}
-                    checked={client_info.type === words_he['departmment']}
+                    checked={client_info.type === words_he['department']}
                     onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
                   />{' '}
-                  {words_he['departmment']}
+                  {words_he['department']}
                 </li>
               </ul>
             </td>

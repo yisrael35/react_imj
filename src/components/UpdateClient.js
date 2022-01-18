@@ -6,7 +6,8 @@ import * as action_client from '../redux/Client/action'
 const words_he = require('../utils/words_he').words_he
 
 const UpdateClient = (props) => {
-  const [client_info, setClientInfo] = useState({ name: props.client.name, type: props.client.type, phone: props.client.phone, email: props.client.email })
+  const { name, type, email, phone } = props.client
+  const [client_info, setClientInfo] = useState({ name, type, phone, email })
   const dispatch = useDispatch()
 
   const en_type = (type) => {
@@ -15,8 +16,8 @@ const UpdateClient = (props) => {
         return 'private'
       case words_he['company']:
         return 'company'
-      case words_he['departmment']:
-        return 'departmment'
+      case words_he['department']:
+        return 'department'
       default:
         break
     }
@@ -86,23 +87,17 @@ const UpdateClient = (props) => {
               <li>
                 <input
                   type='radio'
-                  value={words_he['departmment']}
+                  value={words_he['department']}
                   name={'type'}
-                  checked={client_info.type === words_he['departmment']}
+                  checked={client_info.type === words_he['department']}
                   onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
                 />{' '}
-                {words_he['departmment']}
+                {words_he['department']}
               </li>
             </ul>
           </td>
           <td>
-            <input
-              type='tel'
-              onChange={
-                (e) => setClientInfo({ ...client_info, phone: e.target.value })
-              }
-              defaultValue={client_info.phone}
-            />
+            <input type='tel' onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })} defaultValue={client_info.phone} />
           </td>
           <td>
             <input type='email' onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })} defaultValue={client_info.email} />

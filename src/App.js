@@ -14,7 +14,10 @@ import Bids from './pages/Bids'
 import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
-import ProfileSettings from './pages/ProfileSettings' 
+import ProfileSettings from './pages/ProfileSettings'
+import Events from './pages/Events'
+import Locations from './pages/Locations'
+import Clients from './pages/Clients.js'
 import Tests from './pages/Tests' 
 
 //components
@@ -41,8 +44,11 @@ function App() {
               <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />
               <PrivateRoute path='/Bids' component={Bids} />
+              <PrivateRoute path='/Events' component={Events} />
+              <PrivateRoute path='/Locations' component={Locations} />
               <PrivateRoute path='/CreateBid' component={CreateBid} />
               <PrivateRoute path='/ProfileSettings' component={ProfileSettings} />
+              <PrivateRoute path='/Clients' component={Clients} />
               <PrivateRoute path='/Tests' component={Tests} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>

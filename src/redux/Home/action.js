@@ -4,9 +4,7 @@ import workerInstances from '../../services'
 export const set_events = (response) => (dispatch) => {
   dispatch({ type: GET_EVENTS, payload: { events: response.events } })
 }
-export const get_events = (from_date, to_date, search) => (dispatch, getState) => {
-  const store = getState()
-  const token = store.auth.token
+export const get_events = (from_date, to_date, search) => (dispatch) => {
   const data = {
     type: 'get_events',
     data: {
@@ -15,19 +13,5 @@ export const get_events = (from_date, to_date, search) => (dispatch, getState) =
       search,
     },
   }
-  workerInstances.sendEvent(data, token)
+  workerInstances.send_message(data)
 }
-
-//const my_event = {
-//     title: 'Happy Hour',
-//     start: '2022-02-13',
-//     end: '2022-02-13',
-//     desc: 'Power lunch happy hour',
-//   },
-//   {
-//     title: 'Meeting',
-//     bgColor: '#da70d6',
-//     start: '2022-02-12',
-//     end: '2022-02-12',
-//   },
-// ]

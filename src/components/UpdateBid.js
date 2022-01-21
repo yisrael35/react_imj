@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import * as action_bid from '../redux/Bid/action'
+// import React, { useState, useEffect } from 'react'
+// import { useDispatch } from 'react-redux'
+// import * as action_bid from '../redux/Bid/action'
 
-const words_he = require('../utils/words_he').words_he
+// const words_he = require('../utils/words_he').words_he
 
 const UpdateBid = (props) => {
-  const dispatch = useDispatch()
-  const [bid_info, setBidInfo] = useState()
-  useEffect(async () => {
-    console.log('im here 1')
-    const bid = await dispatch(action_bid.get_bid_by_id(props.id))
-    console.log('im here 2')
-    setBidInfo({ ...bid })
-    console.log(bid)
-  }, [])
+  // const dispatch = useDispatch()
+  // const [bid_info, setBidInfo] = useState()
+  // useEffect(async () => {
+  //   console.log('im here 1')
+  //   const bid = await dispatch(action_bid.get_bid_by_id(props.id))
+  //   console.log('im here 2')
+  //   setBidInfo({ ...bid })
+  //   console.log(bid)
+  //   console.log(bid_info)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
   // const handle_save = () => {
   //   const data = {}
   //   dispatch(action_bid.update_bid_by_id(data, props.bid.id))

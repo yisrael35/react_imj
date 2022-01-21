@@ -22,6 +22,7 @@ const Clients = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_client.get_clients(limit, offset, search))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, offset, search])
 
   const previous_page = () => {
@@ -99,7 +100,9 @@ const Clients = (props) => {
         handle_edit={handle_edit}
       />
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
-      <button  type='button' className='btn btn-info' onClick={handle_create}>{words_he['add_client']}</button>
+      <button type='button' className='btn btn-info' onClick={handle_create}>
+        {words_he['add_client']}
+      </button>
     </div>
   )
 }

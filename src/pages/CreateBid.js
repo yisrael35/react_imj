@@ -98,7 +98,7 @@ const Bid = (props) => {
     //   // return
     // }
   }
-  console.log(req)
+  // console.log(req)
   const handle_clear = () => {
     setDate(moment().format(`YYYY-MM-DD`))
     setEventType('')
@@ -121,7 +121,6 @@ const Bid = (props) => {
     //TODO -- validate data
     const bid_id = await dispatch(action_bid.create_new_bid(req))
     if (bid_id && typeof bid_id === 'number') {
-      console.log(bid_id)
       const content = <EmailAndDownload message={` bid number: ${bid_id} create successfully `} bid_id={bid_id} />
       dispatch(action_popUp.setPopUp(content))
     }

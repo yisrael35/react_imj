@@ -20,8 +20,7 @@ const ProfileSettings = (props) => {
       delete user_info.password
       delete user_info.confirm_password
     }
-    console.log('im here 1');
-    console.log(user_info);
+
     dispatch(userActions.update_user(user_info))
   }
   useEffect(() => {
@@ -42,7 +41,6 @@ const ProfileSettings = (props) => {
     }
   }, [user])
 
-  console.log(user_info)
   return (
     <div>
       <form onSubmit={submit} className='form-signin'>

@@ -1,23 +1,12 @@
 export let ws = null
 let messages = []
-let token
-export const connectWS = (incoming_token) => {
-  if (incoming_token) {
-    token = incoming_token
-  }
-  if ((ws === null || ws.readyState === 3) && token) {
-    ws = new WebSocket(`${process.env.REACT_APP_WS_IMJ_URL}/?token=${token}`)
-  }
+let last_token
 
-  messages = []
-}
-
-export const sendEvent = (data, token) => {
-  if (ws !== null) {
-    if (ws.readyState !== 1) {
-      messages.push(data)
-    } else {
-      ws.send(JSON.stringify(data))
+export const init_ws = ({ token }) => {
+  try {
+    if ((ws === null || ws.readyState === 3) && token) {
+      last_token = token
+      ws = new WebSocket(`${process.env.REACT_APP_WS_IMJ_URL}/?token=${token}`)
     }
 
     ws.onopen = () => {
@@ -33,26 +22,36 @@ export const sendEvent = (data, token) => {
       }
     }
     ws.onclose = () => {
-      console.log("closing ws connection");
+      console.log('closing ws connection')
     }
     ws.onerror = (err) => {
       if (ws.code !== 4000) {
-        setTimeout(function () {
-          connectWS()
+        setTimeout(() => {
+          init_ws({ token: last_token })
         }, 2000)
       }
     }
-  } else {
-    connectWS(token)
+  } catch (error) {
+    console.log(error)
   }
 }
 
-export const closeWS = (token) => {
-  if (ws) {
-    if (ws.readyState === 1) {
-      ws.send(JSON.stringify({ type: 'close-connection' }))
-      ws.close()
-      ws = null
+export const send_message = (data) => {
+  try {
+    if (ws.readyState !== 1) {
+      messages.push(data)
+    } else {
+      ws.send(JSON.stringify(data))
     }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const close_ws = () => {
+  if (ws?.readyState === 1) {
+    ws.send(JSON.stringify({ type: 'close-connection' }))
+    ws.close()
+    ws = null
   }
 }

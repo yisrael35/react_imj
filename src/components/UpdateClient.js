@@ -27,7 +27,6 @@ const UpdateClient = (props) => {
   const get_data = (client_info) => {
     let data = {}
     for (let key in client_info) {
-      console.log(client_info[key])
       if (client_info[key] != null) {
         data[key] = client_info[key]
       }

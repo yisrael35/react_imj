@@ -17,11 +17,7 @@ const Home = (props) => {
   const dispatch = useDispatch()
   //connect to the ws
   useEffect(() => {
-    const data = {
-      type: 'init-connection',
-    }
-    workerInstances.connectWS(token)
-    workerInstances.sendEvent(data, token)
+    workerInstances.init_ws({token})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

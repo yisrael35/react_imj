@@ -17,7 +17,7 @@ const Home = (props) => {
   const dispatch = useDispatch()
   //connect to the ws
   useEffect(() => {
-    workerInstances.init_ws({token})
+    workerInstances.init_ws({ token })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -26,15 +26,15 @@ const Home = (props) => {
     const receiveData = (message) => {
       if ((message?.data?.type === 'login' || message?.data?.type === 'notification') && !message?.data?.error) {
         const response = { ...message.data }
-        console.log(response)
+        // console.log(response)
         dispatch(actionSnackBar.setSnackBar('success', response.content, 2000))
       } else if (message?.data?.type === 'events' && !message?.data?.error) {
         const response = { ...message.data }
-        console.log(response)
+        // console.log(response)
         dispatch(action_home.set_events(response.content))
       } else {
-        const response = { ...message.data }
-        console.log(response)
+        // const response = { ...message.data }
+        // console.log(response)
       }
     }
     workerInstances.addEventListener('message', receiveData)
@@ -48,17 +48,18 @@ const Home = (props) => {
     <div style={{ textAlign: 'center' }}>
       {/* <a href='http://localhost:3001/assets/README.md'>readme</a> */}
       {/* <p>{words_he['welcome']}</p> */}
-      <button
+      {/* <button
         onClick={() => {
-          dispatch(action_home.get_events())
+          const data = { from_date: '2022-01-14', to_date: '2022-01-14' }
+          dispatch(action_home.get_events(data))
         }}
       >
         test - get event
-      </button>
+      </button> */}
       <Calendar
         localizer={localizer}
         events={events}
-        // views={['month']}
+        views={['month']}
         startAccessor='start'
         endAccessor='end'
         style={{ height: 500 }}

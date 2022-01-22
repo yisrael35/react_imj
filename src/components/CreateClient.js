@@ -10,7 +10,7 @@ const CreateClient = () => {
   const [client_info, setClientInfo] = useState({ name: '', type: words_he['private'], phone: '', email: '' })
   const dispatch = useDispatch()
 
-  const en_type = (type) => {
+  const convert_type = (type) => {
     switch (type) {
       case words_he['private']:
         return 'private'
@@ -30,7 +30,7 @@ const CreateClient = () => {
         data[key] = client_info[key]
       }
     }
-    return { ...data, type: en_type(data.type) }
+    return { ...data, type: convert_type(data.type) }
   }
 
   const handle_save = () => {

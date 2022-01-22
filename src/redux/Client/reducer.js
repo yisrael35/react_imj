@@ -1,25 +1,18 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_USERS, GET_USER} from './constants'
+import {GET_CLIENTS} from './constants'
 
 const initialState = {
-  users: [],
-  user:{},
+  clients: [],
   meta_data: {sum_rows:0},
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_USERS: {
+    case GET_CLIENTS: {
       return {
         ...state,
-        users: action.payload.users,
+        clients: action.payload.clients,
         meta_data: action.payload.meta_data,
-      }
-    }
-    case GET_USER: {
-      return {
-        ...state,
-        user: action.payload,
       }
     }
 

@@ -22,7 +22,7 @@ export default function CustomizedSnackbars() {
 
   return (
     <div className={classes.root}>
-      <Collapse in={snackBarOBJ.visible} timeout={400}>
+      <Collapse in={snackBarOBJ.visible} timeout={1000}>
         <Alert
           elevation={4}
           variant='filled'
@@ -33,7 +33,9 @@ export default function CustomizedSnackbars() {
             </IconButton>
           }
         >
-          <Typography data-cy='snackbar-msg'>{snackBarOBJ.message}</Typography>
+          <Typography data-cy='snackbar-msg' style={{ padding: '8px' }}>
+            {snackBarOBJ.message}
+          </Typography>
         </Alert>
       </Collapse>
     </div>

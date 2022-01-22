@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
-
-// import axios from 'axios'
 const words_he = require('../utils/words_he').words_he
 
 const ForgotPassword = (props) => {
@@ -23,8 +21,6 @@ const ForgotPassword = (props) => {
   }
 
   if (redirect) {
-    //TODO -display on screen message
-
     setTimeout(() => {
       return <Redirect to='Home' />
     }, 3000)

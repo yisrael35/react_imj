@@ -5,22 +5,22 @@ import Select from 'react-select'
 
 import TableBuilder from '../components/TableBuilder'
 import PaginationBottom from '../components/PaginationBottom'
-import UpdateUser from '../components/UpdateUser'
+import UpdateBid from '../components/UpdateBid'
 
 import * as action_popUp from '../redux/PopUp/action'
-import * as action_user from '../redux/User/action'
+import * as action_bid from '../redux/Bid/action'
 
 const words_he = require('../utils/words_he').words_he
 
-const Users = (props) => {
-  const items = useSelector((state) => state.user.users)
-  const meta_data = useSelector((state) => state.user.meta_data)
+const Bids = (props) => {
+  const items = useSelector((state) => state.bid.bids)
+  const meta_data = useSelector((state) => state.bid.meta_data)
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(action_user.get_users(limit, offset, search))
+    dispatch(action_bid.get_bids(limit, offset, search))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, offset, search])
 
@@ -35,35 +35,17 @@ const Users = (props) => {
     setOffset(new_offset)
   }
   const handle_edit = (id, index) => {
-    let user
-    for (const item of items) {
-      if (item['id'] === id) {
-        user = item
-        break
-      }
-    }
-
-    if (user['level'] === words_he['admin']) {
-      user['level'] = 1
-    } else if (user['level'] === words_he['user']) {
-      user['level'] = 2
-    } else if (user['level'] === words_he['guest']) {
-      user['level'] = 3
-    }
-    const content = <UpdateUser user={user} counter={index} key={user.id} limit={limit} offset={offset} />
+    // let bid
+    // for (const item of items) {
+    //   if (item['id'] === id) {
+    //     bid = item
+    //     break
+    //   }
+    // }
+    const content = <UpdateBid  counter={index} id={id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
 
-  for (const item of items) {
-    item['is_active'] = item['is_active'] ? words_he['active'] : words_he['not_active']
-    if (item['level'] === 1) {
-      item['level'] = words_he['admin']
-    } else if (item['level'] === 2) {
-      item['level'] = words_he['user']
-    } else if (item['level'] === 3) {
-      item['level'] = words_he['guest']
-    }
-  }
 
   return (
     <div>
@@ -85,16 +67,16 @@ const Users = (props) => {
       />
       <TableBuilder
         items={items}
-        cols={['username', 'email', 'first_name', 'last_name', 'is_active', 'level']}
+        cols={['event_type', 'location', 'first_name', 'event_date', 'event_name', 'client_name']}
         headers={{
-          username: words_he['username'],
+          event_type: words_he['event_type'],
+          location: words_he['location'],
           first_name: words_he['first_name'],
-          last_name: words_he['last_name'],
-          email: words_he['email'],
-          is_active: words_he['status'],
-          level: words_he['permissions'],
+          event_date: words_he['event_date'],
+          event_name: words_he['event_name'],
+          client_name: words_he['client_name'],
         }}
-        title={words_he['users']}
+        title={words_he['bids']}
         offset={offset}
         handle_edit={handle_edit}
       />
@@ -104,7 +86,7 @@ const Users = (props) => {
   )
 }
 
-export default Users
+export default Bids
 
 const limits = [
   { value: '5', label: 5 },

@@ -1,28 +1,24 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_USERS, GET_USER} from './constants'
+import { SET_POPUP, DISABLE_POPUP } from './constants'
 
 const initialState = {
-  users: [],
-  user:{},
-  meta_data: {sum_rows:0},
+  visible: false,
+  content: <span></span>,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_USERS: {
+    case SET_POPUP:
       return {
         ...state,
-        users: action.payload.users,
-        meta_data: action.payload.meta_data,
+        visible: true,
+        content: action.payload,
       }
-    }
-    case GET_USER: {
+    case DISABLE_POPUP:
       return {
         ...state,
-        user: action.payload,
+        visible: false,
       }
-    }
-
     default:
       return state
   }

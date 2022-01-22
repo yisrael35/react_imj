@@ -1,18 +1,16 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_BIDS } from './constants'
+import { GET_EVENTS } from './constants'
 
 const initialState = {
-  bids: [],
-  meta_data: { sum_rows: 0 },
+  events: [],
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_BIDS: {
+    case GET_EVENTS: {
       return {
         ...state,
-        bids: action.payload.bids,
-        meta_data: action.payload.meta_data,
+        events: action.payload.events,
       }
     }
 

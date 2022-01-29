@@ -93,7 +93,18 @@ const words_he = {
   guest: 'אורח',
   event_date: 'תאריך האירוע',
   new_client: 'לקוח חדש',
+  new_event: 'אירוע חדש',
   add_client: 'הוספת לקוח',
+  from_date: 'מתאריך',
+  to_date: 'עד תאריך',
+  end_after_start: 'שעת הסיום צריכה להיות אחרי שעת ההתחלה',
+  create_event: 'צור אירוע חדש',
+  events: 'אירועים',
+  public: 'ציבורי',
+  inside: 'בפנים',
+  photo_shot: 'צילומים',
+  pending: 'ממתין לאישור',
+  canceled: 'בוטל',
 }
 
 module.exports = {

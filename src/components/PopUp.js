@@ -17,7 +17,7 @@ const Popup = (props) => {
           <span className='close-icon' onClick={handle_close}>
             x
           </span>
-          {pop_up_content}
+          <span style={{ lineHeight: '2', display: 'inline-block', verticalAlign: 'middle' }}>{pop_up_content}</span>
         </div>
       </div>
     )

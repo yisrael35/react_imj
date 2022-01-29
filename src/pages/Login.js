@@ -11,14 +11,18 @@ const Login = (props) => {
 
   const dispatch = useDispatch()
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
-  
+  let currentRoute = useSelector((state) => state.auth.currentRoute)
+
   const submit = async (e) => {
     e.preventDefault()
     dispatch(authActions.login(username, password))
   }
 
   if (isAuthenticated) {
-    return <Redirect to='Home' />
+    if (currentRoute === '/Login') {
+      currentRoute = 'Home'
+    }
+    return <Redirect to={currentRoute} />
   }
 
   return (

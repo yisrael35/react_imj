@@ -11,6 +11,7 @@ import eventTypeReducer from './EventType/reducer'
 import utilsReducer from './Utils/reducer'
 import popUpReducer from './PopUp/reducer'
 import homeReducer from './Home/reducer'
+import eventReducer from './Event/reducer'
 
 const initionState = {}
 const middleware = [thunk]
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   popUp: popUpReducer,
   client: clientReducer,
   home: homeReducer,
+  event: eventReducer,
 })
 
 const store = createStore(rootReducer, initionState, composeWithDevTools(applyMiddleware(...middleware)))

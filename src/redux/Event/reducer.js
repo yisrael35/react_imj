@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_HOME_EVENTS } from './constants'
+import { GET_EVENTS } from './constants'
 
 const initialState = {
   events: [],
@@ -8,7 +8,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_HOME_EVENTS: {
+    case GET_EVENTS: {
       return {
         ...state,
         events: action.payload.events,

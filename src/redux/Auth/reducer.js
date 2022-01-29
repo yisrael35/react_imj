@@ -6,7 +6,7 @@ const initialState = {
   permissions: 0,
   userContent: {},
   isAuthenticated: false,
-  loadingIndicator: false,
+  currentRoute: window.location.pathname ||'/Home',
 }
 
 export default (state = initialState, action) => {
@@ -24,7 +24,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         permissions: 0,
-        loadingIndicator: action.payload,
       }
     case LOGOUT_SUCCESS:
       return {

@@ -51,15 +51,16 @@ const Home = (props) => {
     <div style={{ textAlign: 'center' }}>
       {/* <a href='http://localhost:3001/assets/README.md'>readme</a> */}
       {/* <p>{words_he['welcome']}</p> */}
-      <button  className='btn btn-info'
+      <button
+        className='btn btn-info'
         onClick={() => {
           // const data = { from_date: '2022-01-14', to_date: '2022-01-14' }
           // dispatch(action_home.get_events(data))
-          const content = <CreateEvent />
+          const content = <CreateEvent  />
           dispatch(action_popUp.setPopUp(content))
         }}
       >
-        {words_he['create_event']} 
+        {words_he['create_event']}
       </button>
       <Calendar
         localizer={localizer}

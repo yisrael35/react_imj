@@ -35,14 +35,19 @@ const Nav = (props) => {
     if (permissions === 1) {
       menu = (
         <ul className='navbar-nav me-auto mb-2 mb-md-0'>
-            <li className='nav-item active'>
-            <Link to='/Clients' className='nav-link'>
-              {words_he['clients']}
+          <li className='nav-item active'>
+            <Link to='/Tests' className='nav-link'>
+              Tests
             </Link>
           </li>
           <li className='nav-item active'>
-            <Link to='/Tests' className='nav-link'>
-            Tests
+            <Link to='/Events' className='nav-link'>
+              {words_he['events']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/Clients' className='nav-link'>
+              {words_he['clients']}
             </Link>
           </li>
           <li className='nav-item active'>

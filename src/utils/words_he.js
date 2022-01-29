@@ -99,6 +99,12 @@ const words_he = {
   to_date: 'עד תאריך',
   end_after_start: 'שעת הסיום צריכה להיות אחרי שעת ההתחלה',
   create_event: 'צור אירוע חדש',
+  events: 'אירועים',
+  public: 'ציבורי',
+  inside: 'בפנים',
+  photo_shot: 'צילומים',
+  pending: 'ממתין לאישור',
+  canceled: 'בוטל',
 }
 
 module.exports = {

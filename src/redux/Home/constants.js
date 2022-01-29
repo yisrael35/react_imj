@@ -1,2 +1,2 @@
-export const GET_EVENTS = 'GET_EVENTS'
+export const GET_HOME_EVENTS = 'GET_HOME_EVENTS'
 

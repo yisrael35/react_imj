@@ -6,10 +6,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'moment/locale/he'
 import * as action_home from '../redux/Home/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
+import * as action_popUp from '../redux/PopUp/action'
+import CreateEvent from '../components/CreateEvent'
 import workerInstances from '../services'
-
 const localizer = momentLocalizer(moment)
-// const words_he = require('../utils/words_he').words_he
+
+const words_he = require('../utils/words_he').words_he
+
 const Home = (props) => {
   const events = useSelector((state) => state.home.events)
   const token = useSelector((state) => state.auth.token)
@@ -48,18 +51,20 @@ const Home = (props) => {
     <div style={{ textAlign: 'center' }}>
       {/* <a href='http://localhost:3001/assets/README.md'>readme</a> */}
       {/* <p>{words_he['welcome']}</p> */}
-      {/* <button
+      <button  className='btn btn-info'
         onClick={() => {
-          const data = { from_date: '2022-01-14', to_date: '2022-01-14' }
-          dispatch(action_home.get_events(data))
+          // const data = { from_date: '2022-01-14', to_date: '2022-01-14' }
+          // dispatch(action_home.get_events(data))
+          const content = <CreateEvent />
+          dispatch(action_popUp.setPopUp(content))
         }}
       >
-        test - get event
-      </button> */}
+        {words_he['create_event']} 
+      </button>
       <Calendar
         localizer={localizer}
         events={events}
-        views={['month']}
+        // views={['month']}
         startAccessor='start'
         endAccessor='end'
         style={{ height: 500 }}

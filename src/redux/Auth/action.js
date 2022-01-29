@@ -89,21 +89,3 @@ const redirect_to_home = () => {
     window.location.replace('https://' + host)
   }
 }
-// export const changePassword = (current_password, new_password, callBack) => (dispatch) => {
-//   const config = {
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded',
-//     },
-//   }
-//   axios
-//     .put(process.env.REACT_APP_REST_IMJ_URL + '/password_change', qs.stringify({ old_password: current_password, new_password, new_password_retype: new_password }), config)
-//     .then((res) => {
-//       dispatch(actionSnackBar.setSnackBar('success', res.data.message, 2000))
-//       callBack()
-//     })
-//     .catch((error) => {
-//       console.log(error.response.data.message)
-//       dispatch(actionSnackBar.setSnackBar('error', error.response.data.message, 3000))
-//       callBack()
-//     })
-// }

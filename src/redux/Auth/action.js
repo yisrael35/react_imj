@@ -18,7 +18,6 @@ export const login = (username, password) => async (dispatch, getState) => {
   } catch (error) {
     console.log(error)
     dispatch(actionSnackBar.setSnackBar('error', `${words_he['login_error']}`, 3000))
-
   }
 }
 
@@ -42,10 +41,12 @@ export const check_if_token_exist = (token) => async (dispatch) => {
 
 export const logout = () => async (dispatch, getState) => {
   try {
-    const response = await axios.delete(process.env.REACT_APP_REST_IMJ_URL + '/auth')
+    dispatch({ type: LOGOUT_SUCCESS })
+    await axios.delete(process.env.REACT_APP_REST_IMJ_URL + '/auth').catch((error) => {
+      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+    })
     setAuthToken() // Set '' to Axios default header.
     localStorage.removeItem('TokenAccess')
-    dispatch({ type: LOGOUT_SUCCESS, payload: response })
   } catch (error) {
     console.log(error)
   }

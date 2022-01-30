@@ -19,7 +19,7 @@ const Login = (props) => {
   }
 
   if (isAuthenticated) {
-    if (currentRoute === '/Login') {
+    if (currentRoute.toUpperCase() === '/LOGIN' || currentRoute === '/') {
       currentRoute = 'Home'
     }
     return <Redirect to={currentRoute} />

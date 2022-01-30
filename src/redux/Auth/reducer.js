@@ -6,7 +6,7 @@ const initialState = {
   permissions: 0,
   userContent: {},
   isAuthenticated: false,
-  currentRoute: window.location.pathname ||'/Home',
+  currentRoute: window.location.pathname || '/Home',
 }
 
 export default (state = initialState, action) => {
@@ -30,6 +30,7 @@ export default (state = initialState, action) => {
         ...state,
         token: '',
         userContent: {},
+        currentRoute: '/Login',
         isAuthenticated: false,
       }
 

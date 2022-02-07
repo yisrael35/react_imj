@@ -5,24 +5,23 @@ import Select from 'react-select'
 
 import TableBuilder from '../components/TableBuilder'
 import PaginationBottom from '../components/PaginationBottom'
-import UpdateClient from '../components/UpdateClient'
-import CreateClient from '../components/CreateClient'
+import UpdateSupplier from '../components/UpdateSupplier'
+import CreateSupplier from '../components/CreateSupplier'
 
 import * as action_popUp from '../redux/PopUp/action'
-import * as action_client from '../redux/Client/action'
+import * as action_supplier from '../redux/Supplier/action'
 
 const words_he = require('../utils/words_he').words_he
 
-const Clients = () => {
-  const items = useSelector((state) => state.client.clients)
-  const meta_data = useSelector((state) => state.client.meta_data)
+const Suppliers = () => {
+  const items = useSelector((state) => state.supplier.suppliers)
+  const meta_data = useSelector((state) => state.supplier.meta_data)
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(action_client.get_clients(limit, offset, search))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(action_supplier.get_suppliers(limit, offset, search))
   }, [limit, offset, search])
 
   const previous_page = () => {
@@ -36,36 +35,35 @@ const Clients = () => {
     setOffset(new_offset)
   }
   const handle_edit = (id, index) => {
-    let client
+    let supplier
     for (const item of items) {
       if (item['id'] === id) {
-        client = item
+        supplier = item
         break
       }
     }
-    const content = <UpdateClient client={client} counter={index} key={client.id} limit={limit} offset={offset} />
+    const content = <UpdateSupplier supplier={supplier} counter={index} key={supplier.id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
 
   const handle_create = () => {
-    const new_client = <CreateClient />
-    dispatch(action_popUp.setPopUp(new_client))
+    const new_supplier = <CreateSupplier />
+    dispatch(action_popUp.setPopUp(new_supplier))
   }
 
-  for (const item of items) {
-    switch (item['type']) {
-      case 'private':
-        item['type'] = words_he['private']
-        break
-      case 'company':
-        item['type'] = words_he['company']
-        break
-      case 'department':
-        item['type'] = words_he['department']
-        break
-      default:
-        break
+  for (let i = 0; i < items.length; i++) {
+    let account_details_str = ''
+    for (let key in items[i].account){
+      let key_to_display
+      if (key === 'iban' || key === 'swift'){
+        key_to_display = key.toUpperCase()
+      }
+      else{
+        key_to_display = key
+      }
+      account_details_str += key_to_display + ": " + items[i].account[key] + " |  \n"
     }
+    items[i] = {...items[i], account_details: account_details_str}
   }
 
   return (
@@ -88,26 +86,25 @@ const Clients = () => {
       />
       <TableBuilder
         items={items}
-        cols={['name', 'type', 'phone', 'email']}
+        cols={['name', 'phone', 'email', 'account_details']}
         headers={{
           name: words_he['name'],
-          type: words_he['type'],
           phone: words_he['phone'],
           email: words_he['email'],
+          account_details: words_he['account_details'],
         }}
-        title={words_he['clients']}
+        title={words_he['suppliers']}
         offset={offset}
         handle_edit={handle_edit}
       />
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
-      <button type='button' className='btn btn-info' onClick={handle_create}>
-        {words_he['add_client']}
-      </button>
+      <button  type='button' className='btn btn-info' onClick={handle_create}>{words_he['add_supplier']}</button>
+      
     </div>
   )
 }
 
-export default Clients
+export default Suppliers
 
 const limits = [
   { value: '5', label: 5 },

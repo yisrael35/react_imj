@@ -105,6 +105,11 @@ const words_he = {
   photo_shot: 'צילומים',
   pending: 'ממתין לאישור',
   canceled: 'בוטל',
+  suppliers: 'ספקים',
+  account_details: 'פרטי חשבון',
+  account_name: 'שם בעל החשבון',
+  add_supplier: 'הוספת ספק',
+  new_supplier: 'ספק חדש'
 }
 
 module.exports = {

@@ -1,0 +1,2 @@
+export const GET_SUPPLIERS = 'GET_SUPPLIERS'
+

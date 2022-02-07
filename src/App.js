@@ -19,6 +19,7 @@ import Events from './pages/Events'
 // import Locations from './pages/Locations'
 import Clients from './pages/Clients.js'
 import Tests from './pages/Tests' 
+import Suppliers from './pages/Suppliers' 
 
 //components
 import NavBar from './components/NavBar'
@@ -49,6 +50,7 @@ function App() {
               <PrivateRoute path='/CreateBid' component={CreateBid} />
               <PrivateRoute path='/ProfileSettings' component={ProfileSettings} />
               <PrivateRoute path='/Clients' component={Clients} />
+              <PrivateRoute path='/Suppliers' component={Suppliers} />
               <PrivateRoute path='/Tests' component={Tests} />
               <PrivateRoute path='/*' component={Login} />
             </Switch>

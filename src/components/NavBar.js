@@ -46,6 +46,11 @@ const Nav = (props) => {
             </Link>
           </li>
           <li className='nav-item active'>
+            <Link to='/Suppliers' className='nav-link'>
+              {words_he['suppliers']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
             <Link to='/Clients' className='nav-link'>
               {words_he['clients']}
             </Link>

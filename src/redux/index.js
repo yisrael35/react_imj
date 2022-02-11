@@ -13,6 +13,7 @@ import popUpReducer from './PopUp/reducer'
 import homeReducer from './Home/reducer'
 import eventReducer from './Event/reducer'
 import supplierReducer from './Supplier/reducer'
+import csvReducer from './CSV/reducer'
 
 const initionState = {}
 const middleware = [thunk]
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   home: homeReducer,
   event: eventReducer,
   supplier: supplierReducer,
+  csv: csvReducer,
 })
 
 const store = createStore(rootReducer, initionState, composeWithDevTools(applyMiddleware(...middleware)))

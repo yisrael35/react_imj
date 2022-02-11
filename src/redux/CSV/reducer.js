@@ -1,20 +1,22 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_UTILS } from './constants'
+import { GET_CSV, DELETE_CSV } from './constants'
 
 const initialState = {
-  locations: [],
-  events_type: [],
-  tables: [],
+  file_name: undefined,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_UTILS: {
+    case GET_CSV: {
       return {
         ...state,
-        locations: action.payload.locations,
-        events_type: action.payload.events_type,
-        tables: action.payload.tables,
+        file_name: action.payload.file_name,
+      }
+    }
+    case DELETE_CSV: {
+      return {
+        ...state,
+        file_name: undefined,
       }
     }
 

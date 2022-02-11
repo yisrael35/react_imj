@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import * as action_popUp from '../redux/PopUp/action'
+import * as action_popUp from '../../redux/PopUp/action'
 
 const Popup = (props) => {
   const pop_up_visible = useSelector((state) => state.popUp.visible)

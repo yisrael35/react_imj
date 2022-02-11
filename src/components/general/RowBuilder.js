@@ -1,4 +1,4 @@
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 const RowBuilder = ({ counter, cols, data, handle_edit }) => {
   return (

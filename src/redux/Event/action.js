@@ -26,8 +26,8 @@ export const get_events =
         for (const event of res.data.events) {
           events.push({
             ...event,
-            from_date: moment(event.from_date).format('YYYY-MM-DD hh:mm:ss'),
-            to_date: moment(event.to_date).format('YYYY-MM-DD hh:mm:ss'),
+            from_date: moment(event.from_date).format('YYYY-MM-DD HH:mm:ss'),
+            to_date: moment(event.to_date).format('YYYY-MM-DD HH:mm:ss'),
           })
         }
         res.data.events = events
@@ -55,12 +55,11 @@ export const get_event_by_id = (event_id) => (dispatch) => {
   })
 }
 
-export const update_event_by_id = (data, event_id) => (dispatch) => {
+export const update_event = (data, event_id) => (dispatch) => {
   axios
     .put(process.env.REACT_APP_REST_IMJ_URL + `/event/${event_id}`, data)
     .then((res) => {
-      get_events()
-      dispatch(actionSnackBar.setSnackBar('success', 'update user successfully', 2000))
+      dispatch(actionSnackBar.setSnackBar('success', 'update event successfully', 2000))
     })
     .catch((error) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))

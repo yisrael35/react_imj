@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
-import '../css/suppliers.css'
+import '../../css/suppliers.css'
 import { useDispatch } from 'react-redux'
-import * as action_supplier from '../redux/Supplier/action'
-import * as action_popUp from '../redux/PopUp/action'
+import * as action_supplier from '../../redux/Supplier/action'
+import * as action_popUp from '../../redux/PopUp/action'
 
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
-const CreateSupplier = () => {
-  const [supplier_info, setSupplierInfo] = useState({ name: '', account: {account_name: '', iban: '', swift: ''}, phone: '', email: '' })
+const UpdateSupplier = (props) => {
+  console.log(props.supplier)
+  const { name, email, phone, account } = props.supplier
+  const [supplier_info, setSupplierInfo] = useState({ name, account, phone, email })
   const dispatch = useDispatch()
 
   const handle_save = () => {
-    dispatch(action_supplier.create_supplier(supplier_info))
+    // if (account_name == '' || iban === '' || swift == '')
+    // Do we need validation that all the account fields was filled or its okay to fill partly
+
+    dispatch(action_supplier.update_supplier(supplier_info, props.supplier.uuid))
     dispatch(action_supplier.get_suppliers())
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
@@ -32,9 +37,7 @@ const CreateSupplier = () => {
   }
 
   return (
-    <div>
-      <h3>{words_he['new_supplier']}</h3>
-      <table>
+    <table>
       <thead>
         <tr>
           <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
@@ -85,8 +88,7 @@ const CreateSupplier = () => {
         </tr>
       </tbody>
     </table>
-    </div>
   )
 }
 
-export default CreateSupplier
+export default UpdateSupplier

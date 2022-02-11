@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import '../css/users.css'
+import '../../css/users.css'
 import { useDispatch } from 'react-redux'
-import * as action_user from '../redux/User/action'
+import * as action_user from '../../redux/User/action'
 
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 const UpdateUser = (props) => {
   const [is_active, setIsActive] = useState(props.user.is_active === words_he['active'] ? 1 : 0)

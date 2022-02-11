@@ -19,7 +19,7 @@ const User = (props) => {
     setPermission(permission === 1 ? 2 : 1)
   }
   //calculate the time to local time from utc
-  const updated_at = moment.utc(props.user.updated_at).local().format(`yyyy-MM-DD HH:mm:ss`)
+  const updated_at = moment.utc(props.user.updated_at).local().format(`YYYY-MM-DD HH:mm:ss`)
 
   const dispatch = useDispatch()
   return (

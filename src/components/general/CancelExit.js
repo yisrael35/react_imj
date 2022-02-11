@@ -1,9 +1,9 @@
 import React from 'react'
-import * as action_popUp from '../redux/PopUp/action'
+import * as action_popUp from '../../redux/PopUp/action'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 const CancelExit = (props) => {
   const dispatch = useDispatch()

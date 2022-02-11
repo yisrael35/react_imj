@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import * as authActions from '../redux/Auth/action'
-const words_he = require('../utils/words_he').words_he
+import * as authActions from '../../redux/Auth/action'
+const words_he = require('../../utils/words_he').words_he
 
 const Nav = (props) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -41,13 +41,18 @@ const Nav = (props) => {
             </Link>
           </li>
           <li className='nav-item active'>
-            <Link to='/Events' className='nav-link'>
-              {words_he['events']}
+            <Link to='/Reports' className='nav-link'>
+              {words_he['reports']}
             </Link>
           </li>
           <li className='nav-item active'>
             <Link to='/Suppliers' className='nav-link'>
               {words_he['suppliers']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/Events' className='nav-link'>
+              {words_he['events']}
             </Link>
           </li>
           <li className='nav-item active'>

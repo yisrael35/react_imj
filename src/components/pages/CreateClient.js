@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import '../css/clients.css'
+import '../../css/clients.css'
 import { useDispatch } from 'react-redux'
-import * as action_client from '../redux/Client/action'
-import * as action_popUp from '../redux/PopUp/action'
+import * as action_client from '../../redux/Client/action'
+import * as action_popUp from '../../redux/PopUp/action'
 
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 const CreateClient = () => {
   const [client_info, setClientInfo] = useState({ name: '', type: words_he['private'], phone: '', email: '' })

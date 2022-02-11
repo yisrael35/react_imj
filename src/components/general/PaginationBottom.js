@@ -1,5 +1,5 @@
 import React from 'react'
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 const PaginationBottom = ({ limit, offset, meta_data, previous_page, next_page }) => {
   return (

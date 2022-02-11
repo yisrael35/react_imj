@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
 import Select from 'react-select'
 
-import TableBuilder from '../components/TableBuilder'
-import PaginationBottom from '../components/PaginationBottom'
-import UpdateUser from '../components/UpdateUser'
+import TableBuilder from '../components/general/TableBuilder'
+import PaginationBottom from '../components/general/PaginationBottom'
+import UpdateUser from '../components/pages/UpdateUser'
 
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_user from '../redux/User/action'

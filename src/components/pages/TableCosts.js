@@ -1,5 +1,5 @@
 import TableRow from './TableRowCosts'
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 export default function TableCosts({ costs, setCosts  }) {
   const handle_add_row = () => {

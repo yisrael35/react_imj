@@ -15,17 +15,18 @@ import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
 import ProfileSettings from './pages/ProfileSettings'
+import Reports from './pages/Reports'
 import Events from './pages/Events'
 // import Locations from './pages/Locations'
 import Clients from './pages/Clients.js'
-import Tests from './pages/Tests' 
-import Suppliers from './pages/Suppliers' 
+import Tests from './pages/Tests'
+import Suppliers from './pages/Suppliers'
 
 //components
-import NavBar from './components/NavBar'
-import SnackBar from './components/SnackBar'
-import PrivateRoute from './components/PrivateRoutes'
-import PopUp from './components/PopUp'
+import NavBar from './components/general/NavBar'
+import SnackBar from './components/general/SnackBar'
+import PrivateRoute from './components/general/PrivateRoutes'
+import PopUp from './components/general/PopUp'
 
 function App() {
   const [name, setName] = useState('')
@@ -46,7 +47,7 @@ function App() {
               <PrivateRoute path='/Users' component={Users} />
               <PrivateRoute path='/Bids' component={Bids} />
               <PrivateRoute path='/Events' component={Events} />
-              {/* <PrivateRoute path='/Locations' component={Locations} /> */}
+              <PrivateRoute path='/Reports' component={Reports} />
               <PrivateRoute path='/CreateBid' component={CreateBid} />
               <PrivateRoute path='/ProfileSettings' component={ProfileSettings} />
               <PrivateRoute path='/Clients' component={Clients} />

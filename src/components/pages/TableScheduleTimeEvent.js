@@ -1,5 +1,5 @@
 import TableRow from './TableRowScheduleTimeEvent'
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 export default function ScheduleTimeEvent({ schedule_time_event, setScheduleTimeEvent }) {
   const handle_add_row = () => {

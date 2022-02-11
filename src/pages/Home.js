@@ -7,7 +7,7 @@ import 'moment/locale/he'
 import * as action_home from '../redux/Home/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
 import * as action_popUp from '../redux/PopUp/action'
-import CreateEvent from '../components/CreateEvent'
+import CreateEvent from '../components/pages/CreateEvent'
 import workerInstances from '../services'
 const localizer = momentLocalizer(moment)
 
@@ -46,17 +46,19 @@ const Home = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  // const file_name = 'csv_1644175244501.csv'
+  // const url = process.env.REACT_APP_REST_IMJ_URL
+  // const file_path = `${url}/assets/${file_name}`
   return (
     <div style={{ textAlign: 'center' }}>
-      {/* <a href='http://localhost:3001/assets/README.md'>readme</a> */}
+      {/* <a href={file_path}>readme</a> */}
       {/* <p>{words_he['welcome']}</p> */}
       <button
         className='btn btn-info'
         onClick={() => {
           // const data = { from_date: '2022-01-14', to_date: '2022-01-14' }
           // dispatch(action_home.get_events(data))
-          const content = <CreateEvent  />
+          const content = <CreateEvent />
           dispatch(action_popUp.setPopUp(content))
         }}
       >

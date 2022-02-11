@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import * as action_event_type from '../redux/EventType/action'
+import * as action_event_type from '../../redux/EventType/action'
 
 const EmailAndDownload = (props) => {
   const { message, bid_id, event_id } = props

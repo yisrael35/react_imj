@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import MyDatePicker from '../components/DatePicker'
+import MyDatePicker from '../general/DatePicker'
 import moment from 'moment'
-import * as action_popUp from '../redux/PopUp/action'
-import * as action_event from '../redux/Event/action'
+import * as action_popUp from '../../redux/PopUp/action'
+import * as action_event from '../../redux/Event/action'
 
-const words_he = require('../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 const CreateEvent = () => {
   const user = useSelector((state) => state.auth.userContent)

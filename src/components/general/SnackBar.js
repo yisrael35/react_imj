@@ -6,7 +6,7 @@ import { Collapse, IconButton, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
-import * as actionSnackBar from '../redux/SnackBar/action'
+import * as actionSnackBar from '../../redux/SnackBar/action'
 
 export default function CustomizedSnackbars() {
   const classes = useStyles()

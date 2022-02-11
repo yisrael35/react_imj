@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
 import Select from 'react-select'
 
-import TableBuilder from '../components/TableBuilder'
-import PaginationBottom from '../components/PaginationBottom'
+import TableBuilder from '../components/general/TableBuilder'
+import PaginationBottom from '../components/general/PaginationBottom'
+import UpdateEvent from '../components/pages/UpdateEvent'
 import * as action_event from '../redux/Event/action'
-// import UpdateEvent from '../components/UpdateEvent'
-// import * as action_popUp from '../redux/PopUp/action'
+import * as action_popUp from '../redux/PopUp/action'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -35,15 +35,15 @@ const Events = (props) => {
     setOffset(new_offset)
   }
   const handle_edit = (id, index) => {
-    // let event
-    // for (const item of items) {
-    //   if (item['id'] === id) {
-    //     event = item
-    //     break
-    //   }
-    // }
-    // const content = <UpdateEvent  counter={index} id={id} limit={limit} offset={offset} />
-    // dispatch(action_popUp.setPopUp(content))
+    let event
+    for (const item of items) {
+      if (item['id'] === id) {
+        event = item
+        break
+      }
+    }
+    const content = <UpdateEvent counter={index} id={event.id} limit={limit} offset={offset} />
+    dispatch(action_popUp.setPopUp(content))
   }
 
   for (const item of items) {

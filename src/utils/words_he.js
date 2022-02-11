@@ -86,6 +86,7 @@ const words_he = {
   old_password: 'סיסמה נוכחית',
   locatin_name: 'שם מיקום',
   clients: 'לקוחות',
+  client: 'לקוח',
   private: 'פרטי',
   type: 'סוג',
   department: 'מחלקה',
@@ -109,7 +110,8 @@ const words_he = {
   account_details: 'פרטי חשבון',
   account_name: 'שם בעל החשבון',
   add_supplier: 'הוספת ספק',
-  new_supplier: 'ספק חדש'
+  new_supplier: 'ספק חדש',
+  reports: 'דוחות'
 }
 
 module.exports = {

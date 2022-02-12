@@ -43,77 +43,91 @@ const UpdateClient = (props) => {
     }, 1000)
   }
 
+  const handle_delete = () => {
+    dispatch(action_client.delete_client(props.client.uuid))
+    dispatch(action_client.get_clients())
+    setClientInfo({ ...client_info })
+    setTimeout(() => {
+      dispatch(action_popUp.disablePopUp())
+    }, 1000)
+  }
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-            {words_he['name']}
-          </th>
-          <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-            {words_he['type']}
-          </th>
-          <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-            {words_he['phone']}
-          </th>
-          <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-            {words_he['email']}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input type='text' onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })} defaultValue={client_info.name} />
-          </td>
-          <td>
-            <ul>
-              <li>
-                <input
-                  type='radio'
-                  value={words_he['private']}
-                  name={'type'}
-                  checked={client_info.type === words_he['private']}
-                  onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
-                />{' '}
-                {words_he['private']}
-              </li>
-              <li>
-                <input
-                  type='radio'
-                  value={words_he['company']}
-                  name={'type'}
-                  checked={client_info.type === words_he['company']}
-                  onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
-                />{' '}
-                {words_he['company']}
-              </li>
-              <li>
-                <input
-                  type='radio'
-                  value={words_he['department']}
-                  name={'type'}
-                  checked={client_info.type === words_he['department']}
-                  onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
-                />{' '}
-                {words_he['department']}
-              </li>
-            </ul>
-          </td>
-          <td>
-            <input type='tel' onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })} defaultValue={client_info.phone} />
-          </td>
-          <td>
-            <input type='email' onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })} defaultValue={client_info.email} />
-          </td>
-          <td>
-            <button type='button' className='btn btn-info' onClick={handle_save}>
-              {words_he['save']}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
+              {words_he['name']}
+            </th>
+            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
+              {words_he['type']}
+            </th>
+            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
+              {words_he['phone']}
+            </th>
+            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
+              {words_he['email']}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type='text' onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })} defaultValue={client_info.name} />
+            </td>
+            <td>
+              <ul>
+                <li>
+                  <input
+                    type='radio'
+                    value={words_he['private']}
+                    name={'type'}
+                    checked={client_info.type === words_he['private']}
+                    onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
+                  />{' '}
+                  {words_he['private']}
+                </li>
+                <li>
+                  <input
+                    type='radio'
+                    value={words_he['company']}
+                    name={'type'}
+                    checked={client_info.type === words_he['company']}
+                    onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
+                  />{' '}
+                  {words_he['company']}
+                </li>
+                <li>
+                  <input
+                    type='radio'
+                    value={words_he['department']}
+                    name={'type'}
+                    checked={client_info.type === words_he['department']}
+                    onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
+                  />{' '}
+                  {words_he['department']}
+                </li>
+              </ul>
+            </td>
+            <td>
+              <input type='tel' onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })} defaultValue={client_info.phone} />
+            </td>
+            <td>
+              <input type='email' onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })} defaultValue={client_info.email} />
+            </td>
+            <td>
+              <button type='button' className='btn btn-info' onClick={handle_save}>
+                {words_he['save']}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type='button' className='btn-del' onClick={handle_delete}>
+        {words_he['delete']}
+      </button>
+    </div>
   )
 }
 

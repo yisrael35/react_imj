@@ -22,6 +22,7 @@ const Suppliers = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_supplier.get_suppliers(limit, offset, search))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, offset, search])
 
   const previous_page = () => {

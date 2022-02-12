@@ -111,7 +111,7 @@ const words_he = {
   account_name: 'שם בעל החשבון',
   add_supplier: 'הוספת ספק',
   new_supplier: 'ספק חדש',
-  reports: 'דוחות'
+  reports: 'דוחות',
 }
 
 module.exports = {

@@ -50,3 +50,9 @@ ul {
 .select {
   width: 230px;
 }
+
+.btn-del{
+  width: 60px;
+  height: 40px;
+  background-color: crimson;
+}

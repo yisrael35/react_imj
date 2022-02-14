@@ -42,7 +42,7 @@ const Events = (props) => {
         break
       }
     }
-    const content = <UpdateEvent counter={index} id={event.id} limit={limit} offset={offset} />
+    const content = <UpdateEvent counter={index} id={event.id} data={event} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
 

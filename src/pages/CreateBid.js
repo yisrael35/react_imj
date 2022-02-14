@@ -7,8 +7,10 @@ import moment from 'moment'
 import '../css/bid.css'
 import TableScheduleTimeEvent from '../components/pages/TableScheduleTimeEvent'
 import TableCosts from '../components/pages/TableCosts'
+import CreateClient from '../components/pages/CreateClient'
 import EmailAndDownload from '../components/general/EmailAndDownload'
 import CancelExit from '../components/general/CancelExit'
+
 import * as action_bid from '../redux/Bid/action'
 import * as action_utils from '../redux/Utils/action'
 import * as action_popUp from '../redux/PopUp/action'
@@ -31,6 +33,7 @@ const Bid = (props) => {
   // const classes = useStyles()
 
   const locations = useSelector((state) => state.utils.locations)
+  const clients = useSelector((state) => state.utils.clients)
   const events_type = useSelector((state) => state.utils.events_type)
   const user = useSelector((state) => state.auth.userContent)
   const dispatch = useDispatch()
@@ -89,6 +92,13 @@ const Bid = (props) => {
     costs,
     // language,
   }
+
+  const handle_create_client = (e) => {
+    e.preventDefault()
+    const new_client = <CreateClient />
+    dispatch(action_popUp.setPopUp(new_client))
+  }
+
   if (language === 'he') {
     //TODO --USER TEXT HAVE TO BE IN he
   } else {
@@ -149,12 +159,6 @@ const Bid = (props) => {
               setLanguage(e.value)
             }}
           />
-          {/* <button type='button' className='btn btn-info' onClick={handle_pdf}>
-            pdf
-          </button>
-          <button type='button' className='btn btn-info' onClick={handle_email}>
-            email
-          </button> */}
         </div>
 
         <h3> {words_he['new_bid']} </h3>
@@ -180,15 +184,20 @@ const Bid = (props) => {
         />
         <div>
           <label>
-            {words_he['client_name']}
-            <input
-              type='text'
-              name='client_Name'
+            {words_he['pick_client']}
+            <button onClick={handle_create_client}>{'+'}</button>
+            </label>
+            <Select
+              className={'select'}
+              placeholder={words_he['client_name']}
+              options={clients}
+              id='clients'
+              label={words_he['clients']}
               onChange={(e) => {
-                setClientName(e.target.value)
+                //TODO -- replace to client_id
+                setClientName(e.value)
               }}
             />
-          </label>
         </div>
 
         <div>

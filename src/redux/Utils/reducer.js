@@ -15,6 +15,7 @@ export default (state = initialState, action) => {
         locations: action.payload.locations,
         events_type: action.payload.events_type,
         tables: action.payload.tables,
+        clients: action.payload.clients,
       }
     }
 

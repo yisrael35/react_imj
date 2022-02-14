@@ -6,9 +6,11 @@ import Select from 'react-select'
 
 const Reports = (props) => {
   const dispatch = useDispatch()
-  const [from_date, setFromDate] = useState(undefined)
-  const [to_date, setToDate] = useState(undefined)
-
+  //TODO
+  // const [from_date, setFromDate] = useState(undefined)
+  // const [to_date, setToDate] = useState(undefined)
+  let from_date, to_date
+  
   useEffect(() => {
     dispatch(action_utils.get_utils())
     // eslint-disable-next-line react-hooks/exhaustive-deps

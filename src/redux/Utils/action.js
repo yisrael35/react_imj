@@ -7,7 +7,7 @@ export const get_utils = () => (dispatch) => {
   axios
     .get(process.env.REACT_APP_REST_IMJ_URL + '/utils')
     .then((res) => {
-      let utils = { locations: [], events_type: [], tables: [] }
+      let utils = { locations: [], events_type: [], tables: [], clients: [] }
       if (res.data) {
         for (const val of res.data.locations) {
           utils.locations.push({ value: val.id, label: val.name })
@@ -17,6 +17,9 @@ export const get_utils = () => (dispatch) => {
         }
         for (const val of res.data.tables) {
           utils.tables.push({ value: val, label: convert_table_name(val) })
+        }
+        for (const val of res.data.clients) {
+          utils.clients.push({ value: val.id, label: val.name })
         }
       }
 

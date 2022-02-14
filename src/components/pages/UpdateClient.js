@@ -37,7 +37,9 @@ const UpdateClient = (props) => {
   const handle_save = () => {
     const data = get_data(client_info)
     dispatch(action_client.update_client(data, props.client.uuid))
-    dispatch(action_client.get_clients())
+    const limit = props.limit
+    const offset = props.offset
+    dispatch(action_client.get_clients(limit, offset))
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
     }, 1000)
@@ -45,7 +47,9 @@ const UpdateClient = (props) => {
 
   const handle_delete = () => {
     dispatch(action_client.delete_client(props.client.uuid))
-    dispatch(action_client.get_clients())
+    const limit = props.limit
+    const offset = props.offset
+    dispatch(action_client.get_clients(limit, offset))
     setClientInfo({ ...client_info })
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())

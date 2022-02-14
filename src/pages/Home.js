@@ -8,6 +8,7 @@ import * as action_home from '../redux/Home/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
 import * as action_popUp from '../redux/PopUp/action'
 import CreateEvent from '../components/pages/CreateEvent'
+import DisplayEvent from '../components/pages/DisplayEvent'
 import workerInstances from '../services'
 const localizer = momentLocalizer(moment)
 const words_he = require('../utils/words_he').words_he
@@ -59,7 +60,19 @@ const Home = (props) => {
       >
         {words_he['create_event']}
       </button>
-      <Calendar localizer={localizer} events={events} views={['month', 'day', 'agenda']} startAccessor='start' endAccessor='end' style={{ height: 500 }} onNavigate={get_event_by_month} />
+      <Calendar
+        onDoubleClickEvent={(event) => {
+          const content = <DisplayEvent data={event} id={event.id} />
+          dispatch(action_popUp.setPopUp(content))
+        }}
+        localizer={localizer}
+        events={events}
+        views={['month', 'day', 'agenda']}
+        startAccessor='start'
+        endAccessor='end'
+        style={{ height: 500 }}
+        onNavigate={get_event_by_month}
+      />
     </div>
   )
 }

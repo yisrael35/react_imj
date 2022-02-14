@@ -107,14 +107,12 @@ const CreateClient = () => {
             <td>
               <input type='email' onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })} defaultValue={client_info.email} />
             </td>
-            <td>
-              <button type='button' className='btn btn-info' onClick={handle_save}>
-                {words_he['save']}
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>
+      <button type='button' className='btn btn-info' onClick={handle_save}>
+        {words_he['save']}
+      </button>
     </div>
   )
 }

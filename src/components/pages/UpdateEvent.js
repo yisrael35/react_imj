@@ -9,9 +9,9 @@ import * as action_popUp from '../../redux/PopUp/action'
 const words_he = require('../../utils/words_he').words_he
 
 const UpdateEvent = (props) => {
-  const [date, setDate] = useState(moment().format(`YYYY-MM-DD`))
-  const [start_time, setStartTime] = useState('10:00')
-  const [end_time, setEndTime] = useState('11:00')
+  const [date, setDate] = useState(moment(props.data.from_date).format(`YYYY-MM-DD`))
+  const [start_time, setStartTime] = useState(moment(props.data.from_date).format(`HH:mm:ss`))
+  const [end_time, setEndTime] = useState(moment(props.data.to_date).format(`HH:mm:ss`))
   const [end_after_start, setEndAfterStart] = useState(true)
   const [event_info, setEventInfo] = useState({ name: '', from_date: '', to_date: '' })
 
@@ -24,8 +24,8 @@ const UpdateEvent = (props) => {
 
       setEventInfo({ ...event })
       //TODO --
-      setDate(moment(event.from_date).format(`YYYY-MM-DD`))
-
+      // moment(event.from_date).format(`DD/MM/YYYY`)
+      // setDate(moment().format(`2025-MM-DD`))
       setStartTime(moment(event.from_date).format(`HH:mm`))
       setEndTime(moment(event.to_date).format(`HH:mm`))
     }
@@ -50,7 +50,7 @@ const UpdateEvent = (props) => {
     dispatch(action_event.update_event(event_info, props.id))
     const limit = props.limit
     const offset = props.offset
-    dispatch(action_event.get_events({limit, offset}))
+    dispatch(action_event.get_events({ limit, offset }))
 
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
@@ -71,7 +71,7 @@ const UpdateEvent = (props) => {
 
   return (
     <div>
-      <h3>{words_he['new_event']}</h3>
+      <h3>{words_he['edit_event']}</h3>
       <table>
         <thead>
           <tr>
@@ -138,14 +138,12 @@ const UpdateEvent = (props) => {
                 }}
               />
             </td>
-            <td>
-              <button type='button' className='btn btn-info' onClick={handle_save}>
-                {words_he['save']}
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>
+      <button type='button' className='btn btn-info m-4' onClick={handle_save}>
+        {words_he['save']}
+      </button>
     </div>
   )
 }

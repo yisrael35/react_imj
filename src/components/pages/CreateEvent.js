@@ -76,7 +76,6 @@ const CreateEvent = () => {
               />
             </td>
             <td>
-              
               <input
                 type='time'
                 value={end_time}
@@ -86,14 +85,13 @@ const CreateEvent = () => {
               />
               {!end_after_start && <span style={{ color: 'red' }}> {words_he['end_after_start']}</span>}
             </td>
-            <td>
-              <button type='button' className='btn btn-info' onClick={handle_save}>
-                {words_he['save']}
-              </button>
-            </td>
+            <td></td>
           </tr>
         </tbody>
       </table>
+      <button type='button' className='btn btn-info m-4' onClick={handle_save}>
+        {words_he['save']}
+      </button>
     </div>
   )
 }

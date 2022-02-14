@@ -112,6 +112,9 @@ const words_he = {
   add_supplier: 'הוספת ספק',
   new_supplier: 'ספק חדש',
   reports: 'דוחות',
+  display_event: 'האירוע שנבחר',
+  edit_event: 'ערוך אירוע',
+  pick_client: 'בחר לקוח או הוסף חדש ',
 }
 
 module.exports = {

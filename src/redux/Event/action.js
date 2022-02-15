@@ -2,6 +2,9 @@ import axios from 'axios'
 import moment from 'moment'
 import { GET_EVENTS } from './constants'
 import * as actionSnackBar from '../SnackBar/action'
+import * as actionPopUp from '../PopUp/action'
+import DownloadCsv from '../../components/general/DownloadCsv'
+
 const words_he = require('../../utils/words_he').words_he
 
 export const create_event = (data) => (dispatch) => {
@@ -16,23 +19,29 @@ export const create_event = (data) => (dispatch) => {
 }
 
 export const get_events =
-  ({ limit, offset, search, from_date, to_date }) =>
+  ({ limit, offset, search, from_date, to_date, csv }) =>
   (dispatch) => {
-    const query = { limit, offset, search, from_date, to_date }
+    const query = { limit, offset, search, from_date, to_date, csv }
     axios
       .get(process.env.REACT_APP_REST_IMJ_URL + '/event', { params: query })
       .then((res) => {
-        const events = []
-        for (const event of res.data.events) {
-          events.push({
-            ...event,
-            from_date: moment(event.from_date).format('YYYY-MM-DD HH:mm:ss'),
-            to_date: moment(event.to_date).format('YYYY-MM-DD HH:mm:ss'),
-          })
-        }
-        res.data.events = events
+        if (res.data.file_name) {
+          const file_name = res.data.file_name
+          const content = <DownloadCsv file_name={file_name} />
+          dispatch(actionPopUp.setPopUp(content))
+        } else if (res.data.events) {
+          const events = []
+          for (const event of res.data.events) {
+            events.push({
+              ...event,
+              from_date: moment(event.from_date).format('YYYY-MM-DD HH:mm:ss'),
+              to_date: moment(event.to_date).format('YYYY-MM-DD HH:mm:ss'),
+            })
+          }
+          res.data.events = events
 
-        dispatch({ type: GET_EVENTS, payload: res.data })
+          dispatch({ type: GET_EVENTS, payload: res.data })
+        }
       })
       .catch((error) => {
         console.log(error)

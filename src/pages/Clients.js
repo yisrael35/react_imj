@@ -10,6 +10,7 @@ import CreateClient from '../components/pages/CreateClient'
 
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_client from '../redux/Client/action'
+import { FaFileCsv } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -21,7 +22,7 @@ const Clients = () => {
   const [search, setSearch] = useState(undefined)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(action_client.get_clients(limit, offset, search))
+    dispatch(action_client.get_clients({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, offset, search])
 
@@ -67,11 +68,17 @@ const Clients = () => {
         break
     }
   }
-
+  const create_csv = () => {
+    dispatch(action_client.get_clients({ limit, offset, search, csv: true }))
+    //TODO -- make loading
+  }
   return (
     <div>
       {/* search */}
-      <span style={{ float: 'left', margin: '10px' }}>
+      <span className='field_search'>
+        <button className='transparent_button' onClick={create_csv}>
+          <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+        </button>
         <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
       </span>
       {/* Pagination Top */}

@@ -115,6 +115,8 @@ const words_he = {
   display_event: 'האירוע שנבחר',
   edit_event: 'ערוך אירוע',
   pick_client: 'בחר לקוח או הוסף חדש ',
+  download_file: 'הקובץ מוכן להורדה',                                 
+  create_csv: 'צור קובץ csv',
 }
 
 module.exports = {

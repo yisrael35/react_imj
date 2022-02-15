@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
 import Select from 'react-select'
-
 import TableBuilder from '../components/general/TableBuilder'
 import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateEvent from '../components/pages/UpdateEvent'
 import * as action_event from '../redux/Event/action'
 import * as action_popUp from '../redux/PopUp/action'
-
+import { FaFileCsv } from 'react-icons/fa'
 const words_he = require('../utils/words_he').words_he
 
 const Events = (props) => {
@@ -18,6 +17,7 @@ const Events = (props) => {
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_event.get_events({ limit, offset, search }))
@@ -78,11 +78,17 @@ const Events = (props) => {
         break
     }
   }
-
+  const create_csv = () => {
+    dispatch(action_event.get_events({ limit, offset, search, csv: true }))
+    //TODO -- make loading
+  }
   return (
     <div>
-      {/* search */}
-      <span style={{ float: 'left', margin: '10px' }}>
+      <span className='field_search'>
+        <button className='transparent_button' onClick={create_csv}>
+          <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+        </button>
+        {/* search */}
         <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
       </span>
       {/* Pagination Top */}
@@ -97,6 +103,8 @@ const Events = (props) => {
           setLimit(e.value)
         }}
       />
+
+      {/* <button class="fa-duotone fa-file-csv">11111</button> */}
       <TableBuilder
         items={items}
         cols={['name', 'from_date', 'to_date', 'status', 'type']}

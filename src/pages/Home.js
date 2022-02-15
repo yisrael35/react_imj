@@ -16,6 +16,7 @@ const words_he = require('../utils/words_he').words_he
 const Home = (props) => {
   const events = useSelector((state) => state.home.events)
   const token = useSelector((state) => state.auth.token)
+  const saved_date = useSelector((state) => state.home.saved_date)
 
   const dispatch = useDispatch()
   //connect to the ws
@@ -46,6 +47,8 @@ const Home = (props) => {
   }, [])
   const get_event_by_month = (date) => {
     const data = { from_date: moment(date).startOf('month').format('YYYY-MM-DD'), to_date: moment(date).endOf('month').format('YYYY-MM-DD') }
+
+    dispatch(action_home.save_date(date))
     dispatch(action_home.get_events(data))
   }
 
@@ -71,6 +74,7 @@ const Home = (props) => {
         startAccessor='start'
         endAccessor='end'
         style={{ height: 500 }}
+        date={new Date(saved_date)}
         onNavigate={get_event_by_month}
       />
     </div>

@@ -10,6 +10,7 @@ import CreateSupplier from '../components/pages/CreateSupplier'
 
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_supplier from '../redux/Supplier/action'
+import { FaFileCsv } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -21,7 +22,7 @@ const Suppliers = () => {
   const [search, setSearch] = useState(undefined)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(action_supplier.get_suppliers(limit, offset, search))
+    dispatch(action_supplier.get_suppliers({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, offset, search])
 
@@ -54,23 +55,28 @@ const Suppliers = () => {
 
   for (let i = 0; i < items.length; i++) {
     let account_details_str = ''
-    for (let key in items[i].account){
+    for (let key in items[i].account) {
       let key_to_display
-      if (key === 'iban' || key === 'swift'){
+      if (key === 'iban' || key === 'swift') {
         key_to_display = key.toUpperCase()
-      }
-      else{
+      } else {
         key_to_display = key
       }
-      account_details_str += key_to_display + ": " + items[i].account[key] + " |  \n"
+      account_details_str += key_to_display + ': ' + items[i].account[key] + ' |  \n'
     }
-    items[i] = {...items[i], account_details: account_details_str}
+    items[i] = { ...items[i], account_details: account_details_str }
   }
-
+  const create_csv = () => {
+    dispatch(action_supplier.get_suppliers({ limit, offset, search, csv: true }))
+    //TODO -- make loading
+  }
   return (
     <div>
       {/* search */}
-      <span style={{ float: 'left', margin: '10px' }}>
+      <span className='field_search'>
+        <button className='transparent_button' onClick={create_csv}>
+          <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+        </button>
         <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
       </span>
       {/* Pagination Top */}
@@ -99,8 +105,9 @@ const Suppliers = () => {
         handle_edit={handle_edit}
       />
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
-      <button  type='button' className='btn btn-info' onClick={handle_create}>{words_he['add_supplier']}</button>
-      
+      <button type='button' className='btn btn-info' onClick={handle_create}>
+        {words_he['add_supplier']}
+      </button>
     </div>
   )
 }

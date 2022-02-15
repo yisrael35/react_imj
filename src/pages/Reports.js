@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as action_utils from '../redux/Utils/action'
 import * as action_csv from '../redux/CSV/action'
 import Select from 'react-select'
+const words_he = require('../utils/words_he').words_he
 
 const Reports = (props) => {
   const dispatch = useDispatch()
@@ -10,7 +11,7 @@ const Reports = (props) => {
   // const [from_date, setFromDate] = useState(undefined)
   // const [to_date, setToDate] = useState(undefined)
   let from_date, to_date
-  
+
   useEffect(() => {
     dispatch(action_utils.get_utils())
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -22,17 +23,12 @@ const Reports = (props) => {
   const create_csv = async () => {
     dispatch(action_csv.get_table({ from_date, to_date, table }))
   }
-  const delete_file = async () => {
-    dispatch(action_csv.delete_file(file_name))
-  }
-  const url = process.env.REACT_APP_REST_IMJ_URL
-  const file_path = `${url}/assets/${file_name}`
 
   return (
-    <div>
-      {' '}
+    <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
+      {/* TODO -- ADD FROM DATE AND TO DATE */}
       <Select
-        className={'select'}
+        className={'report_select'}
         placeholder={'tables'}
         options={tables}
         id='tables'
@@ -42,13 +38,8 @@ const Reports = (props) => {
         }}
       />
       <button className='w-45 btn m-2 btn-primary' onClick={create_csv} disabled={file_name || !table}>
-        create csv
+        {words_he['create_csv']}
       </button>
-      <a href={file_path}>
-        <button className='w-45 btn m-2 btn-primary' disabled={!file_name} onClick={delete_file}>
-          download file
-        </button>
-      </a>
     </div>
   )
   // return <div style={{ textAlign: 'center' }}>{user ? user.first_name : `didn't load user`}</div>

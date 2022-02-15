@@ -1,20 +1,31 @@
 import { GET_CLIENTS } from './constants'
 import axios from 'axios'
 import * as actionSnackBar from '../SnackBar/action'
+import * as actionPopUp from '../PopUp/action'
+import DownloadCsv from '../../components/general/DownloadCsv'
+
 const words_he = require('../../utils/words_he').words_he
 
-export const get_clients = (limit, offset, search) => (dispatch) => {
-  const query = { limit, offset, search }
-  axios
-  .get(process.env.REACT_APP_REST_IMJ_URL + '/client', { params: query })
-  .then((res) => {
-      dispatch({ type: GET_CLIENTS, payload: res.data })
-    })
-    .catch((error) => {
-      console.log(error)
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
-    })
-}
+export const get_clients =
+  ({ limit, offset, search, csv }) =>
+  (dispatch) => {
+    const query = { limit, offset, search, csv }
+    axios
+      .get(process.env.REACT_APP_REST_IMJ_URL + '/client', { params: query })
+      .then((res) => {
+        if (res.data.file_name) {
+          const file_name = res.data.file_name
+          const content = <DownloadCsv file_name={file_name} />
+          dispatch(actionPopUp.setPopUp(content))
+        } else {
+          dispatch({ type: GET_CLIENTS, payload: res.data })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+        dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
+      })
+  }
 export const delete_client = (client_id) => (dispatch) => {
   axios
     .delete(process.env.REACT_APP_REST_IMJ_URL + `/client/${client_id}`)

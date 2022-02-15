@@ -22,38 +22,57 @@ const DisplayEvent = (props) => {
     <div>
       <h3>{words_he['display_event']}</h3>
       <table>
-        <tr>
-          <th>{'id'}</th>
-          <td>{event_info.id}</td>
-        </tr>
-        <tr>
-          <th>{words_he['event_name']}</th>
-          <td>{event_info.name}</td>
-        </tr>
-        <tr>
-          <th>{words_he['event_date']}</th>
-          <td>{moment(event_info.from_date).format('YYYY-MM-DD')}</td>
-        </tr>
-        <tr>
-          <th> {words_he['start_time']}</th>
-          <td>{moment(event_info.from_date).format('HH:mm:ss')}</td>
-        </tr>
-        <tr>
-          <th> {words_he['end_time']}</th>
-          <td>{moment(event_info.to_date).format('HH:mm:ss')}</td>
-        </tr>
-        <tr>
-          <th> {words_he['status']}</th>
-          <td>{words_he[event_info.status]}</td>
-        </tr>
-        <tr>
-          <th> {words_he['type']}</th>
-          <td>{words_he[event_info.type]}</td>
-        </tr>
-        <tr>
-          <th> {words_he['user']}</th>
-          <td>{event_info.user}</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <b>{'id'}</b>
+            </td>
+            <td>{event_info.id}</td>
+          </tr>
+          <tr>
+            <td>
+              <b>{words_he['event_name']}</b>
+            </td>
+            <td>{event_info.name}</td>
+          </tr>
+          <tr>
+            <td>
+              <b>{words_he['event_date']}</b>
+            </td>
+            <td>{moment(event_info.from_date).format('YYYY-MM-DD')}</td>
+          </tr>
+          <tr>
+            <td>
+              <b> {words_he['start_time']}</b>
+            </td>
+            <td>{moment(event_info.from_date).format('HH:mm:ss')}</td>
+          </tr>
+          <tr>
+            <td>
+              <b> {words_he['end_time']}</b>
+            </td>
+            <td>{moment(event_info.to_date).format('HH:mm:ss')}</td>
+          </tr>
+          <tr>
+            <td>
+              <b> {words_he['status']}</b>
+            </td>
+            <td>{words_he[event_info.status]}</td>
+          </tr>
+          <tr>
+            <td>
+              {' '}
+              <b>{words_he['type']}</b>
+            </td>
+            <td>{words_he[event_info.type]}</td>
+          </tr>
+          <tr>
+            <td>
+              <b> {words_he['user']}</b>
+            </td>
+            <td>{event_info.user}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   )
@@ -67,7 +86,7 @@ export default DisplayEvent
 // comment: null
 // from_date: "2022-02-21T22:00:00.000Z"
 // id: "f56649a8-8531-11ec-ae77-005056c00001"
-// name: "test the event if you want"
+// name: "test tde event if you want"
 // status: "pending"
 // suppliers: null
 // to_date: "2022-02-21T22:00:00.000Z"

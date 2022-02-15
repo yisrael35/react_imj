@@ -1,28 +1,33 @@
 import { GET_SUPPLIERS } from './constants'
 import axios from 'axios'
 import * as actionSnackBar from '../SnackBar/action'
+import * as actionPopUp from '../PopUp/action'
+import DownloadCsv from '../../components/general/DownloadCsv'
 const words_he = require('../../utils/words_he').words_he
 
-export const get_suppliers = (limit, offset, search) => (dispatch) => {
-  const query = { limit, offset, search }
-  axios
-    .get(process.env.REACT_APP_REST_IMJ_URL + '/Supplier', { params: query })
-    .then((res) => {
-
-      for (let i = 0; i < res.data.suppliers.length; i++) {
-        if (res.data.suppliers[i].account) {
-          let json = JSON.parse(res.data.suppliers[i].account)
-          res.data.suppliers[i] = { ...res.data.suppliers[i], account: json }
+export const get_suppliers =
+  ({ limit, offset, search, csv }) =>
+  (dispatch) => {
+    const query = { limit, offset, search, csv }
+    axios
+      .get(process.env.REACT_APP_REST_IMJ_URL + '/Supplier', { params: query })
+      .then((res) => {
+        if (res.data.file_name) {
+          const file_name = res.data.file_name
+          const content = <DownloadCsv file_name={file_name} />
+          dispatch(actionPopUp.setPopUp(content))
+        } else {
+          for (const supplier of res.data.suppliers) {
+            supplier.account = JSON.parse(supplier.account)
+          }
+          dispatch({ type: GET_SUPPLIERS, payload: res.data })
         }
-      }
-      
-      dispatch({ type: GET_SUPPLIERS, payload: res.data })
-    })
-    .catch((error) => {
-      console.log(error)
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
-    })
-}
+      })
+      .catch((error) => {
+        console.log(error)
+        dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
+      })
+  }
 export const delete_supplier = (Supplier_id) => (dispatch) => {
   axios
     .delete(process.env.REACT_APP_REST_IMJ_URL + `/Supplier/${Supplier_id}`)

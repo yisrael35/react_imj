@@ -71,3 +71,23 @@ html {
   border: 1px solid #999;
   font-size: 20px;
 }
+.report_select {
+  margin: auto;
+  width: 400px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.transparent_button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.field_search {
+  float: left;
+  margin: 10px;
+}

@@ -9,6 +9,7 @@ import UpdateBid from '../components/pages/UpdateBid'
 
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_bid from '../redux/Bid/action'
+import { FaFileCsv } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -20,7 +21,7 @@ const Bids = (props) => {
   const [search, setSearch] = useState(undefined)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(action_bid.get_bids(limit, offset, search))
+    dispatch(action_bid.get_bids({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, offset, search])
 
@@ -42,15 +43,20 @@ const Bids = (props) => {
     //     break
     //   }
     // }
-    const content = <UpdateBid  counter={index} id={id} limit={limit} offset={offset} />
+    const content = <UpdateBid counter={index} id={id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
-
-
+  const create_csv = () => {
+    dispatch(action_bid.get_bids({ limit, offset, search, csv: true }))
+    //TODO -- make loading
+  }
   return (
     <div>
       {/* search */}
-      <span style={{ float: 'left', margin: '10px' }}>
+      <span className='field_search'>
+        <button className='transparent_button' onClick={create_csv}>
+          <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+        </button>
         <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
       </span>
       {/* Pagination Top */}

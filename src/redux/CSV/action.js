@@ -1,6 +1,9 @@
 import axios from 'axios'
-import { GET_CSV, DELETE_CSV } from './constants'
+import { DELETE_CSV } from './constants'
 import * as actionSnackBar from '../SnackBar/action'
+import * as actionPopUp from '../PopUp/action'
+import DownloadCsv from '../../components/general/DownloadCsv'
+
 const words_he = require('../../utils/words_he').words_he
 
 export const get_table =
@@ -11,9 +14,11 @@ export const get_table =
     axios
       .get(process.env.REACT_APP_REST_IMJ_URL + '/csv', { params: query })
       .then((res) => {
-        console.log(res.data.file_name)
-
-        dispatch({ type: GET_CSV, payload: res.data })
+        if (res.data.file_name) {
+          const file_name = res.data.file_name
+          const content = <DownloadCsv file_name={file_name} />
+          dispatch(actionPopUp.setPopUp(content))
+        }
       })
       .catch((error) => {
         console.log(error)

@@ -44,7 +44,7 @@ const Bid = (props) => {
   const [language, setLanguage] = useState('he')
   const [status, setStatus] = useState('')
   const [currency, setCurrency] = useState('nis')
-  const [client_name, setClientName] = useState('')
+  const [client_id, setClientName] = useState('')
   const [event_name, setEventName] = useState('')
   const [event_comment, setEventComment] = useState(undefined)
   const [max_participants, setMaxParticipants] = useState()
@@ -78,7 +78,7 @@ const Bid = (props) => {
       user: user.id,
       event_date: date,
       event_comment,
-      client_name,
+      client_id,
       event_name,
       max_participants,
       min_participants,
@@ -186,18 +186,18 @@ const Bid = (props) => {
           <label>
             {words_he['pick_client']}
             <button onClick={handle_create_client}>{'+'}</button>
-            </label>
-            <Select
-              className={'select'}
-              placeholder={words_he['client_name']}
-              options={clients}
-              id='clients'
-              label={words_he['clients']}
-              onChange={(e) => {
-                //TODO -- replace to client_id
-                setClientName(e.value)
-              }}
-            />
+          </label>
+          <Select
+            className={'select'}
+            placeholder={words_he['client_name']}
+            options={clients}
+            id='clients'
+            label={words_he['clients']}
+            onChange={(e) => {
+              //TODO -- replace to client_id
+              setClientName(e.value)
+            }}
+          />
         </div>
 
         <div>

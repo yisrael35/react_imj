@@ -73,14 +73,14 @@ const Bids = (props) => {
       />
       <TableBuilder
         items={items}
-        cols={['event_type', 'location', 'first_name', 'event_date', 'event_name', 'client_name']}
+        cols={['event_type', 'location', 'first_name', 'event_date', 'event_name', 'client_id']}
         headers={{
           event_type: words_he['event_type'],
           location: words_he['location'],
           first_name: words_he['first_name'],
           event_date: words_he['event_date'],
           event_name: words_he['event_name'],
-          client_name: words_he['client_name'],
+          client_id: words_he['client_name'],
         }}
         title={words_he['bids']}
         offset={offset}

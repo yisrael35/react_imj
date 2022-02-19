@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
 import Select from 'react-select'
@@ -8,6 +9,7 @@ import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateBid from '../components/pages/UpdateBid'
 
 import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
 import * as action_bid from '../redux/Bid/action'
 import { FaFileCsv } from 'react-icons/fa'
 
@@ -48,16 +50,23 @@ const Bids = (props) => {
   }
   const create_csv = () => {
     dispatch(action_bid.get_bids({ limit, offset, search, csv: true }))
-    //TODO -- make loading
+    dispatch(action_loading.setLoading())
   }
+  // const search = <FaSearch style={{ fontSize: '28px', margin: '4px' }} />
   return (
     <div>
       {/* search */}
       <span className='field_search'>
+        <Link to='/CreateBid'>
+          <button type='button' className='btn btn-info'>
+            {words_he['new_bid']}
+          </button>
+        </Link>
         <button className='transparent_button' onClick={create_csv}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
         </button>
         <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+        {/* <FaSearch style={{ fontSize: '28px', margin: '4px' }} /> */}
       </span>
       {/* Pagination Top */}
       <Select
@@ -71,16 +80,17 @@ const Bids = (props) => {
           setLimit(e.value)
         }}
       />
+
       <TableBuilder
         items={items}
-        cols={['event_type', 'location', 'first_name', 'event_date', 'event_name', 'client_name']}
+        cols={['event_name', 'client', 'event_date', 'event_type', 'location', 'first_name']}
         headers={{
+          event_name: words_he['event_name'],
           event_type: words_he['event_type'],
           location: words_he['location'],
-          first_name: words_he['first_name'],
+          first_name: words_he['employee_name'],
           event_date: words_he['event_date'],
-          event_name: words_he['event_name'],
-          client_name: words_he['client_name'],
+          client: words_he['client_name'],
         }}
         title={words_he['bids']}
         offset={offset}

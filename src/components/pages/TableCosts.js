@@ -26,7 +26,7 @@ export default function TableCosts({ costs, setCosts  }) {
           ))}
         </tbody>
       </table>
-      <button type='button' className='btn btn-info' onClick={handle_add_row}>
+      <button type='button' className='btn btn-outline-dark' onClick={handle_add_row}>
         +
       </button>
     </div>

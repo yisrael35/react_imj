@@ -67,7 +67,7 @@ const UpdateUser = (props) => {
             </ul>
           </td>
           <td>
-            <button type='button' className='btn btn-info' onClick={handle_save}>
+            <button type='button' className='btn btn-success' onClick={handle_save}>
               {words_he['save']}
             </button>
           </td>

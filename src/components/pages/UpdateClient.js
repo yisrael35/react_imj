@@ -120,15 +120,14 @@ const UpdateClient = (props) => {
             <td>
               <input type='email' onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })} defaultValue={client_info.email} />
             </td>
-            <td>
-              <button type='button' className='btn btn-info' onClick={handle_save}>
-                {words_he['save']}
-              </button>
-            </td>
+            <td></td>
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn-del' onClick={handle_delete}>
+      <button type='button' className='btn btn-success m-2' onClick={handle_save}>
+        {words_he['save']}
+      </button>
+      <button type='button' className='btn btn-danger m-2' onClick={handle_delete}>
         {words_he['delete']}
       </button>
     </div>

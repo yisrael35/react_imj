@@ -9,6 +9,7 @@ import UpdateClient from '../components/pages/UpdateClient'
 import CreateClient from '../components/pages/CreateClient'
 
 import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
 import * as action_client from '../redux/Client/action'
 import { FaFileCsv } from 'react-icons/fa'
 
@@ -70,12 +71,15 @@ const Clients = () => {
   }
   const create_csv = () => {
     dispatch(action_client.get_clients({ limit, offset, search, csv: true }))
-    //TODO -- make loading
+    dispatch(action_loading.setLoading())
   }
   return (
     <div>
       {/* search */}
       <span className='field_search'>
+        <button type='button' className='btn btn-info' onClick={handle_create}>
+          {words_he['add_client']}
+        </button>
         <button className='transparent_button' onClick={create_csv}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
         </button>
@@ -107,9 +111,6 @@ const Clients = () => {
         handle_edit={handle_edit}
       />
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
-      <button type='button' className='btn btn-info' onClick={handle_create}>
-        {words_he['add_client']}
-      </button>
     </div>
   )
 }

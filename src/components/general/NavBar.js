@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../../redux/Auth/action'
+// import { FaUserEdit, FaSignOutAlt } from 'react-icons/fa'
+
 const words_he = require('../../utils/words_he').words_he
 
 const Nav = (props) => {
@@ -25,7 +27,7 @@ const Nav = (props) => {
     menu = (
       <ul className='navbar-nav me-auto mb-2 mb-md-0'>
         <li className='nav-item active'>
-          <Link to='Login' className='nav-link'>
+          <Link to='/Login' className='nav-link'>
             {words_he['login']}
           </Link>
         </li>
@@ -34,13 +36,13 @@ const Nav = (props) => {
   } else {
     if (permissions === 1) {
       menu = (
-        <ul className='navbar-nav me-auto mb-2 mb-md-0'>
-          <li className='nav-item active'>
+        <ul className='navbar-nav  sticky-top me-auto mb-2 mb-md-0'>
+          {/* <li className='nav-item active'>
             <Link to='/Tests' className='nav-link'>
               Tests
             </Link>
-          </li>
-          <li className='nav-item active'>
+          </li> */}
+          <li className='nav-item active '>
             <Link to='/Reports' className='nav-link'>
               {words_he['reports']}
             </Link>
@@ -63,6 +65,7 @@ const Nav = (props) => {
           <li className='nav-item active'>
             <Link to='/ProfileSettings' className='nav-link'>
               {words_he['profile_settings']}
+              {/* <FaUserEdit style={{ fontSize: '28px', margin: '4px' }} /> */}
             </Link>
           </li>
           <li className='nav-item active'>
@@ -70,16 +73,7 @@ const Nav = (props) => {
               {words_he['bids']}
             </Link>
           </li>
-          <li className='nav-item active'>
-            <Link to='/CreateBid' className='nav-link'>
-              {words_he['new_bid']}
-            </Link>
-          </li>
-          <li className='nav-item active'>
-            <Link to='/Register' className='nav-link'>
-              {words_he['create_new_user']}
-            </Link>
-          </li>
+      
           <li className='nav-item active'>
             <Link to='/Users' className='nav-link'>
               {words_he['users']}
@@ -88,6 +82,7 @@ const Nav = (props) => {
           <li className='nav-item active'>
             <Link to='/Login' className='nav-link' onClick={logout}>
               {words_he['logout']}
+              {/* <FaSignOutAlt style={{ fontSize: '28px', margin: '4px' }} /> */}
             </Link>
           </li>
         </ul>
@@ -129,11 +124,11 @@ const Nav = (props) => {
       )
     }
   }
-
+  // fixed-top
   return (
-    <nav className='navbar navbar-expand-md navbar-dark bg-dark mb-4'>
+    <nav className='navbar navbar-expand-md navbar-dark bg-dark mb-4 sticky-top'>
       <div className='container-fluid'>
-        <Link to='Home' className='navbar-brand'>
+        <Link to='/Home' className='navbar-brand'>
           {words_he['home']}
         </Link>
 

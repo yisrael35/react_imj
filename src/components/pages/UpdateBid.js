@@ -1,21 +1,25 @@
-// import React, { useState, useEffect } from 'react'
-// import { useDispatch } from 'react-redux'
-// import * as action_bid from '../redux/Bid/action'
-
-// const words_he = require('../utils/words_he').words_he
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import * as action_bid from '../../redux/Bid/action'
+import EmailAndDownload from '../general/EmailAndDownload'
+// const words_he = require('../../utils/words_he').words_he
 
 const UpdateBid = (props) => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const [bid_info, setBidInfo] = useState()
-  // useEffect(async () => {
-  //   console.log('im here 1')
-  //   const bid = await dispatch(action_bid.get_bid_by_id(props.id))
-  //   console.log('im here 2')
-  //   setBidInfo({ ...bid })
-  //   console.log(bid)
-  //   console.log(bid_info)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  const [email, setEmail] = useState()
+
+  useEffect(() => {
+    const get_bid = async () => {
+      const bid = await dispatch(action_bid.get_bid_by_id(props.id))
+      console.log(bid.bid.client_email)
+      // console.log(bid_info.bid.email)
+      // setBidInfo({ ...bid })
+      setEmail(bid.bid.client_email)
+    }
+    get_bid()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   // const handle_save = () => {
   //   const data = {}
   //   dispatch(action_bid.update_bid_by_id(data, props.bid.id))
@@ -24,7 +28,11 @@ const UpdateBid = (props) => {
   //   dispatch(action_bid.get_bids(limit, offset))
   // }
 
-  return <div>{'bid_info'}</div>
+  return (
+    <div>
+      <EmailAndDownload email={email} message={"you can download a PDF file or send the client the bid"} />
+    </div>
+  )
 }
 
 export default UpdateBid

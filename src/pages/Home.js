@@ -76,6 +76,7 @@ const Home = (props) => {
         style={{ height: 500 }}
         date={new Date(saved_date)}
         onNavigate={get_event_by_month}
+        selectable={false}
       />
     </div>
   )

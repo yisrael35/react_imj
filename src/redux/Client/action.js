@@ -2,6 +2,8 @@ import { GET_CLIENTS } from './constants'
 import axios from 'axios'
 import * as actionSnackBar from '../SnackBar/action'
 import * as actionPopUp from '../PopUp/action'
+import * as actionLoading from '../Loading/action'
+
 import DownloadCsv from '../../components/general/DownloadCsv'
 
 const words_he = require('../../utils/words_he').words_he
@@ -23,6 +25,7 @@ export const get_clients =
       })
       .catch((error) => {
         console.log(error)
+        dispatch(actionLoading.disableLoading())
         dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
       })
   }

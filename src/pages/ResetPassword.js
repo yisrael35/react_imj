@@ -33,7 +33,7 @@ const ForgotPassword = (props) => {
         <input type='password' className='form-control' placeholder={words_he['new_password']} required onChange={(e) => setPassword(e.target.value)} />
         <input type='password' className='form-control' placeholder={words_he['confirm_password']} required onChange={(e) => setPassword(e.target.value)} />
 
-        <button className='w-100 btn btn-lg btn-primary' type='submit'>
+        <button className='w-100 btn btn-lg btn-success' type='submit'>
           {words_he['send']}
         </button>
       </form>

@@ -10,6 +10,7 @@ import locationReducer from './Location/reducer'
 import eventTypeReducer from './EventType/reducer'
 import utilsReducer from './Utils/reducer'
 import popUpReducer from './PopUp/reducer'
+import loadingReducer from './Loading/reducer'
 import homeReducer from './Home/reducer'
 import eventReducer from './Event/reducer'
 import supplierReducer from './Supplier/reducer'
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   eventType: eventTypeReducer,
   utils: utilsReducer,
   popUp: popUpReducer,
+  loading: loadingReducer,
   client: clientReducer,
   home: homeReducer,
   event: eventReducer,

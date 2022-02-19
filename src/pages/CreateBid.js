@@ -44,7 +44,7 @@ const Bid = (props) => {
   const [language, setLanguage] = useState('he')
   const [status, setStatus] = useState('')
   const [currency, setCurrency] = useState('nis')
-  const [client_name, setClientName] = useState('')
+  const [client_id, setClientId] = useState('')
   const [event_name, setEventName] = useState('')
   const [event_comment, setEventComment] = useState(undefined)
   const [max_participants, setMaxParticipants] = useState()
@@ -78,7 +78,7 @@ const Bid = (props) => {
       user: user.id,
       event_date: date,
       event_comment,
-      client_name,
+      client_id,
       event_name,
       max_participants,
       min_participants,
@@ -116,7 +116,7 @@ const Bid = (props) => {
     setLanguage('')
     setStatus('')
     setCurrency('nis')
-    setClientName('')
+    setClientId('')
     setEventName('')
     setMaxParticipants(undefined)
     setMinParticipants(0)
@@ -145,7 +145,7 @@ const Bid = (props) => {
     <div style={{ padding: '30px' }}>
       <label>
         {words_he['event_date']}
-        <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
+        <MyDatePicker date={date} setDate={setDate} />
       </label>
       <form>
         <div>
@@ -186,18 +186,18 @@ const Bid = (props) => {
           <label>
             {words_he['pick_client']}
             <button onClick={handle_create_client}>{'+'}</button>
-            </label>
-            <Select
-              className={'select'}
-              placeholder={words_he['client_name']}
-              options={clients}
-              id='clients'
-              label={words_he['clients']}
-              onChange={(e) => {
-                //TODO -- replace to client_id
-                setClientName(e.value)
-              }}
-            />
+          </label>
+          <Select
+            className={'select'}
+            placeholder={words_he['client_name']}
+            options={clients}
+            id='clients'
+            label={words_he['clients']}
+            onChange={(e) => {
+              console.log(e.value)
+              setClientId(e.value)
+            }}
+          />
         </div>
 
         <div>
@@ -290,14 +290,14 @@ const Bid = (props) => {
         </div>
       </div>
       <div>
-        <button type='button' className='btn btn-info' onClick={handle_clear}>
-          {words_he['clear_all']}
-        </button>
-        <button type='button' className='btn btn-info' onClick={handle_save}>
+        <button type='button' className='btn btn-success m-2' onClick={handle_save}>
           {words_he['save']}
         </button>
-        <button type='button' className='btn btn-info' onClick={handle_cancel_and_exit}>
-          {words_he['cencel_and_exit']}
+        <button type='button' className='btn btn-danger m-2' onClick={handle_cancel_and_exit}>
+          {words_he['cancel_and_exit']}
+        </button>
+        <button type='button' className='btn btn-outline-dark m-2' onClick={handle_clear}>
+          {words_he['clear_all']}
         </button>
       </div>
     </div>
@@ -327,7 +327,7 @@ const bid_status = [
 //       "user": "1",
 //       "event_date": "29-10-2021",
 //       "event_comment": "29-10-2021",
-//       "client_name": "eli",
+//       "client": "eli",
 //       "event_name": "intel",
 //       "max_participants": "500",
 //       "min_participants": "0",

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../../css/clients.css'
 import { useDispatch } from 'react-redux'
 import * as action_client from '../../redux/Client/action'
+import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 
 const words_he = require('../../utils/words_he').words_he
@@ -36,7 +37,8 @@ const CreateClient = () => {
   const handle_save = () => {
     const data = get_data(client_info)
     dispatch(action_client.create_client(data))
-    dispatch(action_client.get_clients())
+    dispatch(action_client.get_clients({}))
+    dispatch(action_utils.get_utils())
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
     }, 1000)
@@ -110,7 +112,7 @@ const CreateClient = () => {
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn btn-info' onClick={handle_save}>
+      <button type='button' className='btn btn-success' onClick={handle_save}>
         {words_he['save']}
       </button>
     </div>

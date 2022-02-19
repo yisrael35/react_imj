@@ -16,11 +16,11 @@ const CancelExit = (props) => {
     <div>
       <div>{words_he['cancel_exit']} </div>
       <Link to='/Home'>
-        <button className='btn btn-lg btn-primary m-2' onClick={handle_click}>
+        <button className='btn btn-lg btn-danger m-2' onClick={handle_click}>
           {words_he['yes']}
         </button>
       </Link>
-      <button className='btn btn-lg btn-primary m-2' onClick={handle_click}>
+      <button className='btn btn-lg btn-success m-2' onClick={handle_click}>
         {words_he['no']}
       </button>
     </div>

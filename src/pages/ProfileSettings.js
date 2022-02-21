@@ -66,7 +66,7 @@ const ProfileSettings = (props) => {
           {!passwordMatch && <span style={{ color: 'red' }}> {words_he['password_not_matched']}</span>}
         </label>
         <div>
-          <button className='w-45 btn m-2 btn-primary' type='submit'>
+          <button className='w-45 btn m-2 btn-success' type='submit'>
             {words_he['send']}
           </button>
         </div>

@@ -27,6 +27,7 @@ import NavBar from './components/general/NavBar'
 import SnackBar from './components/general/SnackBar'
 import PrivateRoute from './components/general/PrivateRoutes'
 import PopUp from './components/general/PopUp'
+import Loading from './components/general/Loading'
 
 function App() {
   const [name, setName] = useState('')
@@ -37,6 +38,7 @@ function App() {
           <NavBar name={name} setName={setName} />
           <SnackBar />
           <PopUp />
+          <Loading />
           <main>
             <Switch>
               <Route path='/Login' component={() => <Login />} />

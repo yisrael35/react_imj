@@ -50,7 +50,7 @@ const Register = () => {
         }}
       />
       <div style={{ padding: '6px', direction: 'ltr' }}>{email + process.env.REACT_APP_IMJ_EMAIL} </div>
-      <button className='w-100 btn btn-lg btn-primary' type='submit'>
+      <button className='w-100 btn btn-lg btn-success' type='submit'>
         {words_he['register']}
       </button>
     </form>

@@ -30,16 +30,14 @@ const Login = (props) => {
       <form onSubmit={submit}>
         <h1 className='h3 mb-3 fw-normal'>{words_he['please_sign_in']}</h1>
         <input type='text' className='form-control' placeholder={words_he['username']} required onChange={(e) => setUsername(e.target.value)} />
-
         <input type='password' className='form-control' placeholder={words_he['password']} required onChange={(e) => setPassword(e.target.value)} />
-
-        <button className='w-100 btn btn-lg btn-success' type='submit'>
+        <Link to='ForgotPassword'>
+          <u style={{ color: 'black' }}>{words_he['forgot_password']}</u>
+        </Link>
+        <button className='w-100 btn btn-lg btn-success mt-1' type='submit'>
           {words_he['login']}
         </button>
       </form>
-      <Link to='ForgotPassword' className='nav-link'>
-        <button className='w-30 btn btn-sm btn-primary m-3'>{words_he['forgot_password']}</button>{' '}
-      </Link>
     </div>
   )
 }

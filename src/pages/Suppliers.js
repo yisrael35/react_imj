@@ -9,6 +9,7 @@ import UpdateSupplier from '../components/pages/UpdateSupplier'
 import CreateSupplier from '../components/pages/CreateSupplier'
 
 import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
 import * as action_supplier from '../redux/Supplier/action'
 import { FaFileCsv } from 'react-icons/fa'
 
@@ -68,12 +69,15 @@ const Suppliers = () => {
   }
   const create_csv = () => {
     dispatch(action_supplier.get_suppliers({ limit, offset, search, csv: true }))
-    //TODO -- make loading
+    dispatch(action_loading.setLoading())
   }
   return (
     <div>
       {/* search */}
       <span className='field_search'>
+        <button type='button' className='btn btn-info' onClick={handle_create}>
+          {words_he['add_supplier']}
+        </button>
         <button className='transparent_button' onClick={create_csv}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
         </button>
@@ -105,9 +109,6 @@ const Suppliers = () => {
         handle_edit={handle_edit}
       />
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
-      <button type='button' className='btn btn-info' onClick={handle_create}>
-        {words_he['add_supplier']}
-      </button>
     </div>
   )
 }

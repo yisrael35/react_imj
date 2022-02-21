@@ -141,7 +141,7 @@ const UpdateEvent = (props) => {
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn btn-info m-4' onClick={handle_save}>
+      <button type='button' className='btn btn-success m-4' onClick={handle_save}>
         {words_he['save']}
       </button>
     </div>

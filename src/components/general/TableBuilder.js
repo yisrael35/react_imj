@@ -9,11 +9,11 @@ const TableBuilder = ({ items, cols, headers, title, offset, handle_edit }) => {
         <table className='table user-table mb-0'>
           <thead>
             <tr>
-              <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
+              <th scope='col' className='border-0 text-muted font-medium pl-4'>
                 #
               </th>
               {cols.map((col, index) => (
-                <th scope='col' className='border-0 text-uppercase font-medium pl-4' key={col}>
+                <th scope='col' className='border-0 text-muted font-medium pl-4' key={col}>
                   {headers[col]}
                 </th>
               ))}

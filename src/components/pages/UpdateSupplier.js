@@ -32,7 +32,6 @@ const UpdateSupplier = (props) => {
     }, 1000)
   }
 
-
   let account_name
   let iban
   let swift
@@ -91,15 +90,13 @@ const UpdateSupplier = (props) => {
             <td>
               <input type='text' onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, swift: e.target.value } })} defaultValue={swift} />
             </td>
-            <td>
-              <button type='button' className='btn btn-info' onClick={handle_save}>
-                {words_he['save']}
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn-del' onClick={handle_delete}>
+      <button type='button' className='btn btn-success m-2' onClick={handle_save}>
+        {words_he['save']}
+      </button>
+      <button type='button' className='btn btn-danger m-2' onClick={handle_delete}>
         {words_he['delete']}
       </button>
     </div>

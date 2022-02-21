@@ -59,7 +59,7 @@ const words_he = {
   total_cost_after_discount: 'סה"כ אחרי הנחה',
   save: 'שמור',
   clear_all: 'נקה הכול',
-  cencel_and_exit: 'ביטול ויציאה',
+  cancel_and_exit: 'ביטול ויציאה',
   nis: 'שקל',
   dollar: 'דולר',
   draft: 'טיוטה',
@@ -111,12 +111,13 @@ const words_he = {
   account_name: 'שם בעל החשבון',
   add_supplier: 'הוספת ספק',
   new_supplier: 'ספק חדש',
-  reports: 'דוחות',
+  reports: 'יצירת דוחות',
   display_event: 'האירוע שנבחר',
   edit_event: 'ערוך אירוע',
   pick_client: 'בחר לקוח או הוסף חדש ',
   download_file: 'הקובץ מוכן להורדה',                                 
   create_csv: 'צור קובץ csv',
+  employee_name: 'יוצר האירוע',
 }
 
 module.exports = {

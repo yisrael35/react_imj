@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
 import Select from 'react-select'
@@ -8,6 +9,7 @@ import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateUser from '../components/pages/UpdateUser'
 
 import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
 import * as action_user from '../redux/User/action'
 import { FaFileCsv } from 'react-icons/fa'
 
@@ -67,12 +69,17 @@ const Users = (props) => {
   }
   const create_csv = () => {
     dispatch(action_user.get_users({ limit, offset, search, csv: true }))
-    //TODO -- make loading
+    dispatch(action_loading.setLoading())
   }
   return (
     <div>
       {/* search */}
       <span className='field_search'>
+        <Link to='/Register'>
+          <button type='button' className='btn btn-info'>
+            {words_he['create_new_user']}
+          </button>
+        </Link>
         <button className='transparent_button' onClick={create_csv}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
         </button>

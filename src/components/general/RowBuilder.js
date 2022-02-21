@@ -1,15 +1,22 @@
-const words_he = require('../../utils/words_he').words_he
+import { FaRegEdit } from 'react-icons/fa'
 
 const RowBuilder = ({ counter, cols, data, handle_edit }) => {
   return (
     <tr>
-      <td className='pl-4'>{counter}</td>
+      <td>{counter}</td>
       {cols.map((col, index) => (
-        <td key={col + index}>{<span className='text-muted'>{data[col]}</span>}</td>
+        <td key={col + index}>{<span>{data[col]}</span>}</td>
       ))}
       {handle_edit ? (
         <td className='pl-4'>
-          <button onClick={() => handle_edit(data.id, Number(counter) )}>{words_he['edit']}</button>
+          <button className='btn btn-secondary btn-sm' onClick={() => handle_edit(data.id, Number(counter))}>
+            <FaRegEdit
+              style={{
+                fontSize: '18px',
+                margin: '2px',
+              }}
+            />
+          </button>
         </td>
       ) : (
         <td></td>

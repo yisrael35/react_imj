@@ -5,8 +5,10 @@ import Select from 'react-select'
 import TableBuilder from '../components/general/TableBuilder'
 import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateEvent from '../components/pages/UpdateEvent'
+import CreateEvent from '../components/pages/CreateEvent'
 import * as action_event from '../redux/Event/action'
 import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
 import { FaFileCsv } from 'react-icons/fa'
 const words_he = require('../utils/words_he').words_he
 
@@ -80,11 +82,21 @@ const Events = (props) => {
   }
   const create_csv = () => {
     dispatch(action_event.get_events({ limit, offset, search, csv: true }))
-    //TODO -- make loading
+    dispatch(action_loading.setLoading())
   }
   return (
     <div>
       <span className='field_search'>
+        <button
+          type='button'
+          className='btn btn-info'
+          onClick={() => {
+            const content = <CreateEvent />
+            dispatch(action_popUp.setPopUp(content))
+          }}
+        >
+          {words_he['create_event']}
+        </button>
         <button className='transparent_button' onClick={create_csv}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
         </button>

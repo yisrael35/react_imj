@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as action_event_type from '../../redux/EventType/action'
+import * as action_pdf from '../../redux/PDF/action'
 import { FaRegFilePdf } from 'react-icons/fa'
 
 const EmailAndDownload = (props) => {
@@ -10,8 +11,12 @@ const EmailAndDownload = (props) => {
 
   const dispatch = useDispatch()
   const handle_send_email = () => {
-    //TODO
-    dispatch(action_event_type.get_events_type({ bid_id, event_id }, clientEmail))
+    const data = {
+      bid_id: bid_id,
+      email: clientEmail,
+    }
+    dispatch(action_pdf.create_pdf(data))
+    // dispatch(action_event_type.get_events_type({ bid_id, event_id }, clientEmail))
   }
   const handle_get_pdf = () => {
     //TODO
@@ -65,7 +70,6 @@ const EmailAndDownload = (props) => {
           </tr>
         </tbody>
       </table>
-      <div></div>
     </div>
   )
 }

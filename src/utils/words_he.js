@@ -118,6 +118,9 @@ const words_he = {
   download_file: 'הקובץ מוכן להורדה',                                 
   create_csv: 'צור קובץ csv',
   employee_name: 'יוצר האירוע',
+  download_pdf: 'הורד PDF',
+  send_to_email: 'שלח למייל',
+  create_pdf: 'צור קובץ PDF',
 }
 
 module.exports = {

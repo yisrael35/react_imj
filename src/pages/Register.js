@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
@@ -10,7 +10,32 @@ const Register = () => {
   const [last_name, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [enable_send, setEnableSend] = useState(false)
+
   const dispatch = useDispatch()
+
+  const validate_fields = () => {
+    if (email && !/^[a-zA-Z0-9]+$/.test(email)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${email} `, 3000))
+      return false
+    }
+    if (phone && !/^[0-9]+$/.test(phone)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${phone} `, 3000))
+      return false
+    }
+    if (first_name.trim() !== '' && email.trim() !== '' && last_name.trim() !== '' && phone.trim() !== '') {
+      return true
+    }
+    return false
+  }
+  useEffect(() => {
+    if (validate_fields()) {
+      setEnableSend(true)
+    } else {
+      setEnableSend(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [first_name, last_name, email, phone])
 
   const submit = async (e) => {
     e.preventDefault()
@@ -50,7 +75,7 @@ const Register = () => {
         }}
       />
       <div style={{ padding: '6px', direction: 'ltr' }}>{email + process.env.REACT_APP_IMJ_EMAIL} </div>
-      <button className='w-100 btn btn-lg btn-success' type='submit'>
+      <button className='w-100 btn btn-lg btn-success' type='submit' disabled={!enable_send}>
         {words_he['register']}
       </button>
     </form>

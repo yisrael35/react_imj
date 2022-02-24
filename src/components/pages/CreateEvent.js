@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MyDatePicker from '../general/DatePicker'
 import moment from 'moment'
+import Select from 'react-select'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as action_event from '../../redux/Event/action'
 
@@ -13,6 +14,7 @@ const CreateEvent = () => {
   const [start_time, setStartTime] = useState('10:00')
   const [end_time, setEndTime] = useState('11:00')
   const [end_after_start, setEndAfterStart] = useState(true)
+  const [enable_send, setEnableSend] = useState(false)
 
   const [event_info, setEventInfo] = useState({ name: '', user: user.id, from_date: '', to_date: '' })
   const dispatch = useDispatch()
@@ -41,6 +43,22 @@ const CreateEvent = () => {
     setEventInfo({ ...event_info, from_date: `${date} ${start_time}`, to_date: `${date} ${end_time}` })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, start_time, end_time])
+
+  const validate_fields = () => {
+    if (event_info.name && event_info.name.trim() !== '' && event_info.from_date && event_info.to_date && event_info.user && end_after_start) {
+      return true
+    }
+    return false
+  }
+
+  useEffect(() => {
+    if (validate_fields()) {
+      setEnableSend(true)
+    } else {
+      setEnableSend(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event_info, date, start_time, end_time])
 
   return (
     <div>
@@ -85,11 +103,22 @@ const CreateEvent = () => {
               />
               {!end_after_start && <span style={{ color: 'red' }}> {words_he['end_after_start']}</span>}
             </td>
-            <td></td>
+            <td>
+              <Select
+                className={'select'}
+                placeholder={words_he['public']}
+                options={types}
+                id='types'
+                label={words_he['type']}
+                onChange={(e) => {
+                  setEventInfo({ ...event_info, type: e.value })
+                }}
+              />
+            </td>
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn btn-success m-4' onClick={handle_save}>
+      <button className='btn btn-success m-4' onClick={handle_save} disabled={!enable_send}>
         {words_he['save']}
       </button>
     </div>
@@ -97,3 +126,10 @@ const CreateEvent = () => {
 }
 
 export default CreateEvent
+
+const types = [
+  { value: 'private', label: words_he['private'] },
+  { value: 'public', label: words_he['public'] },
+  { value: 'inside', label: words_he['inside'] },
+  { value: 'photo_shot', label: words_he['photo_shot'] },
+]

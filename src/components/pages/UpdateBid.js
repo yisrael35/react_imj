@@ -12,25 +12,17 @@ const UpdateBid = (props) => {
   useEffect(() => {
     const get_bid = async () => {
       const bid = await dispatch(action_bid.get_bid_by_id(props.id))
-      console.log(bid.bid.client_email)
-      // console.log(bid_info.bid.email)
-      // setBidInfo({ ...bid })
+      // console.log(bid.bid)
+
       setEmail(bid.bid.client_email)
     }
     get_bid()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  // const handle_save = () => {
-  //   const data = {}
-  //   dispatch(action_bid.update_bid_by_id(data, props.bid.id))
-  //   const limit = props.limit
-  //   const offset = props.offset
-  //   dispatch(action_bid.get_bids(limit, offset))
-  // }
 
   return (
     <div>
-      <EmailAndDownload email={email} message={"you can download a PDF file or send the client the bid"} />
+      <EmailAndDownload bid_id={props.id} email={email} message={'you can download a PDF file or send the client the bid'} />
     </div>
   )
 }

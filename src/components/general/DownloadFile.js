@@ -5,7 +5,7 @@ import { FaCloudDownloadAlt } from 'react-icons/fa'
 
 const words_he = require('../../utils/words_he').words_he
 
-const DownloadCsv = (props) => {
+const DownloadFile = (props) => {
   const file_name = props.file_name
   const url = process.env.REACT_APP_REST_IMJ_URL
   const file_path = `${url}/assets/${file_name}`
@@ -29,4 +29,4 @@ const DownloadCsv = (props) => {
   )
 }
 
-export default DownloadCsv
+export default DownloadFile

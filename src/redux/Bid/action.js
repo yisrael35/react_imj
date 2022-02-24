@@ -4,7 +4,7 @@ import { GET_BIDS } from './constants'
 import * as actionSnackBar from '../SnackBar/action'
 import * as actionPopUp from '../PopUp/action'
 import * as actionLoading from '../Loading/action'
-import DownloadCsv from '../../components/general/DownloadCsv'
+import DownloadFile from '../../components/general/DownloadFile'
 
 const words_he = require('../../utils/words_he').words_he
 
@@ -32,7 +32,7 @@ export const get_bids =
       .then((res) => {
         if (res.data.file_name) {
           const file_name = res.data.file_name
-          const content = <DownloadCsv file_name={file_name} />
+          const content = <DownloadFile file_name={file_name} />
           dispatch(actionPopUp.setPopUp(content))
         } else if (res.data.bids) {
           const bids = []
@@ -40,7 +40,7 @@ export const get_bids =
             bids.push({ ...bid, event_date: moment(bid.event_date).format('YYYY-MM-DD HH:mm:ss') })
           }
           res.data.bids = bids
-          
+
           dispatch({ type: GET_BIDS, payload: res.data })
         }
       })
@@ -57,8 +57,6 @@ export const get_bid_by_id = (bid_id) => (dispatch) => {
       .get(process.env.REACT_APP_REST_IMJ_URL + '/bid/' + bid_id)
       .then((res) => {
         return resolve(res.data)
-        //TODO
-        // dispatch({ type: GET_USER, payload: res.data })
       })
       .catch((error) => {
         console.log(error)

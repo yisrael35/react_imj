@@ -3,7 +3,7 @@ import axios from 'axios'
 import * as actionSnackBar from '../SnackBar/action'
 import * as actionPopUp from '../PopUp/action'
 import * as actionLoading from '../Loading/action'
-import DownloadCsv from '../../components/general/DownloadCsv'
+import DownloadFile from '../../components/general/DownloadFile'
 const words_he = require('../../utils/words_he').words_he
 
 export const get_suppliers =
@@ -15,7 +15,7 @@ export const get_suppliers =
       .then((res) => {
         if (res.data.file_name) {
           const file_name = res.data.file_name
-          const content = <DownloadCsv file_name={file_name} />
+          const content = <DownloadFile file_name={file_name} />
           dispatch(actionPopUp.setPopUp(content))
         } else {
           for (const supplier of res.data.suppliers) {

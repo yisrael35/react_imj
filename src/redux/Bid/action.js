@@ -18,10 +18,42 @@ export const create_new_bid = (data) => (dispatch) => {
       })
       .catch((error) => {
         dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
-        return reject(undefined)
+        return resolve(undefined)
       })
   })
 }
+
+export const create_schedule_event = (data) => (dispatch) => {
+  return new Promise(async (resolve, reject) => {
+    console.log(data)
+    axios
+      .post(process.env.REACT_APP_REST_IMJ_URL + `/schedule_event`, data)
+      .then((res) => {
+        dispatch(actionSnackBar.setSnackBar('success', 'create successfully', 2000))
+        return resolve(res.status)
+      })
+      .catch((error) => {
+        dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+        return resolve(undefined)
+      })
+  })
+}
+
+export const create_costs = (data) => (dispatch) => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .post(process.env.REACT_APP_REST_IMJ_URL + `/cost`, data)
+      .then((res) => {
+        dispatch(actionSnackBar.setSnackBar('success', 'create successfully', 2000))
+        return resolve(res.status)
+      })
+      .catch((error) => {
+        dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+        return resolve(undefined)
+      })
+  })
+}
+
 
 export const get_bids =
   ({ limit, offset, search, csv }) =>

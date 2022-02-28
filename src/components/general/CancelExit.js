@@ -15,14 +15,14 @@ const CancelExit = (props) => {
   return (
     <div>
       <div>{words_he['cancel_exit']} </div>
+      <button className='btn btn-lg btn-success m-2' onClick={handle_click}>
+        {words_he['no']}
+      </button>
       <Link to='/Home'>
         <button className='btn btn-lg btn-danger m-2' onClick={handle_click}>
           {words_he['yes']}
         </button>
       </Link>
-      <button className='btn btn-lg btn-success m-2' onClick={handle_click}>
-        {words_he['no']}
-      </button>
     </div>
   )
 }

@@ -4,8 +4,7 @@ import React from 'react'
 const TestWebsocket = (props) => {
   // const dispatch = useDispatch()
 
-  const test = async () => {
-  }
+  const test = async () => {}
   return (
     <div>
       {' '}

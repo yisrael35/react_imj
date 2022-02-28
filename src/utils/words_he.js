@@ -38,7 +38,7 @@ const words_he = {
   location: 'מיקום',
   event_name: 'שם האירוע',
   comments: 'הערות',
-  prticipnts_amount: 'כמות משתתפים',
+  participants_amount: 'כמות משתתפים',
   minimum: 'מינימום',
   maximum: 'מקסימום',
   time_schedule_for_event: 'לוח זמנים לאירוע',
@@ -115,12 +115,18 @@ const words_he = {
   display_event: 'האירוע שנבחר',
   edit_event: 'ערוך אירוע',
   pick_client: 'בחר לקוח או הוסף חדש ',
-  download_file: 'הקובץ מוכן להורדה',                                 
+  download_file: 'הקובץ מוכן להורדה',
   create_csv: 'צור קובץ csv',
   employee_name: 'יוצר האירוע',
   download_pdf: 'הורד PDF',
   send_to_email: 'שלח למייל',
   create_pdf: 'צור קובץ PDF',
+  finish: 'סיום',
+  next: 'הבא',
+  back: 'חזור',
+  skip: 'דלג',
+  time_schedule: 'לוח זמנים',
+  bid_created: 'הצעת מחיר נוצרה בהצלחה',
 }
 
 module.exports = {

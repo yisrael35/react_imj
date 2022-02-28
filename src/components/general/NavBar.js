@@ -37,11 +37,11 @@ const Nav = (props) => {
     if (permissions === 1) {
       menu = (
         <ul className='navbar-nav  sticky-top me-auto mb-2 mb-md-0'>
-          {/* <li className='nav-item active'>
+          <li className='nav-item active'>
             <Link to='/Tests' className='nav-link'>
               Tests
             </Link>
-          </li> */}
+          </li>
           <li className='nav-item active '>
             <Link to='/Reports' className='nav-link'>
               {words_he['reports']}
@@ -89,20 +89,47 @@ const Nav = (props) => {
       )
     } else if (permissions === 2) {
       menu = (
-        <ul className='navbar-nav me-auto mb-2 mb-md-0'>
+        <ul className='navbar-nav  sticky-top me-auto mb-2 mb-md-0'>
+          {/* <li className='nav-item active'>
+            <Link to='/Tests' className='nav-link'>
+              Tests
+            </Link>
+          </li> */}
+          <li className='nav-item active '>
+            <Link to='/Reports' className='nav-link'>
+              {words_he['reports']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/Suppliers' className='nav-link'>
+              {words_he['suppliers']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/Events' className='nav-link'>
+              {words_he['events']}
+            </Link>
+          </li>
+          <li className='nav-item active'>
+            <Link to='/Clients' className='nav-link'>
+              {words_he['clients']}
+            </Link>
+          </li>
           <li className='nav-item active'>
             <Link to='/ProfileSettings' className='nav-link'>
               {words_he['profile_settings']}
+              {/* <FaUserEdit style={{ fontSize: '28px', margin: '4px' }} /> */}
             </Link>
           </li>
           <li className='nav-item active'>
-            <Link to='/CreateBid' className='nav-link'>
-              {words_he['new_bid']}
+            <Link to='/Bids' className='nav-link'>
+              {words_he['bids']}
             </Link>
           </li>
           <li className='nav-item active'>
-            <Link to='/login' className='nav-link' onClick={logout}>
+            <Link to='/Login' className='nav-link' onClick={logout}>
               {words_he['logout']}
+              {/* <FaSignOutAlt style={{ fontSize: '28px', margin: '4px' }} /> */}
             </Link>
           </li>
         </ul>
@@ -124,14 +151,13 @@ const Nav = (props) => {
       )
     }
   }
-  // fixed-top
+
   return (
     <nav className='navbar navbar-expand-md navbar-dark bg-dark mb-4 sticky-top'>
       <div className='container-fluid'>
         <Link to='/Home' className='navbar-brand'>
           {words_he['home']}
         </Link>
-
         <div>{menu}</div>
       </div>
     </nav>

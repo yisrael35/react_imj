@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
-
+const { invalid_email, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
 const words_he = require('../utils/words_he').words_he
 
 const Register = () => {
@@ -13,21 +13,7 @@ const Register = () => {
   const [enable_send, setEnableSend] = useState(false)
 
   const dispatch = useDispatch()
-
-  const validate_fields = () => {
-    if (email && !/^[a-zA-Z0-9]+$/.test(email)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${email} `, 3000))
-      return false
-    }
-    if (phone && !/^[0-9]+$/.test(phone)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${phone} `, 3000))
-      return false
-    }
-    if (first_name.trim() !== '' && email.trim() !== '' && last_name.trim() !== '' && phone.trim() !== '') {
-      return true
-    }
-    return false
-  }
+  
   useEffect(() => {
     if (validate_fields()) {
       setEnableSend(true)
@@ -37,16 +23,26 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [first_name, last_name, email, phone])
 
+  const validate_fields = () => {
+    if (email && invalid_email(email)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${email} `, 3000))
+      return false
+    }
+    if (phone && invalid_phone(phone)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${phone} `, 3000))
+      return false
+    }
+    // if (first_name.trim() !== '' && email.trim() !== '' && last_name.trim() !== '' && phone.trim() !== '') {
+    //   return true
+    // }
+    if(all_fields_filled([first_name, email, last_name, phone])){
+      return true
+    }
+    return false
+  }
+  
   const submit = async (e) => {
     e.preventDefault()
-    if (!/^[a-zA-Z0-9]+$/.test(email)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${email} `, 3000))
-      return
-    }
-    if (!/^[0-9]+$/.test(phone)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${phone} `, 3000))
-      return
-    }
 
     const data = {
       username: email,

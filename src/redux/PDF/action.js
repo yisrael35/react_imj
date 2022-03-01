@@ -12,7 +12,7 @@ export const create_pdf =
     axios
       .post(process.env.REACT_APP_REST_IMJ_URL + `/pdf`, data)
       .then((res) => {
-        
+
         if (download && res.data.file_name) {
           dispatch(actionLoading.disableLoading())
           const file_name = res.data.file_name
@@ -22,6 +22,7 @@ export const create_pdf =
         dispatch(actionSnackBar.setSnackBar('success', 'create client successfully', 2000))
       })
       .catch((error) => {
+        // console.log(error.response.data)
         dispatch(actionLoading.disableLoading())
         dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
       })

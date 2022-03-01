@@ -42,7 +42,6 @@ export const get_user = () => (dispatch, getState) => {
         password: '',
         confirm_password: '',
       }
-      console.log(data)
       dispatch({ type: GET_USER, payload: data })
     })
     .catch((error) => {

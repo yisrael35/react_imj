@@ -11,7 +11,7 @@ import UpdateBid from '../components/pages/UpdateBid'
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_bid from '../redux/Bid/action'
-import { FaFileCsv } from 'react-icons/fa'
+import { FaFileCsv, FaRegFilePdf } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -37,14 +37,16 @@ const Bids = (props) => {
     let new_offset = Number(offset) + Number(limit)
     setOffset(new_offset)
   }
+  const pdf_icon = (
+    // <PictureAsPdfTwoTone />
+    <FaRegFilePdf
+      style={{
+        fontSize: '20px',
+        margin: '2px',
+      }}
+    />
+  )
   const handle_edit = (id, index) => {
-    // let bid
-    // for (const item of items) {
-    //   if (item['id'] === id) {
-    //     bid = item
-    //     break
-    //   }
-    // }
     const content = <UpdateBid counter={index} id={id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
@@ -52,7 +54,7 @@ const Bids = (props) => {
     dispatch(action_bid.get_bids({ limit, offset, search, csv: true }))
     dispatch(action_loading.setLoading())
   }
-  // const search = <FaSearch style={{ fontSize: '28px', margin: '4px' }} />
+
   return (
     <div>
       {/* search */}
@@ -83,7 +85,7 @@ const Bids = (props) => {
 
       <TableBuilder
         items={items}
-        cols={['event_name', 'client', 'event_date', 'event_type', 'location', 'first_name']}
+        cols={['event_name', 'client', 'event_date', 'event_type', 'location', 'first_name', 'language', 'status']}
         headers={{
           event_name: words_he['event_name'],
           event_type: words_he['event_type'],
@@ -91,10 +93,13 @@ const Bids = (props) => {
           first_name: words_he['employee_name'],
           event_date: words_he['event_date'],
           client: words_he['client_name'],
+          language: words_he['language'],
+          status: words_he['status'],
         }}
         title={words_he['bids']}
         offset={offset}
-        handle_edit={handle_edit}
+        handle_click={handle_edit}
+        click_icon={pdf_icon}
       />
 
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
@@ -105,8 +110,8 @@ const Bids = (props) => {
 export default Bids
 
 const limits = [
-  { value: '5', label: 5 },
-  { value: '10', label: 10 },
+  { value: '15', label: 15 },
   { value: '25', label: 25 },
   { value: '50', label: 50 },
+  { value: '100', label: 100 },
 ]

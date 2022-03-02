@@ -35,8 +35,8 @@ export const get_events =
           for (const event of res.data.events) {
             events.push({
               ...event,
-              from_date: moment(event.from_date).format('YYYY-MM-DD HH:mm:ss'),
-              to_date: moment(event.to_date).format('YYYY-MM-DD HH:mm:ss'),
+              from_date: moment(event.from_date).format('HH:mm:ss YYYY-MM-DD'),
+              to_date: moment(event.to_date).format('HH:mm:ss YYYY-MM-DD'),
             })
           }
           res.data.events = events

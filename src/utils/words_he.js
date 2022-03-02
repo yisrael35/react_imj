@@ -32,6 +32,7 @@ const words_he = {
   first_name: 'שם פרטי',
   last_name: 'שם משפחה',
   languages: 'שפות',
+  language: 'שפה',
   hebrew: 'עברית',
   event_type: 'סוג אירוע',
   client_name: 'שם הלקוח',
@@ -127,6 +128,9 @@ const words_he = {
   skip: 'דלג',
   time_schedule: 'לוח זמנים',
   bid_created: 'הצעת מחיר נוצרה בהצלחה',
+  created_at: 'תאריך יצירה',
+  english: 'אנגלית',
+  updated_at: 'עודכן בתאריך',
 }
 
 module.exports = {

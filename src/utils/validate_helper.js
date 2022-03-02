@@ -18,8 +18,8 @@ const invalid_phone = (phone) => {
 }
 
 const all_fields_filled = (fields) => {
-  var arrayConstructor = [].constructor
-  var objectConstructor = {}.constructor
+  let arrayConstructor = [].constructor
+  let objectConstructor = {}.constructor
 
   if (fields.constructor === arrayConstructor) {
     const len = fields.length

@@ -1,7 +1,6 @@
 import RowBuilder from './RowBuilder'
 
-const TableBuilder = ({ items, cols, headers, title, offset, handle_edit }) => {
-  
+const TableBuilder = ({ items, cols, headers, title, offset, handle_click, click_icon }) => {
   return (
     <div>
       <div className='user_page'>
@@ -21,7 +20,7 @@ const TableBuilder = ({ items, cols, headers, title, offset, handle_edit }) => {
           </thead>
           <tbody>
             {items.map((data, index) => (
-              <RowBuilder data={data} counter={index + 1 + Number(offset)} key={data.id} cols={cols} handle_edit={handle_edit} />
+              <RowBuilder data={data} counter={index + 1 + Number(offset)} key={data.id} cols={cols} handle_click={handle_click} click_icon={click_icon} />
             ))}
           </tbody>
         </table>

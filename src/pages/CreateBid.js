@@ -252,7 +252,7 @@ const CreateBid = (props) => {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Grid className={classes.instructions}>{getStepContent(activeStep)}</Grid>
           </div>
         )}
       </div>

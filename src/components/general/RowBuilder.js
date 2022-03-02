@@ -1,21 +1,16 @@
-import { FaRegEdit } from 'react-icons/fa'
+import moment from 'moment'
 
-const RowBuilder = ({ counter, cols, data, handle_edit }) => {
+const RowBuilder = ({ counter, cols, data, handle_click, click_icon }) => {
   return (
     <tr>
       <td>{counter}</td>
       {cols.map((col, index) => (
-        <td key={col + index}>{<span>{data[col]}</span>}</td>
+        <td key={col + index}>{<span>{col === 'created_at' || col === 'updated_at' ? moment(data[col]).format('HH:mm:ss YYYY-MM-DD') : data[col]}</span>}</td>
       ))}
-      {handle_edit ? (
+      {handle_click ? (
         <td className='pl-4'>
-          <button className='btn btn-secondary btn-sm' onClick={() => handle_edit(data.id, Number(counter))}>
-            <FaRegEdit
-              style={{
-                fontSize: '18px',
-                margin: '2px',
-              }}
-            />
+          <button className='btn btn-outline-dark btn-sm' onClick={() => handle_click(data.id, Number(counter))}>
+            {click_icon}
           </button>
         </td>
       ) : (

@@ -11,7 +11,7 @@ import CreateSupplier from '../components/pages/CreateSupplier'
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_supplier from '../redux/Supplier/action'
-import { FaFileCsv } from 'react-icons/fa'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -48,6 +48,14 @@ const Suppliers = () => {
     const content = <UpdateSupplier supplier={supplier} counter={index} key={supplier.id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
+  const edit_icon = (
+    <FaRegEdit
+      style={{
+        fontSize: '18px',
+        margin: '2px',
+      }}
+    />
+  )
 
   const handle_create = () => {
     const new_supplier = <CreateSupplier />
@@ -97,16 +105,18 @@ const Suppliers = () => {
       />
       <TableBuilder
         items={items}
-        cols={['name', 'phone', 'email', 'account_details']}
+        cols={['name', 'phone', 'email', 'account_details', 'created_at']}
         headers={{
           name: words_he['name'],
           phone: words_he['phone'],
           email: words_he['email'],
           account_details: words_he['account_details'],
+          created_at: words_he['created_at'],
         }}
         title={words_he['suppliers']}
         offset={offset}
-        handle_edit={handle_edit}
+        handle_click={handle_edit}
+        click_icon={edit_icon}
       />
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
     </div>
@@ -116,8 +126,8 @@ const Suppliers = () => {
 export default Suppliers
 
 const limits = [
-  { value: '5', label: 5 },
-  { value: '10', label: 10 },
+  { value: '15', label: 15 },
   { value: '25', label: 25 },
   { value: '50', label: 50 },
+  { value: '100', label: 100 },
 ]

@@ -9,7 +9,7 @@ import CreateEvent from '../components/pages/CreateEvent'
 import * as action_event from '../redux/Event/action'
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
-import { FaFileCsv } from 'react-icons/fa'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 const words_he = require('../utils/words_he').words_he
 
 const Events = (props) => {
@@ -47,6 +47,14 @@ const Events = (props) => {
     const content = <UpdateEvent counter={index} id={event.id} data={event} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
+  const edit_icon = (
+    <FaRegEdit
+      style={{
+        fontSize: '18px',
+        margin: '2px',
+      }}
+    />
+  )
 
   for (const item of items) {
     switch (item['type']) {
@@ -119,17 +127,19 @@ const Events = (props) => {
       {/* <button class="fa-duotone fa-file-csv">11111</button> */}
       <TableBuilder
         items={items}
-        cols={['name', 'from_date', 'to_date', 'status', 'type']}
+        cols={['name', 'from_date', 'to_date', 'first_name', 'status', 'type']}
         headers={{
           name: words_he['name'],
           from_date: words_he['from_date'],
           to_date: words_he['to_date'],
+          first_name: words_he['employee_name'],
           status: words_he['status'],
           type: words_he['type'],
         }}
         title={words_he['events']}
         offset={offset}
-        handle_edit={handle_edit}
+        handle_click={handle_edit}
+        click_icon={edit_icon}
       />
 
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
@@ -140,10 +150,10 @@ const Events = (props) => {
 export default Events
 
 const limits = [
-  { value: '5', label: 5 },
-  { value: '10', label: 10 },
+  { value: '15', label: 15 },
   { value: '25', label: 25 },
   { value: '50', label: 50 },
+  { value: '100', label: 100 },
 ]
 
 // budget: null​

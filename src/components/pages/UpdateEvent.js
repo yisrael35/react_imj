@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import MyDatePicker from '../general/DatePicker'
-import moment, { invalid } from 'moment'
+import moment from 'moment'
 import Select from 'react-select'
 import * as action_event from '../../redux/Event/action'
 import * as action_popUp from '../../redux/PopUp/action'
@@ -38,12 +38,11 @@ const UpdateEvent = (props) => {
     }
     get_event_by_id()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, start_time, end_time, end_after_start, event_info])
 
   const validate_fields = () => {
-   
     if (all_fields_filled([date])) {
       return true
     }

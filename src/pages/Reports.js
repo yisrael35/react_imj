@@ -4,6 +4,7 @@ import * as action_utils from '../redux/Utils/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_csv from '../redux/CSV/action'
 import Select from 'react-select'
+import RangeDatePicker from '../components/general/RangeDatePicker'
 const words_he = require('../utils/words_he').words_he
 
 const Reports = (props) => {
@@ -30,7 +31,7 @@ const Reports = (props) => {
     <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
       {/* TODO -- ADD FROM DATE AND TO DATE */}
       <h4>{words_he['reports']}</h4>
-      
+      <RangeDatePicker />
       <Select
         className={'report_select'}
         placeholder={'tables'}

@@ -54,7 +54,6 @@ export const create_costs = (data) => (dispatch) => {
   })
 }
 
-
 export const get_bids =
   ({ limit, offset, search, csv }) =>
   (dispatch) => {
@@ -69,7 +68,14 @@ export const get_bids =
         } else if (res.data.bids) {
           const bids = []
           for (const bid of res.data.bids) {
-            bids.push({ ...bid, event_date: moment(bid.event_date).format('YYYY-MM-DD HH:mm:ss') })
+            console.log(bid.language)
+            const bid_data = {
+              ...bid,
+              language: convert_language(bid.language),
+              status: convert_status(bid.status),
+              event_date: moment(bid.event_date).format('HH:mm:ss YYYY-MM-DD '),
+            }
+            bids.push(bid_data)
           }
           res.data.bids = bids
 
@@ -108,4 +114,27 @@ export const update_bid_by_id = (data, bid_id) => (dispatch) => {
     .catch((error) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
     })
+}
+
+const convert_status = (table) => {
+  switch (table) {
+    case 'draft':
+      return words_he['draft']
+    case 'sent':
+      return words_he['sent']
+    case 'approved':
+      return words_he['approved']
+    default:
+      break
+  }
+}
+const convert_language = (table) => {
+  switch (table) {
+    case 'he':
+      return words_he['hebrew']
+    case 'en':
+      return words_he['english']
+    default:
+      break
+  }
 }

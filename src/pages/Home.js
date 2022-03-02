@@ -4,14 +4,21 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import 'moment/locale/he'
+
+//redux
 import * as action_home from '../redux/Home/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
 import * as action_popUp from '../redux/PopUp/action'
+
+//components
 import CreateEvent from '../components/pages/CreateEvent'
 import DisplayEvent from '../components/pages/DisplayEvent'
+import FloatingButton from '../components/general/FloatingButton'
+
+//services
 import workerInstances from '../services'
+
 const localizer = momentLocalizer(moment)
-const words_he = require('../utils/words_he').words_he
 
 const Home = (props) => {
   const events = useSelector((state) => state.home.events)
@@ -52,9 +59,14 @@ const Home = (props) => {
     dispatch(action_home.get_events(data))
   }
 
+  const handle_add_event = () => {
+    const content = <CreateEvent />
+    dispatch(action_popUp.setPopUp(content))
+  }
+
   return (
     <div style={{ textAlign: 'center' }}>
-      <button
+      {/* <button
         className='btn btn-info'
         onClick={() => {
           const content = <CreateEvent />
@@ -62,7 +74,7 @@ const Home = (props) => {
         }}
       >
         {words_he['create_event']}
-      </button>
+      </button> */}
       <Calendar
         onDoubleClickEvent={(event) => {
           const content = <DisplayEvent data={event} id={event.id} />
@@ -78,6 +90,7 @@ const Home = (props) => {
         onNavigate={get_event_by_month}
         selectable={false}
       />
+      <FloatingButton handle_click={handle_add_event} />
     </div>
   )
 }

@@ -11,7 +11,7 @@ import CreateClient from '../components/pages/CreateClient'
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_client from '../redux/Client/action'
-import { FaFileCsv } from 'react-icons/fa'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -53,7 +53,14 @@ const Clients = () => {
     const new_client = <CreateClient />
     dispatch(action_popUp.setPopUp(new_client))
   }
-
+  const edit_icon = (
+    <FaRegEdit
+      style={{
+        fontSize: '18px',
+        margin: '2px',
+      }}
+    />
+  )
   for (const item of items) {
     switch (item['type']) {
       case 'private':
@@ -99,16 +106,18 @@ const Clients = () => {
       />
       <TableBuilder
         items={items}
-        cols={['name', 'type', 'phone', 'email']}
+        cols={['name', 'type', 'phone', 'email', 'created_at']}
         headers={{
           name: words_he['name'],
           type: words_he['type'],
           phone: words_he['phone'],
           email: words_he['email'],
+          created_at: words_he['created_at'],
         }}
         title={words_he['clients']}
         offset={offset}
-        handle_edit={handle_edit}
+        handle_click={handle_edit}
+        click_icon={edit_icon}
       />
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
     </div>
@@ -118,8 +127,8 @@ const Clients = () => {
 export default Clients
 
 const limits = [
-  { value: '5', label: 5 },
-  { value: '10', label: 10 },
+  { value: '15', label: 15 },
   { value: '25', label: 25 },
   { value: '50', label: 50 },
+  { value: '100', label: 100 },
 ]

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import MyDatePicker from '../general/DatePicker'
-import moment from 'moment'
+import moment, { invalid } from 'moment'
 import Select from 'react-select'
 import * as action_event from '../../redux/Event/action'
 import * as action_popUp from '../../redux/PopUp/action'
 
 const words_he = require('../../utils/words_he').words_he
+const { all_fields_filled } = require('../../utils/validate_helper')
 
 const UpdateEvent = (props) => {
   const [date, setDate] = useState(moment(props.data.from_date).format(`YYYY-MM-DD`))
@@ -14,9 +15,15 @@ const UpdateEvent = (props) => {
   const [end_time, setEndTime] = useState(moment(props.data.to_date).format(`HH:mm:ss`))
   const [end_after_start, setEndAfterStart] = useState(true)
   const [event_info, setEventInfo] = useState({ name: '', from_date: '', to_date: '' })
+  const [enable_send, setEnableSend] = useState(false)
 
   const dispatch = useDispatch()
   useEffect(() => {
+    if (validate_fields()) {
+      setEnableSend(true)
+    } else {
+      setEnableSend(false)
+    }
     const get_event_by_id = async () => {
       const event = await dispatch(action_event.get_event_by_id(props.id))
       delete event.id
@@ -31,7 +38,17 @@ const UpdateEvent = (props) => {
     }
     get_event_by_id()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date, start_time, end_time, end_after_start, event_info])
+
+  const validate_fields = () => {
+   
+    if (all_fields_filled([date])) {
+      return true
+    }
+    return false
+  }
 
   const handle_save = () => {
     if (start_time >= end_time) {
@@ -141,7 +158,7 @@ const UpdateEvent = (props) => {
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn btn-success m-4' onClick={handle_save}>
+      <button type='button' className='btn btn-success m-4' onClick={handle_save} disabled={!enable_send}>
         {words_he['save']}
       </button>
     </div>

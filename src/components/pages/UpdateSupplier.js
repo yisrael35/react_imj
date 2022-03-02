@@ -1,17 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../css/suppliers.css'
 import { useDispatch } from 'react-redux'
 import * as action_supplier from '../../redux/Supplier/action'
 import * as action_popUp from '../../redux/PopUp/action'
+import * as actionSnackBar from '../../redux/SnackBar/action'
 
 const words_he = require('../../utils/words_he').words_he
+const { invalid_email, invalid_phone, all_fields_filled } = require('../../utils/validate_helper')
 
 const UpdateSupplier = (props) => {
-  console.log(props.supplier)
   const { name, email, phone, account } = props.supplier
   const [supplier_info, setSupplierInfo] = useState({ name, account, phone, email })
   const dispatch = useDispatch()
+  const [enable_send, setEnableSend] = useState(false)
 
+  useEffect(() => {
+    if (validate_fields()) {
+      setEnableSend(true)
+    } else {
+      setEnableSend(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supplier_info])
+
+  const validate_fields = () => {
+    if (supplier_info.email && invalid_email(supplier_info.email)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${supplier_info.email} `, 3000))
+      return false
+    }
+    if (supplier_info.phone && invalid_phone(supplier_info.phone)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${supplier_info.phone} `, 3000))
+      return false
+    }
+
+    if (all_fields_filled(supplier_info)) {
+      return true
+    }
+    return false
+  }
   const handle_save = () => {
     // if (account_name == '' || iban === '' || swift == '')
     // Do we need validation that all the account fields was filled or its okay to fill partly
@@ -93,7 +119,7 @@ const UpdateSupplier = (props) => {
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn btn-success m-2' onClick={handle_save}>
+      <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
         {words_he['save']}
       </button>
       <button type='button' className='btn btn-danger m-2' onClick={handle_delete}>

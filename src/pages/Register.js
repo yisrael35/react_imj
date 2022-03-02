@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
-const { invalid_email, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
+const { invalid_email_prefix, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
 const words_he = require('../utils/words_he').words_he
 
 const Register = () => {
@@ -13,7 +13,7 @@ const Register = () => {
   const [enable_send, setEnableSend] = useState(false)
 
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     if (validate_fields()) {
       setEnableSend(true)
@@ -24,7 +24,7 @@ const Register = () => {
   }, [first_name, last_name, email, phone])
 
   const validate_fields = () => {
-    if (email && invalid_email(email)) {
+    if (email && invalid_email_prefix(email)) {
       dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${email} `, 3000))
       return false
     }
@@ -35,12 +35,12 @@ const Register = () => {
     // if (first_name.trim() !== '' && email.trim() !== '' && last_name.trim() !== '' && phone.trim() !== '') {
     //   return true
     // }
-    if(all_fields_filled([first_name, email, last_name, phone])){
+    if (all_fields_filled([first_name, email, last_name, phone])) {
       return true
     }
     return false
   }
-  
+
   const submit = async (e) => {
     e.preventDefault()
 

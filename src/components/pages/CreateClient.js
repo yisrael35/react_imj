@@ -1,15 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../css/clients.css'
 import { useDispatch } from 'react-redux'
 import * as action_client from '../../redux/Client/action'
 import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
+import * as actionSnackBar from '../../redux/SnackBar/action'
 
 const words_he = require('../../utils/words_he').words_he
+const { invalid_email, invalid_phone, all_fields_filled } = require('../../utils/validate_helper')
 
 const CreateClient = () => {
+  const [enable_send, setEnableSend] = useState(false)
   const [client_info, setClientInfo] = useState({ name: '', type: words_he['private'], phone: '', email: '' })
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (validate_fields()) {
+      setEnableSend(true)
+    } else {
+      setEnableSend(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client_info])
+
+  const validate_fields = () => {
+    if (client_info.email && invalid_email(client_info.email)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${client_info.email} `, 3000))
+      return false
+    }
+    if (client_info.phone && invalid_phone(client_info.phone)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${client_info.phone} `, 3000))
+      return false
+    }
+
+    if (all_fields_filled(client_info)) {
+      return true
+    }
+    return false
+  }
 
   const convert_type = (type) => {
     switch (type) {
@@ -112,7 +140,7 @@ const CreateClient = () => {
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn btn-success' onClick={handle_save}>
+      <button type='button' className='btn btn-success' onClick={handle_save} disabled={!enable_send}>
         {words_he['save']}
       </button>
     </div>

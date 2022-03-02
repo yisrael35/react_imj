@@ -1,8 +1,14 @@
-const invalid_email = (email) => {
+const invalid_email_prefix = (email) => {
   if (!/^[a-zA-Z0-9]+$/.test(email) && email.trim() !== '') {
     return true
   }
   return false
+}
+
+const invalid_email = (email) => {
+  return !String(email)
+    .toLowerCase()
+    .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 }
 const invalid_phone = (phone) => {
   if (!/^[0-9]+$/.test(phone) && phone.trim() !== '') {
@@ -14,17 +20,23 @@ const invalid_phone = (phone) => {
 const all_fields_filled = (fields) => {
   var arrayConstructor = [].constructor
   var objectConstructor = {}.constructor
-  
+
   if (fields.constructor === arrayConstructor) {
     const len = fields.length
     for (let i = 0; i < len; i++) {
-      if (fields[i].trim() === '') {
+      if (!fields[i] || fields[i].trim() === '') {
         return false
       }
     }
   } else if (fields.constructor === objectConstructor) {
     for (let key in fields) {
-      if (fields[key].trim() === '') {
+      if (fields[key] && fields[key].constructor === objectConstructor) {
+        for (let sub_key in fields[key]) {
+          if (!fields[key][sub_key] || fields[key][sub_key].trim() === '') {
+            return false
+          }
+        }
+      } else if (!fields[key] || fields[key].trim() === '') {
         return false
       }
     }
@@ -34,6 +46,7 @@ const all_fields_filled = (fields) => {
 
 module.exports = {
   invalid_email,
+  invalid_email_prefix,
   invalid_phone,
   all_fields_filled,
 }

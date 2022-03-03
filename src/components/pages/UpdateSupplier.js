@@ -6,7 +6,7 @@ import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 
 const words_he = require('../../utils/words_he').words_he
-const { invalid_email, invalid_phone, all_fields_filled } = require('../../utils/validate_helper')
+const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const UpdateSupplier = (props) => {
   const { name, email, phone, account } = props.supplier
@@ -24,9 +24,14 @@ const UpdateSupplier = (props) => {
   }, [supplier_info])
 
   const validate_fields = () => {
-    if (supplier_info.email && invalid_email(supplier_info.email)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${supplier_info.email} `, 3000))
-      return false
+    if (supplier_info.email) {
+      if (invalid_email_characters(supplier_info.email)) {
+        dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${supplier_info.email} `, 3000))
+        return false
+      }
+      if (invalid_email(supplier_info.email)) {
+        return false
+      }
     }
     if (supplier_info.phone && invalid_phone(supplier_info.phone)) {
       dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${supplier_info.phone} `, 3000))

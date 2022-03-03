@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
-const { invalid_email_prefix, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
+const { invalid_email_characters_prefix, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
 const words_he = require('../utils/words_he').words_he
 
 const Register = () => {
@@ -24,8 +24,8 @@ const Register = () => {
   }, [first_name, last_name, email, phone])
 
   const validate_fields = () => {
-    if (email && invalid_email_prefix(email)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${email} `, 3000))
+    if (email && invalid_email_characters_prefix(email)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${email} `, 3000))
       return false
     }
     if (phone && invalid_phone(phone)) {

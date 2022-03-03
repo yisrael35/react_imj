@@ -6,7 +6,7 @@ import * as action_popUp from '../../redux/PopUp/action'
 import Select from 'react-select'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 
-const { invalid_email, invalid_phone, all_fields_filled } = require('../../utils/validate_helper')
+const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 const words_he = require('../../utils/words_he').words_he
 
 const UpdateClient = (props) => {
@@ -25,9 +25,14 @@ const UpdateClient = (props) => {
   }, [client_info])
 
   const validate_fields = () => {
-    if (client_info.email && invalid_email(client_info.email)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${client_info.email} `, 3000))
-      return false
+    if (client_info.email) {
+      if (invalid_email_characters(client_info.email)) {
+        dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${client_info.email} `, 3000))
+        return false
+      }
+      if (invalid_email(client_info.email)) {
+        return false
+      }
     }
     if (client_info.phone && invalid_phone(client_info.phone)) {
       dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${client_info.phone} `, 3000))
@@ -233,7 +238,6 @@ const UpdateClient = (props) => {
       <button type='button' className='btn btn-danger m-2' onClick={handle_delete}>
         {words_he['delete']}
       </button>{' '}
-     
     </div>
   )
 }

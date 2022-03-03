@@ -1,4 +1,10 @@
-const invalid_email_prefix = (email) => {
+const invalid_email_characters = (email) => {
+  if (!/^[a-zA-Z0-9@_.-]+$/.test(email) && email.trim() !== '') {
+    return true
+  }
+  return false
+}
+const invalid_email_characters_prefix = (email) => {
   if (!/^[a-zA-Z0-9]+$/.test(email) && email.trim() !== '') {
     return true
   }
@@ -46,7 +52,8 @@ const all_fields_filled = (fields) => {
 
 module.exports = {
   invalid_email,
-  invalid_email_prefix,
+  invalid_email_characters,
+  invalid_email_characters_prefix,
   invalid_phone,
   all_fields_filled,
 }

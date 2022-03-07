@@ -240,7 +240,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
         <button type='button' className='btn btn-danger m-2' onClick={handle_cancel_and_exit}>
           {words_he['cancel_and_exit']}
         </button>
-        <button type='button' className='btn btn-outline-dark m-2' onClick={handle_clear}>
+        <button type='submit' className='btn btn-outline-dark m-2' onClick={handle_clear}>
           {words_he['clear_all']}
         </button>
       </Grid>

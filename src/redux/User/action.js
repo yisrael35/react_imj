@@ -54,7 +54,6 @@ export const delete_user = (user_id) => (dispatch) => {
   axios
     .delete(process.env.REACT_APP_REST_IMJ_URL + `/user/${user_id}`)
     .then((res) => {
-      get_users()
       dispatch(actionSnackBar.setSnackBar('success', 'user status changed successfully', 2000))
     })
     .catch((error) => {
@@ -65,11 +64,10 @@ export const create_user = (data) => (dispatch) => {
   axios
     .post(process.env.REACT_APP_REST_IMJ_URL + `/user`, data)
     .then((res) => {
-      get_users()
       dispatch(actionSnackBar.setSnackBar('success', 'create user successfully', 2000))
     })
     .catch((error) => {
-      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']}`, 3000))
     })
 }
 
@@ -79,11 +77,10 @@ export const update_user = (data) => (dispatch, getState) => {
   axios
     .put(process.env.REACT_APP_REST_IMJ_URL + `/user/${user_id}`, data)
     .then((res) => {
-      get_users()
       dispatch(actionSnackBar.setSnackBar('success', 'update user successfully', 2000))
     })
     .catch((error) => {
-      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']}`, 3000))
     })
 }
 
@@ -91,10 +88,9 @@ export const update_user_by_id = (data, user_id) => (dispatch, getState) => {
   axios
     .put(process.env.REACT_APP_REST_IMJ_URL + `/user/${user_id}`, data)
     .then((res) => {
-      get_users()
       dispatch(actionSnackBar.setSnackBar('success', 'update user successfully', 2000))
     })
     .catch((error) => {
-      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']}`, 3000))
     })
 }

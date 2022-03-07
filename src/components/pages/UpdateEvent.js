@@ -10,7 +10,7 @@ const words_he = require('../../utils/words_he').words_he
 const { all_fields_filled } = require('../../utils/validate_helper')
 
 const UpdateEvent = (props) => {
-  const [date, setDate] = useState(moment(props.data.from_date).format(`YYYY-MM-DD`))
+  const [date, setDate] = useState(undefined)
   const [start_time, setStartTime] = useState(moment(props.data.from_date).format(`HH:mm:ss`))
   const [end_time, setEndTime] = useState(moment(props.data.to_date).format(`HH:mm:ss`))
   const [end_after_start, setEndAfterStart] = useState(true)
@@ -19,28 +19,42 @@ const UpdateEvent = (props) => {
 
   const dispatch = useDispatch()
   useEffect(() => {
-    if (validate_fields()) {
-      setEnableSend(true)
-    } else {
-      setEnableSend(false)
-    }
     const get_event_by_id = async () => {
       const event = await dispatch(action_event.get_event_by_id(props.id))
       delete event.id
       delete event.user
 
       setEventInfo({ ...event })
-      //TODO --
-      // moment(event.from_date).format(`DD/MM/YYYY`)
-      // setDate(moment().format(`2025-MM-DD`))
+
+      setDate(moment(event.from_date).format(`YYYY-MM-DD`))
       setStartTime(moment(event.from_date).format(`HH:mm`))
       setEndTime(moment(event.to_date).format(`HH:mm`))
     }
     get_event_by_id()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (validate_fields()) {
+      setEnableSend(true)
+    } else {
+      setEnableSend(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, start_time, end_time, end_after_start, event_info])
+
+  useEffect(() => {
+    if (start_time >= end_time) {
+      setEndAfterStart(false)
+      return
+    } else {
+      setEndAfterStart(true)
+    }
+
+    setEventInfo({ ...event_info, from_date: `${date} ${start_time}`, to_date: `${date} ${end_time}` })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date, start_time, end_time])
 
   const validate_fields = () => {
     if (all_fields_filled([date])) {
@@ -62,7 +76,7 @@ const UpdateEvent = (props) => {
       }
     }
 
-    console.log(event_info)
+    // console.log(date)
     dispatch(action_event.update_event(event_info, props.id))
     const limit = props.limit
     const offset = props.offset

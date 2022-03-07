@@ -67,7 +67,8 @@ const ProfileSettings = (props) => {
     }
   }, [user])
   return (
-    <div>
+    <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
+      <h4>{words_he['profile_settings']}</h4>
       <form onSubmit={submit} className='form-signin'>
         <label>
           {words_he['first_name']}

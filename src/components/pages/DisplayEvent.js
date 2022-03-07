@@ -25,52 +25,52 @@ const DisplayEvent = (props) => {
         <tbody>
           <tr>
             <td>
-              <b>{'id'}</b>
+              {'id'}
             </td>
-            <td>{event_info.id}</td>
+            <td><b>{event_info.id}</b></td>
           </tr>
           <tr>
             <td>
-              <b>{words_he['event_name']}</b>
+              {words_he['event_name']}
             </td>
-            <td>{event_info.name}</td>
+            <td><b>{event_info.name}</b></td>
           </tr>
           <tr>
             <td>
-              <b>{words_he['event_date']}</b>
+             {words_he['event_date']}
             </td>
-            <td>{moment(event_info.from_date).format('YYYY-MM-DD')}</td>
+            <td><b>{moment(event_info.from_date).format('YYYY-MM-DD')}</b></td>
           </tr>
           <tr>
             <td>
-              <b> {words_he['start_time']}</b>
+               {words_he['start_time']}
             </td>
-            <td>{moment(event_info.from_date).format('HH:mm:ss')}</td>
+            <td><b>{moment(event_info.from_date).format('HH:mm:ss')}</b></td>
           </tr>
           <tr>
             <td>
-              <b> {words_he['end_time']}</b>
+              {words_he['end_time']}
             </td>
-            <td>{moment(event_info.to_date).format('HH:mm:ss')}</td>
+            <td><b>{moment(event_info.to_date).format('HH:mm:ss')}</b></td>
           </tr>
           <tr>
             <td>
-              <b> {words_he['status']}</b>
+              {words_he['status']}
             </td>
-            <td>{words_he[event_info.status]}</td>
+            <td><b>{words_he[event_info.status]}</b></td>
           </tr>
           <tr>
             <td>
               {' '}
-              <b>{words_he['type']}</b>
+              {words_he['type']}
             </td>
-            <td>{words_he[event_info.type]}</td>
+            <td><b>{words_he[event_info.type]}</b></td>
           </tr>
           <tr>
             <td>
-              <b> {words_he['user']}</b>
+              {words_he['user']}
             </td>
-            <td>{event_info.user}</td>
+            <td><b>{event_info.user}</b></td>
           </tr>
         </tbody>
       </table>

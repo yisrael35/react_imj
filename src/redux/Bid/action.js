@@ -68,7 +68,6 @@ export const get_bids =
         } else if (res.data.bids) {
           const bids = []
           for (const bid of res.data.bids) {
-            console.log(bid.language)
             const bid_data = {
               ...bid,
               language: convert_language(bid.language),

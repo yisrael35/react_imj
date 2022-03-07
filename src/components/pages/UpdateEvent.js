@@ -73,6 +73,17 @@ const UpdateEvent = (props) => {
     }, 1000)
   }
 
+  const handle_delete = () => {
+    dispatch(action_event.delete_event(props.id))
+    const limit = props.limit
+    const offset = props.offset
+    dispatch(action_event.get_events(limit, offset))
+    setEventInfo({ ...event_info })
+    setTimeout(() => {
+      dispatch(action_popUp.disablePopUp())
+    }, 1000)
+  }
+
   useEffect(() => {
     if (start_time >= end_time) {
       setEndAfterStart(false)
@@ -159,6 +170,9 @@ const UpdateEvent = (props) => {
       </table>
       <button type='button' className='btn btn-success m-4' onClick={handle_save} disabled={!enable_send}>
         {words_he['save']}
+      </button>
+      <button type='button' className='btn btn-danger m-2' onClick={handle_delete}>
+        {words_he['delete']}
       </button>
     </div>
   )

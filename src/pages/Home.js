@@ -66,15 +66,6 @@ const Home = (props) => {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      {/* <button
-        className='btn btn-info'
-        onClick={() => {
-          const content = <CreateEvent />
-          dispatch(action_popUp.setPopUp(content))
-        }}
-      >
-        {words_he['create_event']}
-      </button> */}
       <Calendar
         onDoubleClickEvent={(event) => {
           const content = <DisplayEvent data={event} id={event.id} />

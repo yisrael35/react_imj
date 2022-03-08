@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../../css/users.css'
 import { useDispatch } from 'react-redux'
 import * as action_user from '../../redux/User/action'
+import * as action_popUp from '../../redux/PopUp/action'
 
 const words_he = require('../../utils/words_he').words_he
 
@@ -20,7 +21,10 @@ const UpdateUser = (props) => {
     dispatch(action_user.update_user_by_id(data, props.user.id))
     const limit = props.limit
     const offset = props.offset
-    dispatch(action_user.get_users(limit, offset))
+    dispatch(action_user.get_users({ limit, offset }))
+    setTimeout(() => {
+      dispatch(action_popUp.disablePopUp())
+    }, 1000)
   }
 
   return (

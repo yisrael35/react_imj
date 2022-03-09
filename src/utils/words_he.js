@@ -95,6 +95,7 @@ const words_he = {
   guest: 'אורח',
   event_date: 'תאריך האירוע',
   new_client: 'לקוח חדש',
+  update_client: 'ערוך לקוח',
   new_event: 'אירוע חדש',
   add_client: 'הוספת לקוח',
   from_date: 'מתאריך',
@@ -131,7 +132,7 @@ const words_he = {
   created_at: 'תאריך יצירה',
   english: 'אנגלית',
   updated_at: 'עודכן בתאריך',
-  invalid_character: 'הכנסת תו לא חוקי'
+  invalid_character: 'הכנסת תו לא חוקי',
 }
 
 module.exports = {

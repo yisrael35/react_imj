@@ -6,15 +6,39 @@ import * as action_popUp from '../../redux/PopUp/action'
 import Select from '@material-ui/core/Select'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import { Container } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import MenuItem from '@material-ui/core/MenuItem'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  email_input: {
+    paddingRight: '4px',
+    paddingLeft: '4px',
+    marginRight: '18px',
+    // margin: '10px',
+  },
+  input_padding: {
+    marginRight: '18px',
+    paddingLeft: '4px',
+    paddingRight: '4px',
+    margin: '4px',
+  },
+  title: {
+    margin: '20px',
+    fontSize: '30px',
+  },
+  action_buttons: {
+    margin: '20px',
+  },
+}))
+
 const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 const words_he = require('../../utils/words_he').words_he
 
 const UpdateClient = (props) => {
+  const classes = useStyles()
+
   const { name, type, email, phone } = props.client
   const [client_info, setClientInfo] = useState({ name, type, phone, email })
   const dispatch = useDispatch()
@@ -104,6 +128,9 @@ const UpdateClient = (props) => {
   return (
     <div>
       <Grid container>
+        <Grid xs={12}>
+          <Typography className={classes.title}>{words_he['update_client']}</Typography>
+        </Grid>
         <Grid item xs={12}>
           <Grid container justifyContent='center'>
             {' '}
@@ -116,6 +143,7 @@ const UpdateClient = (props) => {
             <Grid item xs={1}>
               {' '}
               <InputBase
+                className={classes.input_padding}
                 type='text'
                 onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })}
                 defaultValue={client_info.name}
@@ -124,7 +152,6 @@ const UpdateClient = (props) => {
             </Grid>{' '}
           </Grid>
         </Grid>
-
         <Grid item xs={12}>
           <Grid container justifyContent='center'>
             {' '}
@@ -137,6 +164,7 @@ const UpdateClient = (props) => {
             <Grid item xs={1}>
               {' '}
               <Select
+                className={classes.input_padding}
                 value={client_info.type}
                 label={words_he['type']}
                 onChange={(e) => setClientInfo({ ...client_info, type: e.value })}
@@ -162,6 +190,7 @@ const UpdateClient = (props) => {
             <Grid item xs={1}>
               {' '}
               <InputBase
+                className={classes.input_padding}
                 type='tel'
                 onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
                 defaultValue={client_info.phone}
@@ -187,26 +216,24 @@ const UpdateClient = (props) => {
                 onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}
                 defaultValue={client_info.email}
                 style={{ borderStyle: 'solid', borderWidth: 1, borderRadius: 5, width: 180 }}
+                className={classes.email_input}
               />{' '}
             </Grid>{' '}
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
-          <Grid container justifyContent='center' >
-            {' '}
+        <Grid item xs={12} className={classes.action_buttons}>
+          <Grid container justifyContent='center'>
             <Grid item xs={1}>
-              {' '}
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
                 {words_he['save']}
-              </button>{' '}
-            </Grid>{' '}
+              </button>
+            </Grid>
             <Grid item xs={1}>
-              {' '}
               <button type='button' className='btn btn-danger m-2' onClick={handle_delete}>
                 {words_he['delete']}
-              </button>{' '}
-            </Grid>{' '}
+              </button>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

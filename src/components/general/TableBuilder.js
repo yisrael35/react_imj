@@ -3,7 +3,7 @@ import RowBuilder from './RowBuilder'
 const TableBuilder = ({ items, cols, headers, title, offset, handle_click, click_icon }) => {
   return (
     <div>
-      <div className='user_page'>
+      <div className='tables_page'>
         <h5 className='card-title text-uppercase mb-0'> {title}</h5>
         <table className='table user-table mb-0'>
           <thead>

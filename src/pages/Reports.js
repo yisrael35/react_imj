@@ -5,14 +5,14 @@ import * as action_loading from '../redux/Loading/action'
 import * as action_csv from '../redux/CSV/action'
 import Select from 'react-select'
 import RangeDatePicker from '../components/general/RangeDatePicker'
+import { FaFileCsv } from 'react-icons/fa'
+
 const words_he = require('../utils/words_he').words_he
 
 const Reports = (props) => {
   const dispatch = useDispatch()
-  //TODO
-  // const [from_date, setFromDate] = useState(undefined)
-  // const [to_date, setToDate] = useState(undefined)
-  let from_date, to_date
+  const [from_date, setFromDate] = useState(undefined)
+  const [to_date, setToDate] = useState(undefined)
 
   useEffect(() => {
     dispatch(action_utils.get_utils())
@@ -29,9 +29,10 @@ const Reports = (props) => {
 
   return (
     <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
-      {/* TODO -- ADD FROM DATE AND TO DATE */}
       <h4>{words_he['reports']}</h4>
-      <RangeDatePicker />
+      <FaFileCsv style={{ fontSize: '100px', margin: '20px' }} />
+
+      <RangeDatePicker from_date={from_date} setFromDate={setFromDate} to_date={to_date} setToDate={setToDate} />
       <Select
         className={'report_select'}
         placeholder={'tables'}
@@ -42,7 +43,7 @@ const Reports = (props) => {
           setTable(e.value)
         }}
       />
-      <button className='w-45 m-2 btn btn-success' onClick={create_csv} disabled={file_name || !table}>
+      <button className='w-45 m-4 btn btn-success' onClick={create_csv} disabled={file_name || !table}>
         {words_he['create_csv']}
       </button>
     </div>

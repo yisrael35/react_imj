@@ -1,42 +1,10 @@
-// import * as React from 'react'
-// import Grid from '@material-ui/core/Grid'
-// import { makeStyles } from '@material-ui/core/styles'
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     width: '90%',
-//     margin: 'auto',
-//     textAlign: 'center',
-//   },
-// }))
-
-// export default function BasicGrid() {
-//   const classes = useStyles()
-
-//   return (
-//     <Grid container spacing={2} className={classes.root}>
-//       <Grid item xs={6}>
-//         im in first
-//       </Grid>
-//       <Grid item xs={6}>
-//         im in sec
-//       </Grid>
-//       <Grid item xs={6}>
-//         im in third
-//       </Grid>
-//       <Grid item xs={6}>
-//         im in forth
-//       </Grid>
-//     </Grid>
-//   )
-// }
-
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import MyDatePicker from '../components/general/DatePicker'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 
 import moment from 'moment'
 import Select from 'react-select'
@@ -50,62 +18,53 @@ const words_he = require('../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // width: '90%',
     textAlign: 'center',
-    // margin: 'auto',
   },
   event_date: {
-    // position: 'relative',
-    // right: '9%',
     margin: '10px',
   },
   event_name: {
-    height: '50px',
+    margin: '10px',
+    height: '45px',
     paddingRight: '8px',
+    borderRadius: '3px',
   },
   participants_amount: {
     margin: '14px',
     position: 'relative',
-    right: '27%',
+    width: '20%',
   },
   textarea: {
     position: 'relative',
-    right: '5%',
+    left: '2%',
+    margin: '10px',
+    padding: '2px',
     display: 'inline-block',
     marginTop: '14px',
+    borderRadius: '3px',
   },
   select_language: {
     float: 'left',
     position: 'relative',
-    // top: '-60px',
     width: '10%',
     marginLeft: '2%',
   },
   select_event_type: {
-    position: 'relative',
-    bottom: '40px',
-    left: '110px',
-    marginBottom: '8px',
-    width: '10%',
+    width: '20%',
     display: 'inline-block',
+    marginRight: '1%',
   },
   select_location: {
     position: 'relative',
-    left: '105px',
-    bottom: '40px',
     marginTop: '8px',
     marginBottom: '8px',
-    width: '10%',
+    width: '20%',
     display: 'inline-block',
   },
   select_clients: {
-    position: 'relative',
-    left: '207px',
-    bottom: '40px',
+    width: '20%',
     display: 'inline-block',
-    width: '10%',
-    marginTop: '8px',
-    marginBottom: '8px',
+    marginRight: '3%',
   },
   title: {
     fontSize: '180%',
@@ -115,14 +74,14 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   button_client: {
-    position: 'relative',
-    right: '85px',
-    bottom: '35px',
-    display: 'inline',
-    background: '#D0D0D0',
-    paddingTop: '5px',
-    paddingRight: '5px',
-    paddingLeft: '5px',
+    // position: 'relative',
+    // right: '85px',
+    // bottom: '35px',
+    // display: 'inline',
+    // background: '#D0D0D0',
+    // paddingTop: '5px',
+    // paddingRight: '5px',
+    // paddingLeft: '5px',
   },
 }))
 const CreateBid = ({ handle_save_bid }) => {
@@ -213,8 +172,9 @@ const CreateBid = ({ handle_save_bid }) => {
       </Grid>
       <Grid item xs={6}>
         <label>
+          {words_he['event_name']}
           <input
-            placeholder={words_he['event_name']}
+            // placeholder={words_he['event_name']}
             className={classes.event_name}
             type='text'
             name='event_Name'
@@ -224,13 +184,13 @@ const CreateBid = ({ handle_save_bid }) => {
           />
         </label>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={3}>
         {words_he['event_date']}
         <label className={classes.event_date}>
           <MyDatePicker date={date} setDate={setDate} />
         </label>
       </Grid>
-      {/* <Grid>
+      <Grid xs={6}>
         <Select
           className={classes.select_event_type}
           placeholder={words_he['event_type']}
@@ -241,6 +201,8 @@ const CreateBid = ({ handle_save_bid }) => {
             setBidInfo({ ...bid_info, event_type: e.value })
           }}
         />
+      </Grid>
+      <Grid xs={4}>
         <textarea
           className={classes.textarea}
           placeholder={words_he['comments']}
@@ -249,7 +211,7 @@ const CreateBid = ({ handle_save_bid }) => {
           }}
         />
       </Grid>
-      <Grid>
+      <Grid xs={6}>
         <Select
           className={classes.select_location}
           placeholder={words_he['location']}
@@ -260,22 +222,26 @@ const CreateBid = ({ handle_save_bid }) => {
             setBidInfo({ ...bid_info, location: e.value })
           }}
         />
+      </Grid>
+      <Grid xs={4}>
         <label>
+          {words_he['participants_amount']}
           <input
             className={classes.participants_amount}
             min='0'
             type='number'
-            placeholder={words_he['participants_amount']}
+            // placeholder={words_he['participants_amount']}
             onChange={(e) => {
               setBidInfo({ ...bid_info, max_participants: e.target.value })
             }}
           />
         </label>
       </Grid>
-      <Grid className={classes.select_clients}>
+      <Grid xs={6}>
         <Select
           placeholder={words_he['client_name']}
           options={clients}
+          className={classes.select_clients}
           id='clients'
           label={words_he['clients']}
           onChange={(e) => {
@@ -283,9 +249,12 @@ const CreateBid = ({ handle_save_bid }) => {
           }}
         />{' '}
         <button className={classes.button_client} onClick={handle_create_client}>
-          {'+'}
+          <AddCircleOutline />
+          {/* TODO  */}
+          {/* {'+'} */}
         </button>
       </Grid>
+      {/*
       <Grid>
         <button className='btn btn-success m-4' onClick={handle_save_bid} disabled={!enable_send}>
           {words_he['save']}

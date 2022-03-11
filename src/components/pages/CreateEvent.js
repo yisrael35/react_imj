@@ -5,6 +5,7 @@ import moment from 'moment'
 import Select from 'react-select'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as action_event from '../../redux/Event/action'
+import EventAvailable from '@material-ui/icons/EventAvailable'
 
 const words_he = require('../../utils/words_he').words_he
 
@@ -62,7 +63,9 @@ const CreateEvent = () => {
 
   return (
     <div>
-      <h3>{words_he['new_event']}</h3>
+      <h3 className='text-muted'>{words_he['new_event']}</h3>
+      <EventAvailable style={{ width: '80px', height: '80px', margin: '4px' }} />
+
       <table>
         <thead>
           <tr>

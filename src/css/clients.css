@@ -43,7 +43,7 @@ ul {
   list-style-type: none;
 }
 
-.user_page {
+.tables_page {
   padding: 20px;
 }
 
@@ -51,7 +51,14 @@ ul {
   width: 230px;
 }
 
-.btn-del{
+.pagination-select {
+  display: inline-block;
+  margin: 4px;
+  width: 90px;
+  text-align: center;
+}
+
+.btn-del {
   width: 60px;
   height: 40px;
   background-color: crimson;

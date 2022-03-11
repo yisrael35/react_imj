@@ -96,8 +96,8 @@ const Users = (props) => {
       </span>
       {/* Pagination Top */}
       <Select
-        className={'select'}
-        placeholder={words_he['rows_to_display'] + `: ${limit}`}
+        className={'pagination-select'}
+        placeholder={`${limit}`}
         options={limits}
         id='limits'
         label='limits'
@@ -108,7 +108,7 @@ const Users = (props) => {
       />
       <TableBuilder
         items={items}
-        cols={['username', 'email', 'first_name', 'last_name','phone','updated_at' ,'is_active', 'level']}
+        cols={['username', 'email', 'first_name', 'last_name', 'phone', 'updated_at', 'is_active', 'level']}
         headers={{
           username: words_he['username'],
           first_name: words_he['first_name'],

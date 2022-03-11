@@ -66,7 +66,7 @@ const CreateSupplier = () => {
 
   return (
     <div>
-      <h3>{words_he['new_supplier']}</h3>
+      <h3 className='text-muted'>{words_he['new_supplier']}</h3>
       <table>
         <thead>
           <tr>

@@ -7,7 +7,7 @@ import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 
 const words_he = require('../../utils/words_he').words_he
-const { invalid_email, invalid_phone, all_fields_filled,invalid_email_characters } = require('../../utils/validate_helper')
+const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const CreateClient = () => {
   const [enable_send, setEnableSend] = useState(false)
@@ -79,7 +79,7 @@ const CreateClient = () => {
 
   return (
     <div>
-      <h3>{words_he['new_client']}</h3>
+      <h3 className='text-muted'>{words_he['new_client']}</h3>
       <table>
         <thead>
           <tr>

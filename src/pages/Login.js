@@ -28,6 +28,8 @@ const Login = (props) => {
   return (
     <div className='form-signin'>
       <form onSubmit={submit}>
+        {/* <h3>{words_he['welcome']}</h3> */}
+        <img src='logo2.png' alt='logo' />
         <h1 className='h3 mb-3 fw-normal'>{words_he['please_sign_in']}</h1>
         <input type='text' className='form-control' placeholder={words_he['username']} required onChange={(e) => setUsername(e.target.value)} />
         <input type='password' className='form-control' placeholder={words_he['password']} required onChange={(e) => setPassword(e.target.value)} />

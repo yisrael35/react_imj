@@ -72,8 +72,8 @@ const Bids = (props) => {
       </span>
       {/* Pagination Top */}
       <Select
-        className={'select'}
-        placeholder={words_he['rows_to_display'] + `: ${limit}`}
+        className={'pagination-select'}
+        placeholder={`${limit}`}
         options={limits}
         id='limits'
         label='limits'

@@ -17,7 +17,8 @@ const DownloadFile = (props) => {
   }, [])
   return (
     <div>
-      <FaCloudDownloadAlt style={{ fontSize: '70px', margin: '4px' }} />
+      <h3 className='text-muted'> {words_he['download_file_title']}</h3>
+      <FaCloudDownloadAlt style={{ fontSize: '100px', margin: '14px' }} />
 
       <div className='AiOutlineDownload'></div>
       <a href={file_path}>

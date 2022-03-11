@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import '../../css/clients.css'
+
 import { useDispatch } from 'react-redux'
 import * as action_client from '../../redux/Client/action'
 import * as action_popUp from '../../redux/PopUp/action'
-import Select from '@material-ui/core/Select'
 import * as actionSnackBar from '../../redux/SnackBar/action'
+
+import Select from '@material-ui/core/Select'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
@@ -27,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: '20px',
     fontSize: '30px',
+    color: 'grey',
   },
   action_buttons: {
     margin: '20px',
@@ -102,7 +105,7 @@ const UpdateClient = (props) => {
     dispatch(action_client.update_client(data, props.client.uuid))
     const limit = props.limit
     const offset = props.offset
-    dispatch(action_client.get_clients(limit, offset))
+    dispatch(action_client.get_clients({ limit, offset }))
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
     }, 1000)
@@ -112,7 +115,7 @@ const UpdateClient = (props) => {
     dispatch(action_client.delete_client(props.client.uuid))
     const limit = props.limit
     const offset = props.offset
-    dispatch(action_client.get_clients(limit, offset))
+    dispatch(action_client.get_clients({ limit, offset }))
     setClientInfo({ ...client_info })
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())

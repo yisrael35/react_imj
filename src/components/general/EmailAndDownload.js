@@ -11,7 +11,6 @@ const words_he = require('../../utils/words_he').words_he
 
 const EmailAndDownload = (props) => {
   const { message, bid_id, email } = props
-  // console.log({ message, bid_id, event_id, email })
   const [clientEmail, setClientEmail] = useState(email)
   const [send_to_email, setSendToEmail] = useState(false)
 
@@ -36,7 +35,6 @@ const EmailAndDownload = (props) => {
   }
 
   const handle_get_pdf = () => {
-    //TODO
     setSendToEmail(false)
     dispatch(action_popUp.disablePopUp())
     dispatch(action_loading.setLoading())
@@ -46,11 +44,8 @@ const EmailAndDownload = (props) => {
 
   return (
     <div>
-      {/*  */}
-
-      <div>{message}</div>
+      <h4 className='text-muted  m-4'>{message}</h4>
       <FaRegFilePdf style={{ fontSize: '160px', margin: '4px' }} />
-
       <div className='mt-3'>
         <button type='button' className='btn btn-dark border' onClick={toggle_buttons} disabled={!send_to_email}>
           {words_he['download_pdf']}
@@ -70,20 +65,21 @@ const EmailAndDownload = (props) => {
         <span>
           <label>
             <input
+              className='input mt-4'
               type='email'
               placeholder={email ? email : 'example@gmail.com'}
               onChange={(e) => {
                 setClientEmail(e.target.value)
               }}
             />
+            <button type='button' className='btn btn-success m-2' onClick={handle_send_email}>
+              {words_he['send']}
+            </button>
           </label>
-          <button type='button' className='btn btn-info m-4' onClick={handle_send_email}>
-            {words_he['send']}
-          </button>
         </span>
       ) : (
         <span>
-          <button type='button' className='btn btn-info m-4' onClick={handle_get_pdf} disabled={false}>
+          <button type='button' className='btn btn-success m-4' onClick={handle_get_pdf} disabled={false}>
             {words_he['create_pdf']}
           </button>
         </span>

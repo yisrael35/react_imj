@@ -73,7 +73,7 @@ const Nav = (props) => {
               {words_he['bids']}
             </Link>
           </li>
-      
+
           <li className='nav-item active'>
             <Link to='/Users' className='nav-link'>
               {words_he['users']}
@@ -156,7 +156,8 @@ const Nav = (props) => {
     <nav className='navbar navbar-expand-md navbar-dark bg-dark mb-4 sticky-top'>
       <div className='container-fluid'>
         <Link to='/Home' className='navbar-brand'>
-          {words_he['home']}
+          <img src='logo2.png' alt='logo' style={{ marginLeft: '10px', height: '35px', width:'40px' }} />
+          {/* {words_he['home']} */}
         </Link>
         <div>{menu}</div>
       </div>

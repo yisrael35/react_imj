@@ -78,6 +78,7 @@ const UpdateSupplier = (props) => {
 
   return (
     <div>
+      <h3 className='text-muted'>{words_he['update_supplier']}</h3>
       <table>
         <thead>
           <tr>

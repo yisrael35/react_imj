@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import * as action_bid from '../../redux/Bid/action'
 import EmailAndDownload from '../general/EmailAndDownload'
-// const words_he = require('../../utils/words_he').words_he
+const words_he = require('../../utils/words_he').words_he
 
 const UpdateBid = (props) => {
   const dispatch = useDispatch()
@@ -22,7 +22,7 @@ const UpdateBid = (props) => {
 
   return (
     <div>
-      <EmailAndDownload bid_id={props.id} email={email} message={'you can download a PDF file or send the client the bid'} />
+      <EmailAndDownload bid_id={props.id} email={email} message={words_he['download_pdf_title']} />
     </div>
   )
 }

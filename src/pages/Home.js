@@ -14,9 +14,11 @@ import * as action_popUp from '../redux/PopUp/action'
 import CreateEvent from '../components/pages/CreateEvent'
 import DisplayEvent from '../components/pages/DisplayEvent'
 import FloatingButton from '../components/general/FloatingButton'
+import Event from '@material-ui/icons/Event'
 
 //services
 import workerInstances from '../services'
+import { words_he } from '../utils/words_he'
 
 const localizer = momentLocalizer(moment)
 
@@ -63,9 +65,10 @@ const Home = (props) => {
     const content = <CreateEvent />
     dispatch(action_popUp.setPopUp(content))
   }
-
+  const event_icon = <Event className='floating_button' />
   return (
     <div style={{ textAlign: 'center' }}>
+      <h3 className='text-muted'>{words_he['welcome']}</h3>
       <Calendar
         onDoubleClickEvent={(event) => {
           const content = <DisplayEvent data={event} id={event.id} />
@@ -81,7 +84,7 @@ const Home = (props) => {
         onNavigate={get_event_by_month}
         selectable={false}
       />
-      <FloatingButton handle_click={handle_add_event} />
+      <FloatingButton handle_click={handle_add_event} button_content={event_icon} />
     </div>
   )
 }

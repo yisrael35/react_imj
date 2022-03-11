@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
+import { FaUserEdit } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 const { invalid_phone, all_fields_filled } = require('../utils/validate_helper')
@@ -69,6 +70,12 @@ const ProfileSettings = (props) => {
   return (
     <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
       <h4>{words_he['profile_settings']}</h4>
+      <FaUserEdit
+        style={{
+          fontSize: '60px',
+          margin: '2px',
+        }}
+      />
       <form onSubmit={submit} className='form-signin'>
         <label>
           {words_he['first_name']}
@@ -105,23 +112,13 @@ const ProfileSettings = (props) => {
 export default ProfileSettings
 
 // created_at: "2021-09-11T15:08:27.000Z"
-// ​
 // email: "yisrael35@gmail.com"
-// ​
 // first_name: "yisrael - azriel"
-// ​
 // id: "1e236f85-1312-11ec-97b5-005056c00001"
-// ​
 // is_active: 1
-// ​
 // last_login: "2022-01-10T05:22:16.000Z"
-// ​
 // last_name: "b"
-// ​
 // level: 1
-// ​
 // phone: null
-// ​
 // updated_at: "2022-01-10T05:22:16.000Z"
-// ​
 // username: "y@gmail.com"

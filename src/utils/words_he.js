@@ -18,6 +18,7 @@ const words_he = {
   reset_password: 'איפוס סיסמה',
   users: 'משתמשים',
   user: 'משתמש',
+  update_user: 'ערוך משתמש',
   admin: 'מנהל',
   active: 'פעיל',
   not_active: 'לא פעיל',
@@ -101,6 +102,7 @@ const words_he = {
   from_date: 'מתאריך',
   to_date: 'עד תאריך',
   end_after_start: 'שעת הסיום צריכה להיות אחרי שעת ההתחלה',
+  end_date_after_start: 'תאריך הסיום צריך להיות אחרי תאריך ההתחלה',
   create_event: 'צור אירוע חדש',
   events: 'אירועים',
   public: 'ציבורי',
@@ -117,7 +119,8 @@ const words_he = {
   display_event: 'האירוע שנבחר',
   edit_event: 'ערוך אירוע',
   pick_client: 'בחר לקוח או הוסף חדש ',
-  download_file: 'הקובץ מוכן להורדה',
+  download_file_title: 'הקובץ מוכן להורדה',
+  download_file: 'לחץ להורדה',
   create_csv: 'צור קובץ csv',
   employee_name: 'יוצר האירוע',
   download_pdf: 'הורד PDF',
@@ -133,6 +136,9 @@ const words_he = {
   english: 'אנגלית',
   updated_at: 'עודכן בתאריך',
   invalid_character: 'הכנסת תו לא חוקי',
+  download_pdf_title: 'קובץ PDF  להורדה או לשליחה למייל',
+  update_supplier: 'ערוך ספק',
+  welcome: 'מערכת ניהול אירועים',
 }
 
 module.exports = {

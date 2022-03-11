@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
+import { FaUserPlus } from 'react-icons/fa'
+
 const { invalid_email_characters_prefix, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
 const words_he = require('../utils/words_he').words_he
 
@@ -58,6 +60,8 @@ const Register = () => {
   return (
     <form onSubmit={submit} className='form-signin'>
       <h1 className='h3 mb-3 fw-normal'> {words_he['create_new_user']}</h1>
+      <FaUserPlus style={{ fontSize: '60px', margin: '10px', textAlign: 'center' }} />
+
       <input className='form-control' placeholder={words_he['first_name']} required onChange={(e) => setFirstName(e.target.value)} />
       <input className='form-control' placeholder={words_he['last_name']} required onChange={(e) => setLastName(e.target.value)} />
       <input type='text' className='form-control' placeholder={words_he['phone']} required onChange={(e) => setPhone(e.target.value)} />
@@ -79,4 +83,3 @@ const Register = () => {
 }
 
 export default Register
-// style={{direction: 'ltr}}

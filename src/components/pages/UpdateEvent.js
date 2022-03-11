@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import MyDatePicker from '../general/DatePicker'
 import moment from 'moment'
 import Select from 'react-select'
 import * as action_event from '../../redux/Event/action'
 import * as action_popUp from '../../redux/PopUp/action'
+import EventNote from '@material-ui/icons/EventNote'
 
 const words_he = require('../../utils/words_he').words_he
 const { all_fields_filled } = require('../../utils/validate_helper')
 
 const UpdateEvent = (props) => {
-  const [date, setDate] = useState(undefined)
+  const [date, setDate] = useState(moment(props.data.from_date).format(`YYYY-MM-DD`))
   const [start_time, setStartTime] = useState(moment(props.data.from_date).format(`HH:mm:ss`))
   const [end_time, setEndTime] = useState(moment(props.data.to_date).format(`HH:mm:ss`))
   const [end_after_start, setEndAfterStart] = useState(true)
@@ -86,7 +86,6 @@ const UpdateEvent = (props) => {
       dispatch(action_popUp.disablePopUp())
     }, 1000)
   }
-  
 
   useEffect(() => {
     if (start_time >= end_time) {
@@ -102,7 +101,9 @@ const UpdateEvent = (props) => {
 
   return (
     <div>
-      <h3>{words_he['edit_event']}</h3>
+      <h3 className='text-muted'>{words_he['edit_event']}</h3>
+
+      <EventNote style={{ width: '80px', height: '80px', margin: '4px' }} />
       <table>
         <thead>
           <tr>
@@ -123,9 +124,7 @@ const UpdateEvent = (props) => {
             <td>
               <input type='text' value={event_info.name} onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })} />
             </td>
-            <td>
-              <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
-            </td>
+            <td>{date}</td>
             <td>
               <input
                 type='time'

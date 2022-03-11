@@ -28,10 +28,7 @@ const ProfileSettings = (props) => {
       return false
     }
 
-    if (all_fields_filled(user_info)) {
-      return true
-    }
-    return false
+    return true
   }
 
   const submit = async (e) => {

@@ -1,106 +1,41 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import MyDatePicker from '../general/DatePicker'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-
-import moment from 'moment'
-import Select from 'react-select'
+import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography, TextareaAutosize } from '@mui/material/'
+import PersonAddOutlined from '@material-ui/icons/PersonAddOutlined'
 import { makeStyles } from '@material-ui/core/styles'
 import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
-import CreateClient from '../../components/pages/CreateClient'
-import CancelExit from '../../components/general/CancelExit'
-
+import CreateClient from './CreateClient'
+import CancelExit from '../general/CancelExit'
 const words_he = require('../../utils/words_he').words_he
-
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
-    // display: 'flex',
-    // justifyContent: 'center',
-  },
-  event_date: {
-    position: 'relative',
-    right: '9%',
-  },
-  participants_amount: {
-    margin: '14px',
-    position: 'relative',
-    right: '27%',
-  },
-  textarea: {
-    position: 'relative',
-    right: '5%',
-    display: 'inline-block',
-    marginTop: '14px',
+    width: '70%',
+    margin: 'auto',
+    direction: 'rtl',
   },
   select_language: {
     float: 'left',
     position: 'relative',
-    top: '-60px',
     width: '10%',
-    margin: '10px',
+    marginLeft: '2%',
   },
-  select_event_type: {
-    position: 'relative',
-    bottom: '40px',
-    left: '110px',
-    marginBottom: '8px',
-    width: '10%',
-    display: 'inline-block',
-  },
-  select_location: {
-    position: 'relative',
-    left: '105px',
-    bottom: '40px',
-    marginTop: '8px',
-    marginBottom: '8px',
-    width: '10%',
-    display: 'inline-block',
-  },
-  select_clients: {
-    position: 'relative',
-    left: '207px',
-    bottom: '40px',
-    display: 'inline-block',
-    width: '10%',
-    marginTop: '8px',
-    marginBottom: '8px',
+  select_element: {
+    width: '50%',
   },
   title: {
-    fontSize: '180%',
-    marginBottom: '18px',
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  button_client: {
-    position: 'relative',
-    right: '85px',
-    bottom: '35px',
-    display: 'inline',
-    background: '#D0D0D0',
-    paddingTop: '5px',
-    paddingRight: '5px',
-    paddingLeft: '5px',
+    padding: '2%',
   },
 }))
+
 const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   const dispatch = useDispatch()
-
-  const [date, setDate] = useState(moment().format(`YYYY-MM-DD`))
-  const [enable_send, setEnableSend] = useState(false)
   const classes = useStyles()
+  const [enable_send, setEnableSend] = useState(false)
   const locations = useSelector((state) => state.utils.locations)
   const clients = useSelector((state) => state.utils.clients)
   const events_type = useSelector((state) => state.utils.events_type)
-
-  useEffect(() => {
-    setBidInfo({ ...bid_info, event_date: date })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date])
 
   useEffect(() => {
     dispatch(action_utils.get_utils())
@@ -114,7 +49,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
       setEnableSend(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bid_info, date])
+  }, [bid_info])
 
   const validate_fields = () => {
     //TODO
@@ -145,112 +80,153 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
       language: 'he',
     })
   }
-  // console.log(bid_info);
   return (
-    <Grid className={classes.root}>
-      <Typography className={classes.title}>{words_he['new_bid']}</Typography>
+    <Box
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
+    >
       <Select
+        variant='standard'
         className={classes.select_language}
-        placeholder={words_he['hebrew']}
-        options={languages}
-        id='languages'
+        value={bid_info.language}
+        id='standard-required'
         label={words_he['languages']}
         onChange={(e) => {
-          setBidInfo({ ...bid_info, language: e.value })
+          setBidInfo({ ...bid_info, language: e.target.value })
         }}
-      />
-      <Grid>
-        <label>
-          <input
-            placeholder={words_he['event_name']}
-            className={classes.margin}
-            // value={bid_info.event_name}
-            type='text'
-            name='event_Name'
-            onChange={(e) => {
-              setBidInfo({ ...bid_info, event_name: e.target.value })
-            }}
-          />
-        </label>
-        <label className={classes.event_date}>
-          {words_he['event_date']}
-          <MyDatePicker date={date} setDate={setDate} />
-        </label>
-      </Grid>
-      <Grid>
-        <Select
-          className={classes.select_event_type}
-          placeholder={words_he['event_type']}
-          options={events_type}
-          id='event_type'
-          label='event type'
-          onChange={(e) => {
-            setBidInfo({ ...bid_info, event_type: e.value })
-          }}
-        />
-        <textarea
-          className={classes.textarea}
-          placeholder={words_he['comments']}
-          onChange={(e) => {
-            setBidInfo({ ...bid_info, event_comment: e.target.value })
-          }}
-        />
-      </Grid>
-      <Grid>
-        <Select
-          className={classes.select_location}
-          placeholder={words_he['location']}
-          options={locations}
-          id='location'
-          label='location'
-          onChange={(e) => {
-            setBidInfo({ ...bid_info, location: e.value })
-          }}
-        />
-        <label>
-          <input
-            className={classes.participants_amount}
-            min='0'
-            type='number'
-            placeholder={words_he['participants_amount']}
-            onChange={(e) => {
-              setBidInfo({ ...bid_info, max_participants: e.target.value })
-            }}
-          />
-        </label>
-      </Grid>
-      <Grid className={classes.select_clients}>
-        <Select
-          placeholder={words_he['client_name']}
-          options={clients}
-          id='clients'
-          label={words_he['clients']}
-          onChange={(e) => {
-            setBidInfo({ ...bid_info, client_id: e.value })
-          }}
-        />{' '}
-        <button className={classes.button_client} onClick={handle_create_client}>
-          {'+'}
-        </button>
-      </Grid>
-      <Grid>
-        <button className='btn btn-success m-4' onClick={handle_save_bid} disabled={!enable_send}>
-          {words_he['save']}
-        </button>
-        <button type='button' className='btn btn-danger m-2' onClick={handle_cancel_and_exit}>
-          {words_he['cancel_and_exit']}
-        </button>
-        <button type='submit' className='btn btn-outline-dark m-2' onClick={handle_clear}>
-          {words_he['clear_all']}
-        </button>
-      </Grid>
-    </Grid>
+      >
+        {languages.map((element) => (
+          <MenuItem value={element.value}>{element.label}</MenuItem>
+        ))}
+      </Select>
+      <div className={classes.root}>
+        <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
+          {words_he['new_bid']}
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <TextField
+              required
+              id='standard-required'
+              label={words_he['event_name']}
+              variant='standard'
+              onChange={(e) => {
+                setBidInfo({ ...bid_info, event_name: e.target.value })
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              required
+              id='standard-required'
+              label={words_he['event_date']}
+              type='date'
+              variant='standard'
+              defaultValue={bid_info.event_date}
+              inputProps={{
+                min: bid_info.event_date,
+              }}
+              onChange={(e) => {
+                //TODO - VALIDATE DATE
+                setBidInfo({ ...bid_info, event_date: e.target.value })
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <InputLabel required id='demo-simple-select-disabled-label'>
+              {words_he['event_type']}
+            </InputLabel>
+            <Select
+              required
+              className={classes.select_element}
+              id='event_type'
+              variant='standard'
+              onChange={(e) => {
+                setBidInfo({ ...bid_info, event_type: e.target.value })
+              }}
+            >
+              {events_type?.map((element) => (
+                <MenuItem value={element.value}>{element.label}</MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid item xs={6}>
+            <TextareaAutosize aria-label='minimum height' minRows={3} placeholder={words_he['comments']} />{' '}
+          </Grid>
+          <Grid item xs={6}>
+            <InputLabel required id='demo-simple-select-disabled-label'>
+              {words_he['location']}{' '}
+            </InputLabel>
+            <Select
+              variant='standard'
+              required
+              className={classes.select_element}
+              id='location'
+              onChange={(e) => {
+                setBidInfo({ ...bid_info, event_type: e.target.value })
+              }}
+            >
+              {locations?.map((element) => (
+                <MenuItem value={element.value}>{element.label}</MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id='standard-number'
+              label={words_he['participants_amount']}
+              type='number'
+              required
+              min='0'
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant='standard'
+              onChange={(e) => {
+                setBidInfo({ ...bid_info, max_participants: e.target.value })
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <InputLabel required id='demo-simple-select-disabled-label'>
+              {words_he['client_name']}
+            </InputLabel>
+            <Select
+              required
+              variant='standard'
+              className={classes.select_element}
+              onChange={(e) => {
+                setBidInfo({ ...bid_info, client_id: e.target.value })
+              }}
+            >
+              {clients?.map((element) => (
+                <MenuItem value={element.value}>{element.label}</MenuItem>
+              ))}
+            </Select>
+            <PersonAddOutlined onClick={handle_create_client} />
+          </Grid>
+          <Grid item xs={12}>
+            <button className='btn btn-success m-4' onClick={handle_save_bid} disabled={!enable_send}>
+              {words_he['save']}
+            </button>
+            <button type='button' className='btn btn-danger m-2' onClick={handle_cancel_and_exit}>
+              {words_he['cancel_and_exit']}
+            </button>
+            <button className='btn btn-outline-dark m-2' onClick={handle_clear}>
+              {words_he['clear_all']}
+            </button>
+          </Grid>
+        </Grid>
+      </div>
+    </Box>
   )
 }
-
-export default CreateBid
 
 const languages = [
   { value: 'he', label: words_he['hebrew'] },
   { value: 'en', label: 'English' },
 ]
+export default CreateBid

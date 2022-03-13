@@ -20,6 +20,7 @@ import EmailAndDownload from '../components/general/EmailAndDownload'
 //redux
 import * as action_bid from '../redux/Bid/action'
 import * as action_popUp from '../redux/PopUp/action'
+import moment from 'moment'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -66,7 +67,7 @@ const CreateBid = (props) => {
     event_type: undefined,
     location: undefined,
     user: user.id,
-    event_date: undefined,
+    event_date: moment().format('YYYY-MM-DD'),
     event_comment: undefined,
     client_id: undefined,
     event_name: undefined,

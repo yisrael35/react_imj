@@ -6,8 +6,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    border: '1px solid',
-    borderRadius: '4px',
+    // border: '1px solid',
+    // borderRadius: '4px',
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MyDatePicker({ date, setDate }) {
+export default function MyDatePicker({ date, setDate, label }) {
   const classes = useStyles()
 
   return (
     <form className={classes.container} noValidate>
       <TextField
         id='date'
-        label='Date'
+        label={label ? label : 'Date'}
         type='date'
         defaultValue={date}
         className={classes.textField}

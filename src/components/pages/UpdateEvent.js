@@ -5,6 +5,7 @@ import Select from 'react-select'
 import * as action_event from '../../redux/Event/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import EventNote from '@material-ui/icons/EventNote'
+// import TextField from '@mui/material/TextField'
 
 const words_he = require('../../utils/words_he').words_he
 const { all_fields_filled } = require('../../utils/validate_helper')
@@ -124,7 +125,18 @@ const UpdateEvent = (props) => {
             <td>
               <input type='text' value={event_info.name} onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })} />
             </td>
-            <td>{date}</td>
+            <td>
+              {date}
+              {/* <TextField
+                id='standard-read-only-input'
+                label='Read Only'
+                defaultValue=
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant='standard'
+              /> */}
+            </td>
             <td>
               <input
                 type='time'

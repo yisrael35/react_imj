@@ -1,5 +1,4 @@
 const words_he = {
-  welcome: 'ברוכים הבאים למוזיאון ישראל',
   login: 'כניסה',
   hello: 'שלום',
   please_sign_in: 'אנא התחבר/י',

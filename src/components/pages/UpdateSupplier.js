@@ -48,7 +48,9 @@ const UpdateSupplier = (props) => {
     // Do we need validation that all the account fields was filled or its okay to fill partly
 
     dispatch(action_supplier.update_supplier(supplier_info, props.supplier.uuid))
-    dispatch(action_supplier.get_suppliers())
+    const limit = props.limit
+    const offset = props.offset
+    dispatch(action_supplier.get_suppliers({ limit, offset }))
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
     }, 1000)
@@ -56,9 +58,11 @@ const UpdateSupplier = (props) => {
 
   const handle_delete = () => {
     dispatch(action_supplier.delete_supplier(props.supplier.uuid))
-    dispatch(action_supplier.get_suppliers())
-    setSupplierInfo({ ...supplier_info })
     setTimeout(() => {
+      setSupplierInfo({ ...supplier_info })
+      const limit = props.limit
+      const offset = props.offset
+      dispatch(action_supplier.get_suppliers({ limit, offset }))
       dispatch(action_popUp.disablePopUp())
     }, 1000)
   }

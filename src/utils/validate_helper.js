@@ -1,11 +1,11 @@
 const invalid_email_characters = (email) => {
-  if (!/^[a-zA-Z0-9@_.-]+$/.test(email) && email.trim() !== '') {
+  if (!/^[a-zA-Z0-9@._-]+$/.test(email) && email.trim() !== '') {
     return true
   }
   return false
 }
 const invalid_email_characters_prefix = (email) => {
-  if (!/^[a-zA-Z0-9]+$/.test(email) && email.trim() !== '') {
+  if (!/^[a-zA-Z0-9._-]+$/.test(email) && email.trim() !== '') {
     return true
   }
   return false

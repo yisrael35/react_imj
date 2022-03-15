@@ -8,7 +8,7 @@ import * as actionSnackBar from '../../redux/SnackBar/action'
 const words_he = require('../../utils/words_he').words_he
 const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
-const CreateSupplier = () => {
+const CreateSupplier = (props) => {
   const [supplier_info, setSupplierInfo] = useState({ name: '', account: { account_name: '', iban: '', swift: '' }, phone: '', email: '' })
   const dispatch = useDispatch()
   const [enable_send, setEnableSend] = useState(false)
@@ -45,7 +45,9 @@ const CreateSupplier = () => {
 
   const handle_save = () => {
     dispatch(action_supplier.create_supplier(supplier_info))
-    dispatch(action_supplier.get_suppliers())
+    const limit = props.limit
+    const offset = props.offset
+    dispatch(action_supplier.get_suppliers({ limit, offset }))
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
     }, 1000)

@@ -170,8 +170,10 @@ const UpdateClient = (props) => {
             id='type'
             className={classes.select_element}
             value={client_info.type}
-            label={words_he['type']}
-            onChange={(e) => setClientInfo({ ...client_info, type: e.value })}
+            onChange={(e) => {
+              console.log(e.target.value)
+              setClientInfo({ ...client_info, type: e.target.value })
+            }}
           >
             <MenuItem value={words_he['private']}>{words_he['private']}</MenuItem>
             <MenuItem value={words_he['company']}>{words_he['company']}</MenuItem>

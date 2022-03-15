@@ -6,33 +6,34 @@ import * as action_client from '../../redux/Client/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 
-import Select from '@material-ui/core/Select'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
-import MenuItem from '@material-ui/core/MenuItem'
+import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography, TextareaAutosize } from '@mui/material/'
+
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
-  email_input: {
-    paddingRight: '4px',
-    paddingLeft: '4px',
-    marginRight: '18px',
-    // margin: '10px',
+  ltr_input: {
+    right: '2%',
+    width: '20%',
+    padding: '1%',
+    direction: 'ltr',
   },
-  input_padding: {
-    marginRight: '18px',
-    paddingLeft: '4px',
-    paddingRight: '4px',
-    margin: '4px',
-  },
-  title: {
-    margin: '20px',
-    fontSize: '30px',
-    color: 'grey',
+  textField: {
+    right: '2%',
+    width: '20%',
+    padding: '1%',
   },
   action_buttons: {
-    margin: '20px',
+    paddingRight: '2%',
+  },
+  select_element: {
+    right: '2%',
+    width: '22%',
+    padding: '1%',
+  },
+  select_text: {
+    right: '11%',
+    fontSize: 20,
   },
 }))
 
@@ -129,100 +130,80 @@ const UpdateClient = (props) => {
   ]
 
   return (
-    <div>
-      <Grid container>
+    <Box
+      component='form'
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
+    >
+      <Grid container spacing={2}>
         <Grid xs={12}>
-          <Typography className={classes.title}>{words_he['update_client']}</Typography>
-        </Grid>
-        <Grid item xs={12}>
           <Grid container justifyContent='center'>
-            {' '}
-            <Grid item xs={1}>
-              {' '}
-              <Typography>
-                <b>{words_he['name']}</b>
-              </Typography>{' '}
-            </Grid>{' '}
-            <Grid item xs={1}>
-              {' '}
-              <InputBase
-                className={classes.input_padding}
-                type='text'
-                onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })}
-                defaultValue={client_info.name}
-                style={{ borderStyle: 'solid', borderWidth: 1, borderRadius: 5, width: 180 }}
-              />{' '}
-            </Grid>{' '}
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container justifyContent='center'>
-            {' '}
-            <Grid item xs={1}>
-              {' '}
-              <Typography>
-                <b>{words_he['type']}</b>
-              </Typography>{' '}
-            </Grid>{' '}
-            <Grid item xs={1}>
-              {' '}
-              <Select
-                className={classes.input_padding}
-                value={client_info.type}
-                label={words_he['type']}
-                onChange={(e) => setClientInfo({ ...client_info, type: e.value })}
-                style={{ borderStyle: 'solid', borderWidth: 1, borderRadius: 5, width: 180 }}
-              >
-                <MenuItem value={words_he['private']}>{words_he['private']}</MenuItem>
-                <MenuItem value={words_he['company']}>{words_he['company']}</MenuItem>
-                <MenuItem value={words_he['department']}>{words_he['department']}</MenuItem>
-              </Select>{' '}
-            </Grid>{' '}
+            <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
+              {words_he['update_client']}
+            </Typography>
           </Grid>
         </Grid>
 
         <Grid item xs={12}>
-          <Grid container justifyContent='center'>
-            {' '}
-            <Grid item xs={1}>
-              {' '}
-              <Typography>
-                <b>{words_he['phone']}</b>
-              </Typography>{' '}
-            </Grid>{' '}
-            <Grid item xs={1}>
-              {' '}
-              <InputBase
-                className={classes.input_padding}
-                type='tel'
-                onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
-                defaultValue={client_info.phone}
-                style={{ borderStyle: 'solid', borderWidth: 1, borderRadius: 5, width: 180 }}
-              />{' '}
-            </Grid>{' '}
-          </Grid>
+          <TextField
+            className={classes.textField}
+            id='standard-required'
+            label={' * ' + words_he['name']}
+            value={client_info.name}
+            variant='standard'
+            onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })}
+          />
         </Grid>
 
         <Grid item xs={12}>
-          <Grid container justifyContent='center'>
-            {' '}
-            <Grid item xs={1}>
-              {' '}
-              <Typography>
-                <b>{words_he['email']}</b>
-              </Typography>{' '}
-            </Grid>{' '}
-            <Grid item xs={1}>
-              {' '}
-              <InputBase
-                type='email'
-                onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}
-                defaultValue={client_info.email}
-                style={{ borderStyle: 'solid', borderWidth: 1, borderRadius: 5, width: 180 }}
-                className={classes.email_input}
-              />{' '}
-            </Grid>{' '}
-          </Grid>
+          <div className={classes.select_text}>
+            <InputLabel className={classes.select_text} style={{ fontSize: 'small' }}>
+              {' * ' + words_he['type']}
+            </InputLabel>
+          </div>
+          <Select
+            variant='standard'
+            required
+            id='type'
+            className={classes.select_element}
+            value={client_info.type}
+            label={words_he['type']}
+            onChange={(e) => setClientInfo({ ...client_info, type: e.value })}
+          >
+            <MenuItem value={words_he['private']}>{words_he['private']}</MenuItem>
+            <MenuItem value={words_he['company']}>{words_he['company']}</MenuItem>
+            <MenuItem value={words_he['department']}>{words_he['department']}</MenuItem>
+          </Select>
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            className={classes.ltr_input}
+            required
+            type='tel'
+            id='standard-required'
+            label={words_he['phone']}
+            value={client_info.phone}
+            variant='standard'
+            onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            className={classes.ltr_input}
+            required
+            type='email'
+            id='standard-required'
+            label={words_he['email']}
+            value={client_info.email}
+            variant='standard'
+            direction='ltr'
+            onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}
+          />
         </Grid>
 
         <Grid item xs={12} className={classes.action_buttons}>
@@ -240,7 +221,7 @@ const UpdateClient = (props) => {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   )
 }
 

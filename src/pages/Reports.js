@@ -6,10 +6,24 @@ import * as action_csv from '../redux/CSV/action'
 import Select from 'react-select'
 import RangeDatePicker from '../components/general/RangeDatePicker'
 import { FaFileCsv } from 'react-icons/fa'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  textStyle: {
+    'font-weight': 'normal',
+    color: 'grey',
+  },
+  rtl: {
+    display: 'inline-block',
+    'text-align': 'right',
+  },
+}))
 
 const words_he = require('../utils/words_he').words_he
 
 const Reports = (props) => {
+  const classes = useStyles()
+
   const dispatch = useDispatch()
   const [from_date, setFromDate] = useState(undefined)
   const [to_date, setToDate] = useState(undefined)
@@ -31,6 +45,20 @@ const Reports = (props) => {
     <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
       <h4>{words_he['reports']}</h4>
       <FaFileCsv style={{ fontSize: '100px', margin: '20px' }} />
+
+      <h6 className={classes.textStyle}>
+        {'קובץ CSV (ערכים מופרדים באמצעות פסיקים) הוא סוג מיוחד של קובץ שניתן ליצור או לערוך בפלטפורמת Excel.'}
+        <br />
+        {'שלבי ייצוא קובץ CSV של המידע המאוחסן בטבלאות מסד הנתונים של המערכת במהירות ופשטות:'}
+        <br />
+        <span className={classes.rtl}>
+          {' 1. בחרו את הטבלה המכילה את הנתונים הרצויים לייצוא.'}
+          <br />
+          {'2. בחרו את טווח התאריכים בו מעוניינים (אופציונלי).'}
+          <br />
+          {'3. לחצו על כפתור "צור קובץ CSV".'}{' '}
+        </span>
+      </h6>
 
       <RangeDatePicker from_date={from_date} setFromDate={setFromDate} to_date={to_date} setToDate={setToDate} />
       <Select

@@ -1,62 +1,97 @@
+//react
 import React, { useState, useEffect } from 'react'
-import Select from 'react-select'
-import MyDatePicker from '../components/DatePicker'
-import moment from 'moment'
-// import { makeStyles } from '@material-ui/core/styles'
-import '../css/bid.css'
-import TableScheduleTimeEvent from '../components/TableScheduleTimeEvent'
-import TableCosts from '../components/TableCosts'
-import EmailAndDownload from '../components/EmailAndDownload'
 import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+
+//material
+import { makeStyles } from '@material-ui/core/styles'
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+
+//components
+import TableCosts from '../components/pages/TableCosts'
+import CreateBidComponent from '../components/pages/CreateBid'
+import TableScheduleTimeEvent from '../components/pages/TableScheduleTimeEvent'
+import EmailAndDownload from '../components/general/EmailAndDownload'
+
+//redux
 import * as action_bid from '../redux/Bid/action'
-import * as action_utils from '../redux/Utils/action'
 import * as action_popUp from '../redux/PopUp/action'
-import CancelExit from '../components/CancelExit'
-// import * as actionSnackBar from '../redux/SnackBar/action'
+import moment from 'moment'
 
 const words_he = require('../utils/words_he').words_he
-// const useStyles = makeStyles((theme) => ({
-//   container: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//   },
-//   textField: {
-//     marginLeft: theme.spacing(1),
-//     marginRight: theme.spacing(1),
-//     width: 200,
-//   },
-// }))
 
-const Bid = (props) => {
-  // const classes = useStyles()
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '90%',
+    margin: 'auto',
+    textAlign: 'center',
+  },
+  button: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
 
-  const locations = useSelector((state) => state.utils.locations)
-  const events_type = useSelector((state) => state.utils.events_type)
+  table: {
+    textAlign: 'center',
+    padding: theme.spacing(3),
+    margin: 'auto',
+  },
+  padding: {
+    padding: theme.spacing(1),
+  },
+  currencies: {
+    width: '200px',
+    marginTop: theme.spacing(2),
+  },
+}))
+
+const CreateBid = (props) => {
   const user = useSelector((state) => state.auth.userContent)
   const dispatch = useDispatch()
 
-  const [date, setDate] = useState(moment().format(`YYYY-MM-DD`))
-  const [event_type, setEventType] = useState('')
-  const [location, setLocation] = useState('')
-  const [language, setLanguage] = useState('he')
-  const [status, setStatus] = useState('')
-  const [currency, setCurrency] = useState('nis')
-  const [client_name, setClientName] = useState('')
-  const [event_name, setEventName] = useState('')
-  const [event_comment, setEventComment] = useState(undefined)
-  const [max_participants, setMaxParticipants] = useState()
-  const [min_participants, setMinParticipants] = useState(0)
-  const [schedule_time_event, setScheduleTimeEvent] = useState([{ start_time: '', end_time: '', activity_description: '' }])
-  const [costs, setCosts] = useState([{ description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' }])
-  //for the calculation
+  const classes = useStyles()
+  const [activeStep, setActiveStep] = useState(0)
   const [total_b_discount, setTotalBDiscount] = useState(0)
   const [total_a_discount, setTotalADiscounts] = useState(0)
   const [total_discount, setDiscount] = useState(0)
+  const [currency, setCurrency] = useState('nis')
+  const [bid_id, setBidId] = useState(undefined)
+
+  const [bid_info, setBidInfo] = useState({
+    event_type: '',
+    location: '',
+    user: user.id,
+    event_date: moment().format('YYYY-MM-DD'),
+    event_comment: '',
+    client_id: '',
+    event_name: '',
+    max_participants: 0,
+    language: 'he',
+  })
+  const [enable_send, setEnableSend] = useState(false)
+  const [costs, setCosts] = useState([
+    { description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' },
+    { description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' },
+    { description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' },
+  ])
+  const [schedule_time_event, setScheduleTimeEvent] = useState([
+    { start_time: '', end_time: '', activity_description: '' },
+    { start_time: '', end_time: '', activity_description: '' },
+    { start_time: '', end_time: '', activity_description: '' },
+  ])
+  const steps = [words_he['new_bid'], words_he['time_schedule'], words_he['costs']]
 
   useEffect(() => {
-    dispatch(action_utils.get_utils())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setEnableSend(true)
+  }, [schedule_time_event])
+
   useEffect(() => {
     let total_cost = 0
     let discount = 0
@@ -67,269 +102,219 @@ const Bid = (props) => {
     setDiscount(Number(discount).toFixed(2))
     setTotalBDiscount(Number(total_cost).toFixed(2))
     setTotalADiscounts(Number(total_cost - discount).toFixed(2))
-  }, [costs])
-  let req = {
-    bid: {
-      event_type,
-      location,
-      user: user.id,
-      event_date: date,
-      event_comment,
-      client_name,
-      event_name,
-      max_participants,
-      min_participants,
-      total_b_discount,
-      total_a_discount,
-      total_discount,
-      currency,
-      status,
-    },
-    schedule_event: schedule_time_event,
-    costs,
-    // language,
-  }
-  if (language === 'he') {
-    //TODO --USER TEXT HAVE TO BE IN he
-  } else {
-    //TODO --USER TEXT HAVE TO BE IN en
-    // if (!/^[a-zA-Z0-9]+$/.test(val)) {
-    //   dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_in_en']} ${val} `, 3000))
-    //   // return
-    // }
-  }
-  // console.log(req)
-  const handle_clear = () => {
-    setDate(moment().format(`YYYY-MM-DD`))
-    setEventType('')
-    setLocation('')
-    setLanguage('')
-    setStatus('')
-    setCurrency('nis')
-    setClientName('')
-    setEventName('')
-    setMaxParticipants(undefined)
-    setMinParticipants(0)
-    setScheduleTimeEvent([{ from: '', to: '', describe: '' }])
-    setCosts([{ description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' }])
-    setTotalBDiscount(0)
-    setTotalADiscounts(0)
-    setDiscount(0)
-  }
-
-  const handle_save = async () => {
-    //TODO -- validate data
-    const bid_id = await dispatch(action_bid.create_new_bid(req))
-    if (bid_id && typeof bid_id === 'number') {
-      const content = <EmailAndDownload message={` bid number: ${bid_id} create successfully `} bid_id={bid_id} />
-      dispatch(action_popUp.setPopUp(content))
+    if (total_cost > 0) {
+      setEnableSend(true)
     }
-    props.history.push('/Home')
-  }
-  const handle_cancel_and_exit = () => {
-    const content = <CancelExit />
+  }, [costs])
+
+  if (activeStep === steps.length) {
+    const message = (
+      <Grid>
+        <span>
+          <h3 className='text-muted'>{words_he['bid_created']}</h3>
+          <h5>{`${words_he['bid_id']}: ${bid_id}`}</h5>
+        </span>
+      </Grid>
+    )
+    const content = <EmailAndDownload message={message} bid_id={bid_id} />
     dispatch(action_popUp.setPopUp(content))
   }
 
+  const handle_save_bid = async () => {
+    const bid_id = await dispatch(action_bid.create_new_bid(bid_info))
+    if (bid_id) {
+      setBidId(bid_id)
+      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    } else {
+      const error_msg = (
+        <div>
+          <div> {words_he['error_accord']}</div>
+        </div>
+      )
+      dispatch(action_popUp.setPopUp(error_msg))
+    }
+    // props.history.push('/Home')
+  }
+
+  const handle_save_schedule_event = async () => {
+    const data_schedule = []
+    for (const schedule of schedule_time_event) {
+      if (schedule.start_time !== '' && schedule.end_time) {
+        data_schedule.push(schedule)
+      }
+    }
+    const res = await dispatch(action_bid.create_schedule_event({ schedule_time_event: data_schedule, bid_id }))
+    if (res) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    } else {
+      const error_msg = (
+        <div>
+          <div> {words_he['error_accord']}</div>
+        </div>
+      )
+      dispatch(action_popUp.setPopUp(error_msg))
+    }
+  }
+
+  const handle_save_costs = async () => {
+    const data_costs = []
+    for (const cost of costs) {
+      if (cost.amount !== '' && cost.total_cost !== '' && cost.unit_cost) {
+        data_costs.push(cost)
+      }
+    }
+    const res = await dispatch(action_bid.create_costs({ costs: data_costs, bid_id }))
+    if (res) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+      setEnableSend(false)
+    } else {
+      const error_msg = (
+        <div>
+          <div> {words_he['error_accord']}</div>
+        </div>
+      )
+      dispatch(action_popUp.setPopUp(error_msg))
+    }
+  }
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return (
+          <Grid>
+            <CreateBidComponent bid_info={bid_info} setBidInfo={setBidInfo} handle_save_bid={handle_save_bid} />
+          </Grid>
+        )
+      case 1:
+        return (
+          <Grid>
+            <Grid container>
+              <Grid item xs={12}>
+                <span>
+                  <h3 className='text-muted'>{words_he['bid_created']}</h3>
+                </span>
+                {`${words_he['bid_id']}: ${bid_id}`}
+              </Grid>
+              <Grid item className={classes.table}>
+                <TableScheduleTimeEvent setScheduleTimeEvent={setScheduleTimeEvent} schedule_time_event={schedule_time_event} />
+              </Grid>
+              <Grid item xs={12}>
+                <button className='btn btn-success m-4' onClick={handle_save_schedule_event} disabled={!enable_send}>
+                  {words_he['save']}
+                </button>
+                <button
+                  className='btn btn-outline-dark m-2'
+                  onClick={() => {
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+                  }}
+                >
+                  {words_he['skip']}
+                </button>
+              </Grid>
+            </Grid>
+          </Grid>
+        )
+      case 2:
+        return (
+          <Grid>
+            <Grid item xs={12}>
+              <span>
+                <h3 className='text-muted'>{words_he['bid_created']}</h3>
+              </span>
+              {`${words_he['bid_id']}: ${bid_id}`}
+            </Grid>
+            <TableCosts
+              setCosts={setCosts}
+              costs={costs}
+              calculation={{
+                total_b_discount,
+                total_a_discount,
+                total_discount,
+                setTotalBDiscount,
+                setTotalADiscounts,
+                setDiscount,
+              }}
+            />
+            <Select
+              className={classes.currencies}
+              placeholder={words_he['nis']}
+              options={currencies}
+              id='currency'
+              label='currency'
+              onChange={(e) => {
+                setCurrency(e.value)
+              }}
+            />
+            <div>
+              <div>
+                {words_he['total_cost_before_discount']} {total_b_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
+              </div>
+              <div>
+                {words_he['total_discount']} {total_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
+              </div>
+              <div>
+                {words_he['total_cost_after_discount']} {total_a_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
+              </div>
+            </div>
+            <button className='btn btn-success m-4' onClick={handle_save_costs} disabled={!enable_send}>
+              {words_he['save']}
+            </button>
+            <button
+              className='btn btn-outline-dark m-2'
+              onClick={() => {
+                setActiveStep((prevActiveStep) => prevActiveStep + 1)
+              }}
+            >
+              {words_he['skip']}
+            </button>
+          </Grid>
+        )
+      default:
+        return 'Unknown step'
+    }
+  }
+
   return (
-    <div style={{ padding: '30px' }}>
-      <label>
-        {words_he['event_date']}
-        <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
-      </label>
-      <form>
-        <div>
-          <Select
-            className={'select'}
-            placeholder={words_he['languages']}
-            options={languages}
-            id='languages'
-            label={words_he['languages']}
-            onChange={(e) => {
-              setLanguage(e.value)
-            }}
-          />
-          {/* <button type='button' className='btn btn-info' onClick={handle_pdf}>
-            pdf
-          </button>
-          <button type='button' className='btn btn-info' onClick={handle_email}>
-            email
-          </button> */}
-        </div>
-
-        <h3> {words_he['new_bid']} </h3>
-        <Select
-          className={'select'}
-          placeholder={words_he['event_type']}
-          options={events_type}
-          id='event_type'
-          label='event type'
-          onChange={(e) => {
-            setEventType(e.value)
-          }}
-        />
-        <Select
-          className={'select'}
-          placeholder={words_he['location']}
-          options={locations}
-          id='location'
-          label='location'
-          onChange={(e) => {
-            setLocation(e.value)
-          }}
-        />
-        <div>
-          <label>
-            {words_he['client_name']}
-            <input
-              type='text'
-              name='client_Name'
-              onChange={(e) => {
-                setClientName(e.target.value)
-              }}
-            />
-          </label>
-        </div>
-
-        <div>
-          <label>
-            {words_he['event_name']}
-            <input
-              type='text'
-              name='event_Name'
-              onChange={(e) => {
-                setEventName(e.target.value)
-              }}
-            />
-          </label>
-        </div>
-        <label>
-          {words_he['prticipnts_amount']}
-          <input
-            min='0'
-            type='number'
-            placeholder={words_he['minimum']}
-            onChange={(e) => {
-              setMinParticipants(e.target.value)
-            }}
-          />
-          <input
-            min='0'
-            type='number'
-            placeholder={words_he['maximum']}
-            onChange={(e) => {
-              setMaxParticipants(e.target.value)
-            }}
-          />
-        </label>
-        <div>
-          <label>
-            {words_he['comments']}
-            <textarea
-              onChange={(e) => {
-                setEventComment(e.target.value)
-              }}
-            ></textarea>
-          </label>
-        </div>
-
-        <div></div>
-      </form>
-      <TableScheduleTimeEvent setScheduleTimeEvent={setScheduleTimeEvent} schedule_time_event={schedule_time_event} />
-      <TableCosts
-        setCosts={setCosts}
-        costs={costs}
-        calculation={{
-          total_b_discount,
-          total_a_discount,
-          total_discount,
-          setTotalBDiscount,
-          setTotalADiscounts,
-          setDiscount,
-        }}
-      />
-      <Select
-        className={'select'}
-        placeholder={words_he['currency']}
-        options={currencies}
-        id='currency'
-        label='currency'
-        onChange={(e) => {
-          setCurrency(e.value)
-        }}
-      />
-      <Select
-        // className={classes.textField}
-        className={'select'}
-        placeholder={words_he['bid_status']}
-        options={bid_status}
-        id='bid_status'
-        label='bid_status'
-        onChange={(e) => {
-          setStatus(e.value)
-        }}
-      />
+    <div className={classes.root}>
+      <Stepper activeStep={activeStep}>
+        {steps.map((label, index) => {
+          const stepProps = {}
+          const labelProps = {}
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>
+                <span className={classes.padding}>{label}</span>
+              </StepLabel>
+            </Step>
+          )
+        })}
+      </Stepper>
       <div>
-        <div>
-          {words_he['total_cost_before_discount']} {total_b_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
-        </div>
-        <div>
-          {words_he['total_discount']} {total_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
-        </div>
-        <div>
-          {words_he['total_cost_after_discount']} {total_a_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
-        </div>
-      </div>
-      <div>
-        <button type='button' className='btn btn-info' onClick={handle_clear}>
-          {words_he['clear_all']}
-        </button>
-        <button type='button' className='btn btn-info' onClick={handle_save}>
-          {words_he['save']}
-        </button>
-        <button type='button' className='btn btn-info' onClick={handle_cancel_and_exit}>
-          {words_he['cencel_and_exit']}
-        </button>
+        {activeStep === steps.length ? (
+          <div>
+            <Typography className={classes.instructions}> {words_he['bid_created']}</Typography>
+          </div>
+        ) : (
+          <div>
+            <Grid className={classes.instructions}>{getStepContent(activeStep)}</Grid>
+            {/* <button
+              className='btn btn-outline-dark m-2'
+              onClick={() => {
+                setActiveStep((prevActiveStep) => prevActiveStep + 1)
+              }}
+            >
+              {words_he['skip']}
+            </button> */}
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
-export default Bid
+export default CreateBid
 
-const languages = [
-  { value: 'he', label: words_he['hebrew'] },
-  { value: 'en', label: 'English' },
-]
 const currencies = [
   { value: 'nis', label: words_he['nis'] },
   { value: 'usd', label: words_he['dollar'] },
 ]
-const bid_status = [
-  { value: 'draft', label: words_he['draft'] },
-  { value: 'sent', label: words_he['sent'] },
-  { value: 'approved', label: words_he['approved'] },
-]
-
-// {
-//   "bid": {
-//       "event_type": "1",
-//       "location": "1",
-//       "user": "1",
-//       "event_date": "29-10-2021",
-//       "event_comment": "29-10-2021",
-//       "client_name": "eli",
-//       "event_name": "intel",
-//       "max_participants": "500",
-//       "min_participants": "0",
-//       "total_b_discount": "1600",
-//       "total_a_discount": "1500",
-//       "total_discount": "100",
-//       "currency": "nis",
-//       "status": "approved"
-//   },
-//   "schedule_event":[{ "start_time": "1", "end_time":"2", "activity_description": "3" },
-//   { "start_time": "12", "end_time":"32", "activity_description": "34" }
-//   ],
-//   "costs": [{ "description": "4", "amount": "5", "unit_cost": "6", "total_cost": "7", "discount":"8", "comment": "9" }]
-// }

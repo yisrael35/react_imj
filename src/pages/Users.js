@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
 import Select from 'react-select'
 
-import TableBuilder from '../components/TableBuilder'
-import PaginationBottom from '../components/PaginationBottom'
-import UpdateUser from '../components/UpdateUser'
+import TableBuilder from '../components/general/TableBuilder'
+import PaginationBottom from '../components/general/PaginationBottom'
+import UpdateUser from '../components/pages/UpdateUser'
 
 import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
 import * as action_user from '../redux/User/action'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -20,7 +23,7 @@ const Users = (props) => {
   const [search, setSearch] = useState(undefined)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(action_user.get_users(limit, offset, search))
+    dispatch(action_user.get_users({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, offset, search])
 
@@ -54,6 +57,15 @@ const Users = (props) => {
     dispatch(action_popUp.setPopUp(content))
   }
 
+  const edit_icon = (
+    <FaRegEdit
+      style={{
+        fontSize: '18px',
+        margin: '2px',
+      }}
+    />
+  )
+
   for (const item of items) {
     item['is_active'] = item['is_active'] ? words_he['active'] : words_he['not_active']
     if (item['level'] === 1) {
@@ -64,17 +76,28 @@ const Users = (props) => {
       item['level'] = words_he['guest']
     }
   }
-
+  const create_csv = () => {
+    dispatch(action_user.get_users({ limit, offset, search, csv: true }))
+    dispatch(action_loading.setLoading())
+  }
   return (
     <div>
       {/* search */}
-      <span style={{ float: 'left', margin: '10px' }}>
+      <span className='field_search'>
+        <Link to='/Register'>
+          <button type='button' className='btn btn-info'>
+            {words_he['create_new_user']}
+          </button>
+        </Link>
+        <button className='transparent_button' onClick={create_csv}>
+          <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+        </button>
         <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
       </span>
       {/* Pagination Top */}
       <Select
-        className={'select'}
-        placeholder={words_he['rows_to_display'] + `: ${limit}`}
+        className={'pagination-select'}
+        placeholder={`${limit}`}
         options={limits}
         id='limits'
         label='limits'
@@ -85,18 +108,21 @@ const Users = (props) => {
       />
       <TableBuilder
         items={items}
-        cols={['username', 'email', 'first_name', 'last_name', 'is_active', 'level']}
+        cols={['username', 'email', 'first_name', 'last_name', 'phone', 'updated_at', 'is_active', 'level']}
         headers={{
           username: words_he['username'],
           first_name: words_he['first_name'],
           last_name: words_he['last_name'],
           email: words_he['email'],
+          phone: words_he['phone'],
+          updated_at: words_he['updated_at'],
           is_active: words_he['status'],
           level: words_he['permissions'],
         }}
         title={words_he['users']}
         offset={offset}
-        handle_edit={handle_edit}
+        handle_click={handle_edit}
+        click_icon={edit_icon}
       />
 
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
@@ -107,8 +133,8 @@ const Users = (props) => {
 export default Users
 
 const limits = [
-  { value: '5', label: 5 },
-  { value: '10', label: 10 },
+  { value: '15', label: 15 },
   { value: '25', label: 25 },
   { value: '50', label: 50 },
+  { value: '100', label: 100 },
 ]

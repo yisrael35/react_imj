@@ -1,21 +1,31 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import moment from 'moment'
 import 'moment/locale/he'
+
+//redux
 import * as action_home from '../redux/Home/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
 import * as action_popUp from '../redux/PopUp/action'
-import CreateEvent from '../components/CreateEvent'
-import workerInstances from '../services'
-const localizer = momentLocalizer(moment)
 
-const words_he = require('../utils/words_he').words_he
+//components
+import CreateEvent from '../components/pages/CreateEvent'
+import DisplayEvent from '../components/pages/DisplayEvent'
+import FloatingButton from '../components/general/FloatingButton'
+import Event from '@material-ui/icons/Event'
+
+//services
+import workerInstances from '../services'
+import { words_he } from '../utils/words_he'
+
+const localizer = momentLocalizer(moment)
 
 const Home = (props) => {
   const events = useSelector((state) => state.home.events)
   const token = useSelector((state) => state.auth.token)
+  const saved_date = useSelector((state) => state.home.saved_date)
 
   const dispatch = useDispatch()
   //connect to the ws
@@ -29,11 +39,9 @@ const Home = (props) => {
     const receiveData = (message) => {
       if ((message?.data?.type === 'login' || message?.data?.type === 'notification') && !message?.data?.error) {
         const response = { ...message.data }
-        // console.log(response)
         dispatch(actionSnackBar.setSnackBar('success', response.content, 2000))
       } else if (message?.data?.type === 'events' && !message?.data?.error) {
         const response = { ...message.data }
-        // console.log(response)
         dispatch(action_home.set_events(response.content))
       } else {
         // const response = { ...message.data }
@@ -46,30 +54,37 @@ const Home = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  const get_event_by_month = (date) => {
+    const data = { from_date: moment(date).startOf('month').format('YYYY-MM-DD'), to_date: moment(date).endOf('month').format('YYYY-MM-DD') }
 
+    dispatch(action_home.save_date(date))
+    dispatch(action_home.get_events(data))
+  }
+
+  const handle_add_event = () => {
+    const content = <CreateEvent />
+    dispatch(action_popUp.setPopUp(content))
+  }
+  const event_icon = <Event className='floating_button' />
   return (
     <div style={{ textAlign: 'center' }}>
-      {/* <a href='http://localhost:3001/assets/README.md'>readme</a> */}
-      {/* <p>{words_he['welcome']}</p> */}
-      <button
-        className='btn btn-info'
-        onClick={() => {
-          // const data = { from_date: '2022-01-14', to_date: '2022-01-14' }
-          // dispatch(action_home.get_events(data))
-          const content = <CreateEvent  />
+      <h3 className='text-muted'>{words_he['welcome']}</h3>
+      <Calendar
+        onDoubleClickEvent={(event) => {
+          const content = <DisplayEvent data={event} id={event.id} />
           dispatch(action_popUp.setPopUp(content))
         }}
-      >
-        {words_he['create_event']}
-      </button>
-      <Calendar
         localizer={localizer}
         events={events}
-        // views={['month']}
+        views={['month', 'day', 'agenda']}
         startAccessor='start'
         endAccessor='end'
         style={{ height: 500 }}
+        date={new Date(saved_date)}
+        onNavigate={get_event_by_month}
+        selectable={false}
       />
+      <FloatingButton handle_click={handle_add_event} button_content={event_icon} />
     </div>
   )
 }

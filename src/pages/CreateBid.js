@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(1),
-    // background: '#078839',
   },
   instructions: {
     marginTop: theme.spacing(1),
@@ -63,8 +62,7 @@ const CreateBid = (props) => {
   const [total_a_discount, setTotalADiscounts] = useState(0)
   const [total_discount, setDiscount] = useState(0)
   const [currency, setCurrency] = useState('nis')
-  // const [bid_id, setBidId] = useState(undefined)
-  const [bid_id, setBidId] = useState('81490f6d-97e0-11ec-94d1-005056c00001')
+  const [bid_id, setBidId] = useState(undefined)
 
   const [bid_info, setBidInfo] = useState({
     event_type: '',
@@ -139,22 +137,43 @@ const CreateBid = (props) => {
   }
 
   const handle_save_schedule_event = async () => {
-    const res = await dispatch(action_bid.create_schedule_event({ schedule_time_event, bid_id }))
-    console.log({ res })
+    const data_schedule = []
+    for (const schedule of schedule_time_event) {
+      if (schedule.start_time !== '' && schedule.end_time) {
+        data_schedule.push(schedule)
+      }
+    }
+    const res = await dispatch(action_bid.create_schedule_event({ schedule_time_event: data_schedule, bid_id }))
     if (res) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1)
     } else {
-      //TODO -- display message
+      const error_msg = (
+        <div>
+          <div> {words_he['error_accord']}</div>
+        </div>
+      )
+      dispatch(action_popUp.setPopUp(error_msg))
     }
   }
 
   const handle_save_costs = async () => {
-    const res = await dispatch(action_bid.create_costs({ costs, bid_id }))
+    const data_costs = []
+    for (const cost of costs) {
+      if (cost.amount !== '' && cost.total_cost !== '' && cost.unit_cost) {
+        data_costs.push(cost)
+      }
+    }
+    const res = await dispatch(action_bid.create_costs({ costs: data_costs, bid_id }))
     if (res) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1)
       setEnableSend(false)
     } else {
-      //TODO -- display message
+      const error_msg = (
+        <div>
+          <div> {words_he['error_accord']}</div>
+        </div>
+      )
+      dispatch(action_popUp.setPopUp(error_msg))
     }
   }
 

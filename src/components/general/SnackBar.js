@@ -44,10 +44,10 @@ export default function CustomizedSnackbars() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'absolute',
+    position: 'fixed',
     top: '69px',
     right: '30px',
-    width: 'auto',
+    width: 'fit-content',
     zIndex: 1400,
     opacity: 0.8,
     '& > * + *': {

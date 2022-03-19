@@ -71,6 +71,7 @@ const words_he = {
   sum_rows: 'סך התוצאות: ',
   rows_to_display: 'מספר שורות להציג',
   server_error: 'שגיאת שרת',
+  error_accord: 'אירעה שגיאה אנא בדוק את הנתונים ונסה שנית',
   login_error: 'שם משתמש או סיסמא לא נכונים',
   failed_load_data: 'נכשל לטעון מידע',
   type_in_en: 'הקלד באנגלית',
@@ -129,6 +130,7 @@ const words_he = {
   next: 'הבא',
   back: 'חזור',
   skip: 'דלג',
+  tables: 'טבלאות',
   time_schedule: 'לוח זמנים',
   bid_created: 'הצעת מחיר נוצרה בהצלחה',
   created_at: 'תאריך יצירה',
@@ -138,6 +140,11 @@ const words_he = {
   download_pdf_title: 'קובץ PDF  להורדה או לשליחה למייל',
   update_supplier: 'ערוך ספק',
   welcome: 'מערכת ניהול אירועים',
+  reports_content_row1: 'קובץ CSV הוא סוג מיוחד של קובץ שניתן ליצור או לערוך בפלטפורמת Excel.',
+  reports_content_row2: 'שלבי ייצוא קובץ CSV של המידע המאוחסן בטבלאות מסד הנתונים של המערכת במהירות ופשטות:',
+  reports_content_row3: '1. בחרו את הטבלה המכילה את הנתונים הרצויים לייצוא.',
+  reports_content_row4: '2. בחרו את טווח התאריכים בו מעוניינים (אופציונלי).',
+  reports_content_row5: '3. לחצו על כפתור "צור קובץ CSV".',
 }
 
 module.exports = {

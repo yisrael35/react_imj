@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as action_utils from '../redux/Utils/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_csv from '../redux/CSV/action'
-import Select from 'react-select'
+import * as action_popUp from '../redux/PopUp/action'
+
 import RangeDatePicker from '../components/general/RangeDatePicker'
 import { FaFileCsv } from 'react-icons/fa'
 import { makeStyles } from '@material-ui/core/styles'
+import { MenuItem, Select, Grid, InputLabel } from '@mui/material/'
 
 const useStyles = makeStyles((theme) => ({
   textStyle: {
@@ -37,8 +39,9 @@ const Reports = (props) => {
   const tables = useSelector((state) => state.utils.tables)
   const file_name = useSelector((state) => state.csv.file_name)
   const create_csv = async () => {
-    dispatch(action_csv.get_table({ from_date, to_date, table }))
+    dispatch(action_popUp.disablePopUp())
     dispatch(action_loading.setLoading())
+    dispatch(action_csv.get_table({ from_date, to_date, table }))
   }
 
   return (
@@ -47,36 +50,45 @@ const Reports = (props) => {
       <FaFileCsv style={{ fontSize: '100px', margin: '20px' }} />
 
       <h6 className={classes.textStyle}>
-        {'קובץ CSV (ערכים מופרדים באמצעות פסיקים) הוא סוג מיוחד של קובץ שניתן ליצור או לערוך בפלטפורמת Excel.'}
+        {words_he['reports_content_row1']}
         <br />
-        {'שלבי ייצוא קובץ CSV של המידע המאוחסן בטבלאות מסד הנתונים של המערכת במהירות ופשטות:'}
+        {words_he['reports_content_row2']}
         <br />
         <span className={classes.rtl}>
-          {' 1. בחרו את הטבלה המכילה את הנתונים הרצויים לייצוא.'}
+          {words_he['reports_content_row3']}
           <br />
-          {'2. בחרו את טווח התאריכים בו מעוניינים (אופציונלי).'}
+          {words_he['reports_content_row4']}
           <br />
-          {'3. לחצו על כפתור "צור קובץ CSV".'}{' '}
+          {words_he['reports_content_row5']}
         </span>
       </h6>
 
       <RangeDatePicker from_date={from_date} setFromDate={setFromDate} to_date={to_date} setToDate={setToDate} />
-      <Select
-        className={'report_select'}
-        placeholder={'tables'}
-        options={tables}
-        id='tables'
-        label={'tables'}
-        onChange={(e) => {
-          setTable(e.value)
-        }}
-      />
+      <Grid>
+        <InputLabel required id='demo-simple-select-disabled-label'>
+          {words_he['tables']}
+        </InputLabel>
+        <Select
+          variant='standard'
+          className={'report_select'}
+          id='standard-required'
+          label={words_he['tables']}
+          onChange={(e) => {
+            setTable(e.target.value)
+          }}
+        >
+          {tables.map((element) => (
+            <MenuItem value={element.value} key={element.value}>
+              {element.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </Grid>
       <button className='w-45 m-4 btn btn-success' onClick={create_csv} disabled={file_name || !table}>
         {words_he['create_csv']}
       </button>
     </div>
   )
-  // return <div style={{ textAlign: 'center' }}>{user ? user.first_name : `didn't load user`}</div>
 }
 
 export default Reports

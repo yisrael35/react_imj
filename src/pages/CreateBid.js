@@ -38,14 +38,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
-  ScheduleTimeEvent: {
-    margin: theme.spacing(10),
-  },
-  costs: {
-    margin: theme.spacing(10),
+
+  table: {
+    textAlign: 'center',
+    padding: theme.spacing(3),
+    margin: 'auto',
   },
   padding: {
     padding: theme.spacing(1),
+  },
+  currencies: {
+    width: '200px',
+    marginTop: theme.spacing(2),
   },
 }))
 
@@ -59,24 +63,31 @@ const CreateBid = (props) => {
   const [total_a_discount, setTotalADiscounts] = useState(0)
   const [total_discount, setDiscount] = useState(0)
   const [currency, setCurrency] = useState('nis')
-  //TODO
-  const [bid_id, setBidId] = useState(undefined)
-  // const [bid_id, setBidId] = useState('81490f6d-97e0-11ec-94d1-005056c00001')
+  // const [bid_id, setBidId] = useState(undefined)
+  const [bid_id, setBidId] = useState('81490f6d-97e0-11ec-94d1-005056c00001')
 
   const [bid_info, setBidInfo] = useState({
-    event_type: undefined,
-    location: undefined,
+    event_type: '',
+    location: '',
     user: user.id,
     event_date: moment().format('YYYY-MM-DD'),
-    event_comment: undefined,
-    client_id: undefined,
-    event_name: undefined,
-    max_participants: undefined,
+    event_comment: '',
+    client_id: '',
+    event_name: '',
+    max_participants: 0,
     language: 'he',
   })
   const [enable_send, setEnableSend] = useState(false)
-  const [costs, setCosts] = useState([{ description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' }])
-  const [schedule_time_event, setScheduleTimeEvent] = useState([{ start_time: '', end_time: '', activity_description: '' }])
+  const [costs, setCosts] = useState([
+    { description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' },
+    { description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' },
+    { description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' },
+  ])
+  const [schedule_time_event, setScheduleTimeEvent] = useState([
+    { start_time: '', end_time: '', activity_description: '' },
+    { start_time: '', end_time: '', activity_description: '' },
+    { start_time: '', end_time: '', activity_description: '' },
+  ])
   const steps = [words_he['new_bid'], words_he['time_schedule'], words_he['costs']]
 
   useEffect(() => {
@@ -99,7 +110,15 @@ const CreateBid = (props) => {
   }, [costs])
 
   if (activeStep === steps.length) {
-    const content = <EmailAndDownload message={` bid number: ${bid_id} create successfully `} bid_id={bid_id} />
+    const message = (
+      <Grid>
+        <span>
+          <h3 className='text-muted'>{words_he['bid_created']}</h3>
+          <h5>{`${words_he['bid_id']}: ${bid_id}`}</h5>
+        </span>
+      </Grid>
+    )
+    const content = <EmailAndDownload message={message} bid_id={bid_id} />
     dispatch(action_popUp.setPopUp(content))
   }
 
@@ -109,10 +128,9 @@ const CreateBid = (props) => {
       setBidId(bid_id)
       setActiveStep((prevActiveStep) => prevActiveStep + 1)
     } else {
-      //TODO -- display message
       const error_msg = (
         <div>
-          <div>Error accord please try again</div>
+          <div> {words_he['error_accord']}</div>
         </div>
       )
       dispatch(action_popUp.setPopUp(error_msg))
@@ -150,33 +168,40 @@ const CreateBid = (props) => {
         )
       case 1:
         return (
-          <Grid className={classes.ScheduleTimeEvent}>
-            <Grid>
-              <span>
-                <h3>{words_he['bid_created']}</h3>
-              </span>
-              {`${words_he['bid_id']}: ${bid_id}`}
+          <Grid>
+            <Grid container>
+              <Grid item xs={12}>
+                <span>
+                  <h3 className='text-muted'>{words_he['bid_created']}</h3>
+                </span>
+                {`${words_he['bid_id']}: ${bid_id}`}
+              </Grid>
+              <Grid item className={classes.table}>
+                <TableScheduleTimeEvent setScheduleTimeEvent={setScheduleTimeEvent} schedule_time_event={schedule_time_event} />
+              </Grid>
+              <Grid item xs={12}>
+                <button className='btn btn-success m-4' onClick={handle_save_schedule_event} disabled={!enable_send}>
+                  {words_he['save']}
+                </button>
+                <button
+                  className='btn btn-outline-dark m-2'
+                  onClick={() => {
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+                  }}
+                >
+                  {words_he['skip']}
+                </button>
+              </Grid>
             </Grid>
-            <TableScheduleTimeEvent setScheduleTimeEvent={setScheduleTimeEvent} schedule_time_event={schedule_time_event} />
-            {/* TODO */}
-            <button className='btn btn-success m-4' onClick={handle_save_schedule_event} disabled={!enable_send}>
-              {words_he['save']}
-            </button>
-            <button
-              className='btn btn-outline-dark m-2'
-              onClick={() => {
-                setActiveStep((prevActiveStep) => prevActiveStep + 1)
-              }}
-            >
-              {words_he['skip']}
-            </button>
           </Grid>
         )
       case 2:
         return (
-          <Grid className={classes.costs}>
-            <Grid>
-              <div>{words_he['bid_created']}</div>
+          <Grid>
+            <Grid item xs={12}>
+              <span>
+                <h3 className='text-muted'>{words_he['bid_created']}</h3>
+              </span>
               {`${words_he['bid_id']}: ${bid_id}`}
             </Grid>
             <TableCosts
@@ -192,7 +217,7 @@ const CreateBid = (props) => {
               }}
             />
             <Select
-              className={'select'}
+              className={classes.currencies}
               placeholder={words_he['nis']}
               options={currencies}
               id='currency'
@@ -212,7 +237,6 @@ const CreateBid = (props) => {
                 {words_he['total_cost_after_discount']} {total_a_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
               </div>
             </div>
-            {/* TODO */}
             <button className='btn btn-success m-4' onClick={handle_save_costs} disabled={!enable_send}>
               {words_he['save']}
             </button>
@@ -254,6 +278,14 @@ const CreateBid = (props) => {
         ) : (
           <div>
             <Grid className={classes.instructions}>{getStepContent(activeStep)}</Grid>
+            {/* <button
+              className='btn btn-outline-dark m-2'
+              onClick={() => {
+                setActiveStep((prevActiveStep) => prevActiveStep + 1)
+              }}
+            >
+              {words_he['skip']}
+            </button> */}
           </div>
         )}
       </div>

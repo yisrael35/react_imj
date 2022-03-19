@@ -7,6 +7,8 @@ import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import CreateClient from './CreateClient'
 import CancelExit from '../general/CancelExit'
+import moment from 'moment'
+
 const words_he = require('../../utils/words_he').words_he
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '2%',
   },
   select_element: {
-    width: '50%',
+    width: '220px',
   },
   title: {
     padding: '2%',
@@ -52,8 +54,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   }, [bid_info])
 
   const validate_fields = () => {
-    //TODO
-    if (bid_info.event_type && bid_info.location && bid_info.user && bid_info.event_date && bid_info.event_comment && bid_info.client_id && bid_info.event_name && bid_info.max_participants) {
+    if (bid_info.event_type && bid_info.location && bid_info.user && bid_info.event_date && bid_info.client_id && bid_info.event_name && bid_info.max_participants) {
       return true
     }
     return false
@@ -70,16 +71,17 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
 
   const handle_clear = () => {
     setBidInfo({
-      event_type: undefined,
-      location: undefined,
-      event_date: undefined,
-      event_comment: undefined,
-      client_id: undefined,
-      event_name: undefined,
-      max_participants: undefined,
+      event_type: '',
+      location: '',
+      event_date: moment().format('YYYY-MM-DD'),
+      event_comment: '',
+      client_id: '',
+      event_name: '',
+      max_participants: 0,
       language: 'he',
     })
   }
+  console.log(bid_info)
   return (
     <Box
       sx={{
@@ -99,7 +101,9 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
         }}
       >
         {languages.map((element) => (
-          <MenuItem value={element.value}>{element.label}</MenuItem>
+          <MenuItem value={element.value} key={element.value}>
+            {element.label}
+          </MenuItem>
         ))}
       </Select>
       <div className={classes.root}>
@@ -113,6 +117,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               id='standard-required'
               label={words_he['event_name']}
               variant='standard'
+              value={bid_info.event_name}
               onChange={(e) => {
                 setBidInfo({ ...bid_info, event_name: e.target.value })
               }}
@@ -125,12 +130,11 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               label={words_he['event_date']}
               type='date'
               variant='standard'
-              defaultValue={bid_info.event_date}
+              value={bid_info.event_date}
               inputProps={{
                 min: bid_info.event_date,
               }}
               onChange={(e) => {
-                //TODO - VALIDATE DATE
                 setBidInfo({ ...bid_info, event_date: e.target.value })
               }}
             />
@@ -143,18 +147,29 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               required
               className={classes.select_element}
               id='event_type'
+              value={bid_info.event_type}
               variant='standard'
               onChange={(e) => {
                 setBidInfo({ ...bid_info, event_type: e.target.value })
               }}
             >
               {events_type?.map((element) => (
-                <MenuItem value={element.value}>{element.label}</MenuItem>
+                <MenuItem value={element.value} key={element.value}>
+                  {element.label}
+                </MenuItem>
               ))}
             </Select>
           </Grid>
           <Grid item xs={6}>
-            <TextareaAutosize aria-label='minimum height' minRows={3} placeholder={words_he['comments']} />{' '}
+            <TextareaAutosize
+              aria-label='minimum height'
+              minRows={3}
+              placeholder={words_he['comments']}
+              value={bid_info.event_comment}
+              onChange={(e) => {
+                setBidInfo({ ...bid_info, event_comment: e.target.value })
+              }}
+            />{' '}
           </Grid>
           <Grid item xs={6}>
             <InputLabel required id='demo-simple-select-disabled-label'>
@@ -165,12 +180,15 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               required
               className={classes.select_element}
               id='location'
+              value={bid_info.location}
               onChange={(e) => {
-                setBidInfo({ ...bid_info, event_type: e.target.value })
+                setBidInfo({ ...bid_info, location: e.target.value })
               }}
             >
               {locations?.map((element) => (
-                <MenuItem value={element.value}>{element.label}</MenuItem>
+                <MenuItem value={element.value} key={element.value}>
+                  {element.label}
+                </MenuItem>
               ))}
             </Select>
           </Grid>
@@ -181,6 +199,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               type='number'
               required
               min='0'
+              value={bid_info.max_participants}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -198,12 +217,15 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               required
               variant='standard'
               className={classes.select_element}
+              value={bid_info.client_id}
               onChange={(e) => {
                 setBidInfo({ ...bid_info, client_id: e.target.value })
               }}
             >
               {clients?.map((element) => (
-                <MenuItem value={element.value}>{element.label}</MenuItem>
+                <MenuItem value={element.value} key={element.value}>
+                  {element.label}
+                </MenuItem>
               ))}
             </Select>
             <PersonAddOutlined onClick={handle_create_client} />

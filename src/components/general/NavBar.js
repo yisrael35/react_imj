@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../../redux/Auth/action'
-// import { FaUserEdit, FaSignOutAlt } from 'react-icons/fa'
-
+import * as action_popUp from '../../redux/PopUp/action'
+import Reports from '../../pages/Reports'
 const words_he = require('../../utils/words_he').words_he
 
 const Nav = (props) => {
@@ -21,6 +21,11 @@ const Nav = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const handle_report_click = () => {
+    const reports = <Reports />
+    dispatch(action_popUp.setPopUp(reports))
+  }
 
   let menu
   if (!isAuthenticated) {
@@ -43,9 +48,12 @@ const Nav = (props) => {
             </Link>
           </li>
           <li className='nav-item active '>
-            <Link to='/Reports' className='nav-link'>
+            <span className='nav-link' onClick={handle_report_click}>
               {words_he['reports']}
-            </Link>
+            </span>
+            {/* <Link to='/Reports' className='nav-link'>
+              {words_he['reports']}
+            </Link> */}
           </li>
           <li className='nav-item active'>
             <Link to='/Suppliers' className='nav-link'>
@@ -156,7 +164,7 @@ const Nav = (props) => {
     <nav className='navbar navbar-expand-md navbar-dark bg-dark mb-4 sticky-top'>
       <div className='container-fluid'>
         <Link to='/Home' className='navbar-brand'>
-          <img src='logo2.png' alt='logo' style={{ marginLeft: '10px', height: '35px', width:'40px' }} />
+          <img src='logo2.png' alt='logo' style={{ marginLeft: '10px', height: '35px', width: '40px' }} />
           {/* {words_he['home']} */}
         </Link>
         <div>{menu}</div>

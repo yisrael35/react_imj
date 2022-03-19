@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   select_element: {
     right: '2%',
-    width: '22%',
+    width: '220px',
     padding: '1%',
   },
   select_text: {
@@ -138,8 +138,8 @@ const UpdateClient = (props) => {
       noValidate
       autoComplete='off'
     >
-      <Grid container spacing={2}>
-        <Grid xs={12}>
+      <Grid container spacing={2} justifyContent='center'>
+        <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
               {words_he['update_client']}
@@ -147,7 +147,7 @@ const UpdateClient = (props) => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={10}>
           <TextField
             className={classes.textField}
             id='standard-required'
@@ -158,7 +158,7 @@ const UpdateClient = (props) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={10}>
           <div className={classes.select_text}>
             <InputLabel className={classes.select_text} style={{ fontSize: 'small' }}>
               {' * ' + words_he['type']}
@@ -181,7 +181,7 @@ const UpdateClient = (props) => {
           </Select>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={10}>
           <TextField
             className={classes.ltr_input}
             required
@@ -194,7 +194,7 @@ const UpdateClient = (props) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={10}>
           <TextField
             className={classes.ltr_input}
             required
@@ -207,15 +207,14 @@ const UpdateClient = (props) => {
             onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}
           />
         </Grid>
-
-        <Grid item xs={12} className={classes.action_buttons}>
+        <Grid item xs={10} className={classes.action_buttons}>
           <Grid container justifyContent='center'>
-            <Grid item xs={1}>
+            <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
                 {words_he['save']}
               </button>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item>
               <button type='button' className='btn btn-danger m-2' onClick={handle_delete}>
                 {words_he['delete']}
               </button>

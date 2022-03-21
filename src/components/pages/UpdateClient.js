@@ -6,8 +6,7 @@ import * as action_client from '../../redux/Client/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 
-import InputBase from '@material-ui/core/InputBase'
-import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography, TextareaAutosize } from '@mui/material/'
+import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -31,9 +30,8 @@ const useStyles = makeStyles((theme) => ({
     width: '220px',
     padding: '1%',
   },
-  select_text: {
-    right: '11%',
-    fontSize: 20,
+  title_type: {
+    textAlign: 'center',
   },
 }))
 
@@ -123,12 +121,6 @@ const UpdateClient = (props) => {
     }, 1000)
   }
 
-  const types = [
-    { value: words_he['private'], label: words_he['private'] },
-    { value: words_he['company'], label: words_he['company'] },
-    { value: words_he['department'], label: words_he['department'] },
-  ]
-
   return (
     <Box
       component='form'
@@ -159,11 +151,10 @@ const UpdateClient = (props) => {
         </Grid>
 
         <Grid item xs={10}>
-          <div className={classes.select_text}>
-            <InputLabel className={classes.select_text} style={{ fontSize: 'small' }}>
-              {' * ' + words_he['type']}
-            </InputLabel>
-          </div>
+          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+            {' * ' + words_he['type']}
+          </InputLabel>
+
           <Select
             variant='standard'
             required

@@ -5,11 +5,41 @@ import * as action_client from '../../redux/Client/action'
 import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
+import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
+
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  ltr_input: {
+    right: '2%',
+    width: '20%',
+    padding: '1%',
+    direction: 'ltr',
+  },
+  textField: {
+    right: '2%',
+    width: '20%',
+    padding: '1%',
+  },
+  action_buttons: {
+    paddingRight: '2%',
+  },
+  select_element: {
+    right: '2%',
+    width: '220px',
+    padding: '1%',
+  },
+  title_type: {
+    textAlign: 'center',
+  },
+}))
 
 const words_he = require('../../utils/words_he').words_he
 const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const CreateClient = () => {
+  const classes = useStyles()
+
   const [enable_send, setEnableSend] = useState(false)
   const [client_info, setClientInfo] = useState({ name: '', type: words_he['private'], phone: '', email: '' })
   const dispatch = useDispatch()
@@ -78,77 +108,89 @@ const CreateClient = () => {
   }
 
   return (
-    <div>
-      <h3 className='text-muted'>{words_he['new_client']}</h3>
-      <table>
-        <thead>
-          <tr>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['name']}
-            </th>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['type']}
-            </th>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['phone']}
-            </th>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['email']}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input type='text' onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })} defaultValue={client_info.name} />
-            </td>
-            <td>
-              <ul>
-                <li>
-                  <input
-                    type='radio'
-                    value={words_he['private']}
-                    name={'type'}
-                    checked={client_info.type === words_he['private']}
-                    onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
-                  />{' '}
-                  {words_he['private']}
-                </li>
-                <li>
-                  <input
-                    type='radio'
-                    value={words_he['company']}
-                    name={'type'}
-                    checked={client_info.type === words_he['company']}
-                    onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
-                  />{' '}
-                  {words_he['company']}
-                </li>
-                <li>
-                  <input
-                    type='radio'
-                    value={words_he['department']}
-                    name={'type'}
-                    checked={client_info.type === words_he['department']}
-                    onChange={(e) => setClientInfo({ ...client_info, type: e.target.value })}
-                  />{' '}
-                  {words_he['department']}
-                </li>
-              </ul>
-            </td>
-            <td>
-              <input type='tel' onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })} defaultValue={client_info.phone} />
-            </td>
-            <td>
-              <input type='email' onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })} defaultValue={client_info.email} />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button type='button' className='btn btn-success' onClick={handle_save} disabled={!enable_send}>
-        {words_he['save']}
-      </button>
-    </div>
+    <Box
+      component='form'
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
+    >
+      <Grid container spacing={2} justifyContent='center'>
+        <Grid item xs={10}>
+          <Grid container justifyContent='center'>
+            <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
+              {words_he['new_client']}
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={10}>
+          <TextField
+            className={classes.textField}
+            id='standard-required'
+            label={' * ' + words_he['name']}
+            variant='standard'
+            onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })}
+          />
+        </Grid>
+
+        <Grid item xs={10}>
+          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+            {' * ' + words_he['type']}
+          </InputLabel>
+
+          <Select
+            variant='standard'
+            required
+            id='type'
+            className={classes.select_element}
+            onChange={(e) => {
+              console.log(e.target.value)
+              setClientInfo({ ...client_info, type: e.target.value })
+            }}
+          >
+            <MenuItem value={words_he['private']}>{words_he['private']}</MenuItem>
+            <MenuItem value={words_he['company']}>{words_he['company']}</MenuItem>
+            <MenuItem value={words_he['department']}>{words_he['department']}</MenuItem>
+          </Select>
+        </Grid>
+
+        <Grid item xs={10}>
+          <TextField
+            className={classes.ltr_input}
+            required
+            type='tel'
+            id='standard-required'
+            label={words_he['phone']}
+            variant='standard'
+            onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
+          />
+        </Grid>
+
+        <Grid item xs={10}>
+          <TextField
+            className={classes.ltr_input}
+            required
+            type='email'
+            id='standard-required'
+            label={words_he['email']}
+            variant='standard'
+            direction='ltr'
+            onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={10} className={classes.action_buttons}>
+          <Grid container justifyContent='center'>
+            <Grid item>
+              <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
+                {words_he['save']}
+              </button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 

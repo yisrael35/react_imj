@@ -162,7 +162,6 @@ const UpdateClient = (props) => {
             className={classes.select_element}
             value={client_info.type}
             onChange={(e) => {
-              console.log(e.target.value)
               setClientInfo({ ...client_info, type: e.target.value })
             }}
           >

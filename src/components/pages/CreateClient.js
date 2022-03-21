@@ -146,7 +146,6 @@ const CreateClient = () => {
             id='type'
             className={classes.select_element}
             onChange={(e) => {
-              console.log(e.target.value)
               setClientInfo({ ...client_info, type: e.target.value })
             }}
           >

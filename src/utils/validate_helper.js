@@ -4,18 +4,6 @@ const invalid_email_characters = (email) => {
   }
   return false
 }
-const invalid_email_characters_prefix = (email) => {
-  if (!/^[a-zA-Z0-9._-]+$/.test(email) && email.trim() !== '') {
-    return true
-  }
-  return false
-}
-
-const invalid_email = (email) => {
-  return !String(email)
-    .toLowerCase()
-    .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-}
 const invalid_phone = (phone) => {
   if (!/^[0-9]+$/.test(phone) && phone.trim() !== '') {
     return true
@@ -51,9 +39,7 @@ const all_fields_filled = (fields) => {
 }
 
 module.exports = {
-  invalid_email,
   invalid_email_characters,
-  invalid_email_characters_prefix,
   invalid_phone,
   all_fields_filled,
 }

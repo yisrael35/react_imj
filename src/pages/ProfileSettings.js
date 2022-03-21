@@ -5,7 +5,7 @@ import * as actionSnackBar from '../redux/SnackBar/action'
 import { FaUserEdit } from 'react-icons/fa'
 
 const words_he = require('../utils/words_he').words_he
-const { invalid_phone, all_fields_filled } = require('../utils/validate_helper')
+const { invalid_phone } = require('../utils/validate_helper')
 
 const ProfileSettings = (props) => {
   const dispatch = useDispatch()

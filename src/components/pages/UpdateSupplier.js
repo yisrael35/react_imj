@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import * as action_supplier from '../../redux/Supplier/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
-import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
+import { Box, Grid, TextField, Typography } from '@mui/material/'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -111,7 +111,6 @@ const UpdateSupplier = (props) => {
   }
 
   return (
-
     <Box
       component='form'
       sx={{
@@ -218,7 +217,5 @@ const UpdateSupplier = (props) => {
     </Box>
   )
 }
-
-  
 
 export default UpdateSupplier

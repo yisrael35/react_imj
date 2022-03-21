@@ -10,12 +10,6 @@ import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
-  ltr_input: {
-    right: '2%',
-    width: '20%',
-    padding: '1%',
-    direction: 'ltr',
-  },
   textField: {
     right: '2%',
     width: '20%',

@@ -1,16 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
-import Select from 'react-select'
 import * as action_event from '../../redux/Event/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import EventNote from '@material-ui/icons/EventNote'
 // import TextField from '@mui/material/TextField'
+import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
+
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    right: '2%',
+    width: '20%',
+    padding: '1%',
+  },
+  action_buttons: {
+    paddingRight: '2%',
+  },
+  select_element: {
+    right: '2%',
+    width: '220px',
+    padding: '1%',
+  },
+  title_type: {
+    textAlign: 'center',
+  },
+}))
 
 const words_he = require('../../utils/words_he').words_he
 const { all_fields_filled } = require('../../utils/validate_helper')
 
 const UpdateEvent = (props) => {
+  const classes = useStyles()
+
   const [date, setDate] = useState(moment(props.data.from_date).format(`YYYY-MM-DD`))
   const [start_time, setStartTime] = useState(moment(props.data.from_date).format(`HH:mm:ss`))
   const [end_time, setEndTime] = useState(moment(props.data.to_date).format(`HH:mm:ss`))
@@ -101,108 +124,118 @@ const UpdateEvent = (props) => {
   }, [date, start_time, end_time])
 
   return (
-    <div>
-      <h3 className='text-muted'>{words_he['edit_event']}</h3>
+    <Box
+      component='form'
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
+    >
+      <Grid container spacing={2} justifyContent='center'>
+        <Grid item xs={10}>
+          <Grid container justifyContent='center'>
+            <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
+              {words_he['edit_event']}
+            </Typography>
+          </Grid>
+          <EventNote style={{ width: '80px', height: '80px', margin: '4px' }} />
+        </Grid>
+        <Grid item xs={10}>
+          <TextField
+            className={classes.textField}
+            id='standard-required'
+            label={' * ' + words_he['event_name']}
+            value={event_info.name}
+            variant='standard'
+            onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })}
+          />
+        </Grid>
 
-      <EventNote style={{ width: '80px', height: '80px', margin: '4px' }} />
-      <table>
-        <thead>
-          <tr>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['event_name']}
-            </th>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['event_date']}
-            </th>
-            <th> {words_he['start_time']}</th>
-            <th> {words_he['end_time']}</th>
-            <th> {words_he['status']}</th>
-            <th> {words_he['type']}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input type='text' value={event_info.name} onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })} />
-            </td>
-            <td>
-              {date}
-              {/* <TextField
-                id='standard-read-only-input'
-                label='Read Only'
-                defaultValue=
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant='standard'
-              /> */}
-            </td>
-            <td>
-              <input
-                type='time'
-                value={start_time}
-                onChange={(e) => {
-                  setStartTime(e.target.value)
-                }}
-              />
-            </td>
-            <td>
-              <input
-                type='time'
-                value={end_time}
-                onChange={(e) => {
-                  setEndTime(e.target.value)
-                }}
-              />
-              {!end_after_start && <span style={{ color: 'red' }}> {words_he['end_after_start']}</span>}
-            </td>
-            <td>
-              <Select
-                className={'select'}
-                placeholder={words_he[event_info.status]}
-                options={statuses}
-                id='statuses'
-                label={words_he['status']}
-                onChange={(e) => {
-                  setEventInfo({ ...event_info, status: e.value })
-                }}
-              />
-            </td>
-            <td>
-              <Select
-                className={'select'}
-                placeholder={words_he[event_info.type]}
-                options={types}
-                id='types'
-                label={words_he['type']}
-                onChange={(e) => {
-                  setEventInfo({ ...event_info, type: e.value })
-                }}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button type='button' className='btn btn-success m-4' onClick={handle_save} disabled={!enable_send}>
-        {words_he['save']}
-      </button>
-    </div>
+        <Grid item xs={10}>
+          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+            {' * ' + words_he['event_date']}
+          </InputLabel>
+          <Grid container item xs={12} justifyContent='center'>
+            {date}
+          </Grid>
+        </Grid>
+        <Grid item xs={10}>
+          <TextField
+            className={classes.textField}
+            label={' * ' + words_he['start_time']}
+            type='time'
+            value={start_time}
+            onChange={(e) => {
+              setStartTime(e.target.value)
+            }}
+          />
+        </Grid>
+        <Grid item xs={10}>
+          <TextField
+            className={classes.textField}
+            label={' * ' + words_he['end_time']}
+            type='time'
+            value={end_time}
+            onChange={(e) => {
+              setEndTime(e.target.value)
+            }}
+          />
+          {!end_after_start && <span style={{ color: 'red', display: 'block' }}> {words_he['end_after_start']}</span>}
+        </Grid>
+        <Grid item xs={10}>
+          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+            {' * ' + words_he['status']}
+          </InputLabel>
+
+          <Select
+            variant='standard'
+            value={String(event_info.status)}
+            className={classes.select_element}
+            onChange={(e) => {
+              setEventInfo({ ...event_info, status: e.target.value })
+            }}
+          >
+            <MenuItem value='pending'>{words_he['pending']}</MenuItem>
+            <MenuItem value='approved'>{words_he['approved']}</MenuItem>
+            <MenuItem value='canceled'>{words_he['canceled']}</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item xs={10}>
+          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+            {' * ' + words_he['type']}
+          </InputLabel>
+
+          <Select
+            variant='standard'
+            value={String(event_info.type)}
+            className={classes.select_element}
+            onChange={(e) => {
+              setEventInfo({ ...event_info, type: e.target.value })
+            }}
+          >
+            <MenuItem value='private'>{words_he['private']}</MenuItem>
+            <MenuItem value='public'>{words_he['public']}</MenuItem>
+            <MenuItem value='inside'>{words_he['inside']}</MenuItem>
+            <MenuItem value='photo_shot'>{words_he['photo_shot']}</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item xs={10} className={classes.action_buttons}>
+          <Grid container justifyContent='center'>
+            <Grid item>
+              <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
+                {words_he['save']}
+              </button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
 export default UpdateEvent
 
-const statuses = [
-  { value: 'pending', label: words_he['pending'] },
-  { value: 'approved', label: words_he['approved'] },
-  { value: 'canceled', label: words_he['canceled'] },
-]
-const types = [
-  { value: 'private', label: words_he['private'] },
-  { value: 'public', label: words_he['public'] },
-  { value: 'inside', label: words_he['inside'] },
-  { value: 'photo_shot', label: words_he['photo_shot'] },
-]
 // budget: null
 // check_list: null
 // clients: null

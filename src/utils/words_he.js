@@ -69,7 +69,7 @@ const words_he = {
   bid_status: 'סטטוס הצעה',
   search: 'חיפוש...',
   sum_rows: 'סך התוצאות: ',
-  rows_to_display: 'מספר שורות להציג',
+  rows_to_display: 'שורות להצגה',
   server_error: 'שגיאת שרת',
   error_accord: 'אירעה שגיאה אנא בדוק את הנתונים ונסה שנית',
   login_error: 'שם משתמש או סיסמא לא נכונים',

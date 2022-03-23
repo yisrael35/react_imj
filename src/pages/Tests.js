@@ -1,50 +1,138 @@
-import React, { useState } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+// import React from 'react'
 
-import TableScheduleTimeEvent from '../components/pages/TableScheduleTimeEvent'
-const words_he = require('../utils/words_he').words_he
+// const Test = () => {
+//   return <div></div>
+// }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '90%',
-    margin: 'auto',
-    textAlign: 'center',
-  },
-  ScheduleTimeEvent: {
-    // textAlign: 'center',
-    // margin: theme.spacing(2),
-    // margin: 'auto',
-  },
-  table: {
-    margin: 'auto',
-    padding: theme.spacing(10),
-  },
-}))
-const Test = () => {
-  const [bid_id, setBidId] = useState('81490f6d-97e0-11ec-94d1-005056c00001')
+// export default Test
 
-  const [schedule_time_event, setScheduleTimeEvent] = useState([{ start_time: '', end_time: '', activity_description: '' }])
-  const classes = useStyles()
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import Menu from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
+import MenuItem from '@mui/material/MenuItem'
+
+import NavigateNextTwoTone from '@mui/icons-material/NavigateNextTwoTone'
+import NavigateBeforeOutlined from '@mui/icons-material/NavigateBeforeOutlined'
+
+const pages = ['Products', 'Pricing', 'Blog']
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+
+const ResponsiveAppBar = () => {
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget)
+  }
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget)
+  }
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null)
+  }
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
 
   return (
     <div>
-      <Grid className={classes.ScheduleTimeEvent}>
-        <Grid container>
-          <Grid item xs={12}>
-            <span>
-              <h3>{words_he['bid_created']}</h3>
-            </span>
-            {`${words_he['bid_id']}: ${bid_id}`}
-          </Grid>
-          <Grid item className={classes.table}>
-            <TableScheduleTimeEvent setScheduleTimeEvent={setScheduleTimeEvent} schedule_time_event={schedule_time_event} />
-          </Grid>
-        </Grid>
-      </Grid>
+      <AppBar position='static'>
+        <Container maxWidth='xl'>
+          <Toolbar disableGutters>
+            <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              LOGO
+            </Typography>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton size='large' aria-label='account of current user' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='inherit'>
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign='center'>{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              LOGO
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {pages.map((page) => (
+                <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                  {page}
+                </Button>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign='center'>{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <IconButton color='primary'>
+        <NavigateNextTwoTone />
+      </IconButton>
+      <IconButton color='primary'>
+        <NavigateBeforeOutlined />
+      </IconButton>
     </div>
   )
 }
-
-export default Test
+export default ResponsiveAppBar

@@ -69,7 +69,7 @@ const UpdateEvent = (props) => {
   }, [date, start_time, end_time, end_after_start, event_info])
 
   useEffect(() => {
-    if (start_time >= end_time) {
+    if (moment(start_time).isBefore(end_time)) {
       setEndAfterStart(false)
       return
     } else {

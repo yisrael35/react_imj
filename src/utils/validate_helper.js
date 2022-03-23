@@ -4,6 +4,12 @@ const invalid_email_characters = (email) => {
   }
   return false
 }
+
+const validateEmail = (email) => {
+  var re = /\S+@\S+\.\S+/
+  return re.test(email)
+}
+
 const invalid_phone = (phone) => {
   if (!/^[0-9]+$/.test(phone) && phone.trim() !== '') {
     return true
@@ -42,4 +48,5 @@ module.exports = {
   invalid_email_characters,
   invalid_phone,
   all_fields_filled,
+  validateEmail,
 }

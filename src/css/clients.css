@@ -54,6 +54,7 @@ ul {
 .pagination-select {
   display: inline-block;
   margin: 4px;
+  margin-bottom: 0px;
   width: 90px;
   text-align: center;
 }

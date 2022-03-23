@@ -1,41 +1,46 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-// import * as action_event_type from '../../redux/EventType/action'
+
 import * as action_pdf from '../../redux/PDF/action'
 import * as action_loading from '../../redux/Loading/action'
 import * as action_popUp from '../../redux/PopUp/action'
+import { TextField } from '@mui/material/'
+
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 import { FaRegFilePdf } from 'react-icons/fa'
-import '../../css/toggle.css'
 const words_he = require('../../utils/words_he').words_he
-
+const { validateEmail } = require('../../utils/validate_helper')
 const EmailAndDownload = (props) => {
   const { message, bid_id, email } = props
-  const [clientEmail, setClientEmail] = useState(email)
-  const [send_to_email, setSendToEmail] = useState(false)
+  const [client_email, setClientEmail] = useState(email)
+  const [email_valid, setEmailValid] = useState(true)
+  const [toggle_file, setToggleFile] = useState('download_pdf')
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // TODO -- REGEX - EMAIL
-    //  TODO -- MOVE REGEX TO GLOBAL PLACE
+    if (!validateEmail(client_email)) {
+      setEmailValid(false)
+    } else {
+      setEmailValid(true)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientEmail])
+  }, [client_email])
 
-  // console.log({ bid_uuid })
   const handle_send_email = () => {
     const data = {
       bid_id,
-      email: clientEmail,
+      email: client_email,
     }
     dispatch(action_pdf.create_pdf({ data, download: false }))
   }
-  const toggle_buttons = () => {
-    setSendToEmail(!send_to_email)
+  const toggle_buttons = (event, name) => {
+    setToggleFile(name)
   }
 
   const handle_get_pdf = () => {
-    setSendToEmail(false)
     dispatch(action_popUp.disablePopUp())
     dispatch(action_loading.setLoading())
     const pdf_req = { bid_id }
@@ -47,12 +52,10 @@ const EmailAndDownload = (props) => {
       <h4 className='text-muted  m-4'>{message}</h4>
       <FaRegFilePdf style={{ fontSize: '160px', margin: '4px' }} />
       <div className='mt-3'>
-        <button type='button' className='btn btn-dark border' onClick={toggle_buttons} disabled={!send_to_email}>
-          {words_he['download_pdf']}
-        </button>
-        <button type='button' className='btn btn-dark border' onClick={toggle_buttons} disabled={send_to_email}>
-          {words_he['send_to_email']}
-        </button>
+        <ToggleButtonGroup color='primary' value={toggle_file} exclusive onChange={toggle_buttons}>
+          <ToggleButton value='download_pdf'> {words_he['download_pdf']}</ToggleButton>
+          <ToggleButton value='send_to_email'> {words_he['send_to_email']}</ToggleButton>
+        </ToggleButtonGroup>
       </div>
       <table>
         <tbody>
@@ -61,22 +64,23 @@ const EmailAndDownload = (props) => {
           </tr>
         </tbody>
       </table>
-      {send_to_email ? (
-        <span>
-          <label>
-            <input
-              className='input mt-4'
-              type='email'
-              placeholder={email ? email : 'example@gmail.com'}
-              onChange={(e) => {
-                setClientEmail(e.target.value)
-              }}
-            />
-            <button type='button' className='btn btn-success m-2' onClick={handle_send_email}>
-              {words_he['send']}
-            </button>
-          </label>
-        </span>
+      {toggle_file === 'send_to_email' ? (
+        <div style={{ margin: '18px' }}>
+          <TextField
+            required
+            id='standard-required'
+            label={words_he['email']}
+            variant='standard'
+            placeholder={email ? email : 'example@gmail.com'}
+            value={client_email}
+            onChange={(e) => {
+              setClientEmail(e.target.value)
+            }}
+          />
+          <button type='button' className='btn btn-success m-2' disabled={!email_valid} onClick={handle_send_email}>
+            {words_he['send']}
+          </button>
+        </div>
       ) : (
         <span>
           <button type='button' className='btn btn-success m-4' onClick={handle_get_pdf} disabled={false}>

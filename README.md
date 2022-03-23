@@ -1,6 +1,42 @@
-# Getting Started with Create React App
+## Management events system
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### About the project
+
+I built this project for The Israel Museum, Jerusalem.
+The technology stack:
+
+> For the DB I used MySQL [Link](https://github.com/yisrael35/rest_imj/tree/main/sql/structure)
+> For the FrontEnd I used React with Redux - current repository
+> For the BackEnd I used REST-API and WebSocket (NodeJS) [Link](https://github.com/yisrael35/rest_imj)
+> For the deployment I used AWS-EC2 [Link](http://yisraelbar.xyz/Login)
+> For the documentation I used wiki.js [Link](https://wiki-imj.herokuapp.com/)
+> To menage all the project I used Monday and Git
+> The project goal is to build a Management events system for IMJ.
+
+### About this repository
+
+There are 3 type of users:
+
+1. Admin - all permissions
+2. user - all actions except users
+3. guest - can view just the main screen
+
+- All calls to the BackEnd - REST/WS done by token thats you get in the login
+
+Main files and Folders:
+App.js contains all the routes to the main pages
+src/pages/ contain all the main pages
+src/pages/Home.js The main page of the events
+src/redux/ contain the store and all redux file, and all calls to BackEnd happens in "action" files
+src/services/ init a web-worker thats init a WS the BackEnd (Register to get events - Design patterns observer)
+
+👀 All rights reserved to Yisrael Bar
+🌱 How to reach me:
+[My Linkedin](https://www.linkedin.com/in/yisrael-bar-7534a842/)
+If you want to see more of my projects:
+[My GitHub](https://github.com/yisrael35)
+
+### Create by: Yisrael Bar
 
 ## Available Scripts
 
@@ -14,11 +50,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
@@ -28,43 +59,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

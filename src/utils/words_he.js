@@ -145,6 +145,16 @@ const words_he = {
   reports_content_row3: '1. בחרו את הטבלה המכילה את הנתונים הרצויים לייצוא.',
   reports_content_row4: '2. בחרו את טווח התאריכים בו מעוניינים (אופציונלי).',
   reports_content_row5: '3. לחצו על כפתור "צור קובץ CSV".',
+  allDay: 'כל היום',
+  previous: 'הקודם',
+  today: 'היום',
+  month: 'חודש',
+  week: 'שבוע',
+  day: 'יום',
+  agenda: 'בתוכנית',
+  date: 'תאריך',
+  time: 'זמן',
+  event: 'אירוע',
 }
 
 module.exports = {

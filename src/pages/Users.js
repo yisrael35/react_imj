@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
-// import Select from 'react-select'
 import { InputLabel, Select, MenuItem } from '@mui/material/'
 
 import TableBuilder from '../components/general/TableBuilder'
@@ -83,7 +82,6 @@ const Users = (props) => {
   }
   return (
     <div>
-      {/* search */}
       <span className='field_search'>
         <Link to='/Register'>
           <button type='button' className='btn btn-info'>
@@ -124,7 +122,8 @@ const Users = (props) => {
           </Select>
         </span>
       </span>
-      <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      {/* search */}
+      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
 
       <TableBuilder
         items={items}

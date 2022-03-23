@@ -92,6 +92,12 @@ html {
   margin: 10px;
 }
 
+.debounce_search {
+  margin: 10px;
+}
+
+
+
 .table_header {
   background-color: rgb(83, 83, 83);
   color: white;

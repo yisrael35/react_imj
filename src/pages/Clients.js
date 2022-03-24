@@ -12,6 +12,7 @@ import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_client from '../redux/Client/action'
 import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
+import SearchIcon from '@mui/icons-material/Search';
 
 const words_he = require('../utils/words_he').words_he
 
@@ -123,6 +124,7 @@ const Clients = () => {
       </span>
       {/* search */}
       <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      <SearchIcon />
 
       <TableBuilder
         items={items}

@@ -83,19 +83,6 @@ const CreateSupplier = (props) => {
     }, 1000)
   }
 
-  let account_name
-  let iban
-  let swift
-  if (!supplier_info.account) {
-    account_name = ''
-    iban = ''
-    swift = ''
-  } else {
-    account_name = supplier_info.account.account_name
-    iban = supplier_info.account.iban
-    swift = supplier_info.account.swift
-  }
-
   return (
     <Box
       component='form'

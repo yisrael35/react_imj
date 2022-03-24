@@ -26,7 +26,7 @@ const Register = () => {
   }, [first_name, last_name, email, phone])
 
   const validate_fields = () => {
-    if (email && invalid_email_characters(email+'@imj.org.il')) {
+    if (email && invalid_email_characters(email + '@imj.org.il')) {
       dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${email} `, 3000))
       return false
     }
@@ -61,19 +61,21 @@ const Register = () => {
     <form onSubmit={submit} className='form-signin'>
       <h1 className='h3 mb-3 fw-normal'> {words_he['create_new_user']}</h1>
       <FaUserPlus style={{ fontSize: '60px', margin: '10px', textAlign: 'center' }} />
-
-      <input className='form-control' placeholder={words_he['first_name']} required onChange={(e) => setFirstName(e.target.value)} />
-      <input className='form-control' placeholder={words_he['last_name']} required onChange={(e) => setLastName(e.target.value)} />
-      <input type='text' className='form-control' placeholder={words_he['phone']} required onChange={(e) => setPhone(e.target.value)} />
-      <input
-        type='text'
-        className='form-control'
-        placeholder={words_he['email']}
-        required
-        onChange={(e) => {
-          setEmail(e.target.value)
-        }}
-      />
+      <div style={{ textAlign: 'center' }}>
+        <input style={{ textAlign: 'center' }} className='form-control' placeholder={words_he['first_name']} required onChange={(e) => setFirstName(e.target.value)} />
+        <input style={{ textAlign: 'center' }} className='form-control' placeholder={words_he['last_name']} required onChange={(e) => setLastName(e.target.value)} />
+        <input style={{ textAlign: 'center' }} type='text' className='form-control' placeholder={words_he['phone']} required onChange={(e) => setPhone(e.target.value)} />
+        <input
+          style={{ textAlign: 'center' }}
+          type='text'
+          className='form-control'
+          placeholder={words_he['email']}
+          required
+          onChange={(e) => {
+            setEmail(e.target.value)
+          }}
+        />
+      </div>
       <div style={{ padding: '6px', direction: 'ltr' }}>{email + process.env.REACT_APP_IMJ_EMAIL} </div>
       <button className='w-100 btn btn-lg btn-success' type='submit' disabled={!enable_send}>
         {words_he['register']}

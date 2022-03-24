@@ -12,7 +12,7 @@ export const create_event = (data) => (dispatch) => {
   axios
     .post(process.env.REACT_APP_REST_IMJ_URL + `/event`, data)
     .then((res) => {
-      dispatch(actionSnackBar.setSnackBar('success', 'create successfully', 2000))
+      dispatch(actionSnackBar.setSnackBar('success', words_he['event_created'], 2000))
     })
     .catch((error) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
@@ -70,7 +70,7 @@ export const update_event = (data, event_id) => (dispatch) => {
   axios
     .put(process.env.REACT_APP_REST_IMJ_URL + `/event/${event_id}`, data)
     .then((res) => {
-      dispatch(actionSnackBar.setSnackBar('success', 'update event successfully', 2000))
+      dispatch(actionSnackBar.setSnackBar('success', words_he['event_updated'], 2000))
     })
     .catch((error) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))

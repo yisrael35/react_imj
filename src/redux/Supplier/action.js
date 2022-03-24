@@ -34,7 +34,7 @@ export const delete_supplier = (Supplier_id) => (dispatch) => {
   axios
     .delete(process.env.REACT_APP_REST_IMJ_URL + `/Supplier/${Supplier_id}`)
     .then((res) => {
-      dispatch(actionSnackBar.setSnackBar('success', 'Supplier status changed successfully', 2000))
+      dispatch(actionSnackBar.setSnackBar('success', words_he['supplier_deleted'], 2000))
     })
     .catch((error) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
@@ -44,7 +44,7 @@ export const create_supplier = (data) => (dispatch) => {
   axios
     .post(process.env.REACT_APP_REST_IMJ_URL + `/Supplier`, data)
     .then((res) => {
-      dispatch(actionSnackBar.setSnackBar('success', 'create Supplier successfully', 2000))
+      dispatch(actionSnackBar.setSnackBar('success', words_he['supplier_created'], 2000))
     })
     .catch((error) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
@@ -55,7 +55,7 @@ export const update_supplier = (data, Supplier_id) => (dispatch) => {
   axios
     .put(process.env.REACT_APP_REST_IMJ_URL + `/Supplier/${Supplier_id}`, data)
     .then((res) => {
-      dispatch(actionSnackBar.setSnackBar('success', 'update Supplier successfully', 2000))
+      dispatch(actionSnackBar.setSnackBar('success', words_he['supplier_updated'], 2000))
     })
     .catch((error) => {
       dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))

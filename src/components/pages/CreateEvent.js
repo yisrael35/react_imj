@@ -50,17 +50,18 @@ const CreateEvent = (props) => {
     } else {
       setEndAfterStart(true)
     }
+    event_info.status = 'approved'
     dispatch(action_event.create_event(event_info))
     setTimeout(() => {
       const limit = props.limit
-    const offset = props.offset
-    dispatch(action_event.get_events({ limit, offset }))
+      const offset = props.offset
+      dispatch(action_event.get_events({ limit, offset }))
       dispatch(action_popUp.disablePopUp())
     }, 1000)
   }
 
   useEffect(() => {
-    if (start_time >= end_time) {
+    if (!moment(`${date} ${start_time}`).isBefore(`${date} ${end_time}`)) {
       setEndAfterStart(false)
       return
     } else {
@@ -128,6 +129,7 @@ const CreateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['start_time']}
             type='time'
+            variant='standard'
             value={start_time}
             onChange={(e) => {
               setStartTime(e.target.value)
@@ -139,6 +141,7 @@ const CreateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['end_time']}
             type='time'
+            variant='standard'
             value={end_time}
             onChange={(e) => {
               setEndTime(e.target.value)

@@ -13,7 +13,7 @@ export const create_new_bid = (data) => (dispatch) => {
     axios
       .post(process.env.REACT_APP_REST_IMJ_URL + `/bid`, data)
       .then((res) => {
-        dispatch(actionSnackBar.setSnackBar('success', 'create successfully', 2000))
+        dispatch(actionSnackBar.setSnackBar('success', words_he['bid_created'], 2000))
         return resolve(res.data.bid_id)
       })
       .catch((error) => {
@@ -29,7 +29,7 @@ export const create_schedule_event = (data) => (dispatch) => {
     axios
       .post(process.env.REACT_APP_REST_IMJ_URL + `/schedule_event`, data)
       .then((res) => {
-        dispatch(actionSnackBar.setSnackBar('success', 'create successfully', 2000))
+        dispatch(actionSnackBar.setSnackBar('success', words_he['schedule_event_created'], 2000))
         return resolve(res.status)
       })
       .catch((error) => {
@@ -44,7 +44,7 @@ export const create_costs = (data) => (dispatch) => {
     axios
       .post(process.env.REACT_APP_REST_IMJ_URL + `/cost`, data)
       .then((res) => {
-        dispatch(actionSnackBar.setSnackBar('success', 'create successfully', 2000))
+        dispatch(actionSnackBar.setSnackBar('success', words_he['cost_created'], 2000))
         return resolve(res.status)
       })
       .catch((error) => {

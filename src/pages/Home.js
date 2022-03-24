@@ -38,9 +38,9 @@ const Home = (props) => {
   //receive message from the ws
   useEffect(() => {
     const receiveData = (message) => {
-      if ((message?.data?.type === 'login' || message?.data?.type === 'notification') && !message?.data?.error) {
-        const response = { ...message.data }
-        dispatch(actionSnackBar.setSnackBar('success', response.content, 2000))
+      if (message?.data?.type === 'login' && !message?.data?.error) {
+        // const response = { ...message.data }
+        dispatch(actionSnackBar.setSnackBar('success', words_he['login_success'], 2000))
       } else if (message?.data?.type === 'events' && !message?.data?.error) {
         const response = { ...message.data }
         dispatch(action_home.set_events(response.content))
@@ -95,7 +95,7 @@ const Home = (props) => {
         views={['month', 'week', 'day', 'agenda']}
         startAccessor='start'
         endAccessor='end'
-        style={{ height: 500 }}
+        style={{ minHeight: 500, height: 'auto', marginRight: '14px', marginLeft: '14px' }}
         date={new Date(saved_date)}
         onNavigate={get_event_by_month}
         selectable={false}

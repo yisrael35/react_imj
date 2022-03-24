@@ -21,7 +21,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 
 import NavigateNextTwoTone from '@mui/icons-material/NavigateNextTwoTone'
-import NavigateBeforeOutlined from '@mui/icons-material/NavigateBeforeOutlined'
+import SearchIcon from '@mui/icons-material/Search';
 
 const pages = ['Products', 'Pricing', 'Blog']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
@@ -130,7 +130,7 @@ const ResponsiveAppBar = () => {
         <NavigateNextTwoTone />
       </IconButton>
       <IconButton color='primary'>
-        <NavigateBeforeOutlined />
+        <SearchIcon />
       </IconButton>
     </div>
   )

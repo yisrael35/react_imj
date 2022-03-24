@@ -10,6 +10,8 @@ import * as action_event from '../redux/Event/action'
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
+import SearchIcon from '@mui/icons-material/Search';
+
 const words_he = require('../utils/words_he').words_he
 
 const Events = (props) => {
@@ -141,6 +143,7 @@ const Events = (props) => {
       </span>
       {/* search */}
       <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      <SearchIcon />
 
       {/* <button class="fa-duotone fa-file-csv">11111</button> */}
       <TableBuilder

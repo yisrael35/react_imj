@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const words_he = require('../../utils/words_he').words_he
-const { all_fields_filled } = require('../../utils/validate_helper')
 
 const UpdateEvent = (props) => {
   const classes = useStyles()
@@ -60,7 +59,7 @@ const UpdateEvent = (props) => {
   }, [])
 
   useEffect(() => {
-    if (validate_fields()) {
+    if (end_after_start && start_time && end_time && date && event_info.name) {
       setEnableSend(true)
     } else {
       setEnableSend(false)
@@ -69,7 +68,7 @@ const UpdateEvent = (props) => {
   }, [date, start_time, end_time, end_after_start, event_info])
 
   useEffect(() => {
-    if (moment(start_time).isBefore(end_time)) {
+    if (!moment(`${date} ${start_time}`).isBefore(`${date} ${end_time}`)) {
       setEndAfterStart(false)
       return
     } else {
@@ -79,13 +78,6 @@ const UpdateEvent = (props) => {
     setEventInfo({ ...event_info, from_date: `${date} ${start_time}`, to_date: `${date} ${end_time}` })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, start_time, end_time])
-
-  const validate_fields = () => {
-    if (all_fields_filled([date])) {
-      return true
-    }
-    return false
-  }
 
   const handle_save = () => {
     if (start_time >= end_time) {
@@ -110,18 +102,6 @@ const UpdateEvent = (props) => {
       dispatch(action_popUp.disablePopUp())
     }, 1000)
   }
-
-  useEffect(() => {
-    if (start_time >= end_time) {
-      setEndAfterStart(false)
-      return
-    } else {
-      setEndAfterStart(true)
-    }
-
-    setEventInfo({ ...event_info, from_date: `${date} ${start_time}`, to_date: `${date} ${end_time}` })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date, start_time, end_time])
 
   return (
     <Box
@@ -151,7 +131,6 @@ const UpdateEvent = (props) => {
             onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })}
           />
         </Grid>
-
         <Grid item xs={10}>
           <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
             {' * ' + words_he['event_date']}
@@ -165,6 +144,7 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['start_time']}
             type='time'
+            variant='standard'
             value={start_time}
             onChange={(e) => {
               setStartTime(e.target.value)
@@ -176,6 +156,7 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['end_time']}
             type='time'
+            variant='standard'
             value={end_time}
             onChange={(e) => {
               setEndTime(e.target.value)

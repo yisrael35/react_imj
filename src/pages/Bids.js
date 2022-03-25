@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
-import Select from 'react-select'
+import { InputLabel, Select, MenuItem } from '@mui/material/'
 
 import TableBuilder from '../components/general/TableBuilder'
 import PaginationBottom from '../components/general/PaginationBottom'
@@ -12,6 +12,7 @@ import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_bid from '../redux/Bid/action'
 import { FaFileCsv, FaRegFilePdf } from 'react-icons/fa'
+import SearchIcon from '@mui/icons-material/Search';
 
 const words_he = require('../utils/words_he').words_he
 
@@ -57,7 +58,6 @@ const Bids = (props) => {
 
   return (
     <div>
-      {/* search */}
       <span className='field_search'>
         <Link to='/CreateBid'>
           <button type='button' className='btn btn-info'>
@@ -67,21 +67,40 @@ const Bids = (props) => {
         <button className='transparent_button' onClick={create_csv}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
         </button>
-        <DebounceInput minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
-        {/* <FaSearch style={{ fontSize: '28px', margin: '4px' }} /> */}
+        <span>
+          {/* Pagination Top */}
+          <InputLabel
+            style={{
+              position: 'absolute',
+              top: '75px',
+              left: '15px',
+              display: 'inline',
+            }}
+          >
+            {words_he['rows_to_display']}
+          </InputLabel>
+          <Select
+            variant='standard'
+            className={'pagination-select'}
+            value={`${limit}`}
+            id='standard-required'
+            label='limits'
+            onChange={(e) => {
+              setOffset(0)
+              setLimit(e.target.value)
+            }}
+          >
+            {limits.map((element) => (
+              <MenuItem value={element.value} key={element.value}>
+                {element.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </span>
       </span>
-      {/* Pagination Top */}
-      <Select
-        className={'pagination-select'}
-        placeholder={`${limit}`}
-        options={limits}
-        id='limits'
-        label='limits'
-        onChange={(e) => {
-          setOffset(0)
-          setLimit(e.value)
-        }}
-      />
+      {/* search */}
+      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      <SearchIcon />
 
       <TableBuilder
         items={items}

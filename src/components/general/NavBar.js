@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../../redux/Auth/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import Reports from '../../pages/Reports'
+// import LogoutIcon from '@mui/icons-material/Logout';
 const words_he = require('../../utils/words_he').words_he
 
 const Nav = (props) => {
@@ -42,11 +43,11 @@ const Nav = (props) => {
     if (permissions === 1) {
       menu = (
         <ul className='navbar-nav  sticky-top me-auto mb-2 mb-md-0'>
-          <li className='nav-item active'>
+          {/* <li className='nav-item active'>
             <Link to='/Tests' className='nav-link'>
               Tests
             </Link>
-          </li>
+          </li> */}
           <li className='nav-item active '>
             <span className='nav-link' onClick={handle_report_click}>
               {words_he['reports']}
@@ -73,7 +74,6 @@ const Nav = (props) => {
           <li className='nav-item active'>
             <Link to='/ProfileSettings' className='nav-link'>
               {words_he['profile_settings']}
-              {/* <FaUserEdit style={{ fontSize: '28px', margin: '4px' }} /> */}
             </Link>
           </li>
           <li className='nav-item active'>
@@ -90,6 +90,7 @@ const Nav = (props) => {
           <li className='nav-item active'>
             <Link to='/Login' className='nav-link' onClick={logout}>
               {words_he['logout']}
+              {/* <LogoutIcon/> */}
               {/* <FaSignOutAlt style={{ fontSize: '28px', margin: '4px' }} /> */}
             </Link>
           </li>
@@ -165,7 +166,6 @@ const Nav = (props) => {
       <div className='container-fluid'>
         <Link to='/Home' className='navbar-brand'>
           <img src='logo2.png' alt='logo' style={{ marginLeft: '10px', height: '35px', width: '40px' }} />
-          {/* {words_he['home']} */}
         </Link>
         <div>{menu}</div>
       </div>

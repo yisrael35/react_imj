@@ -2,14 +2,37 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MyDatePicker from '../general/DatePicker'
 import moment from 'moment'
-import Select from 'react-select'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as action_event from '../../redux/Event/action'
 import EventAvailable from '@material-ui/icons/EventAvailable'
+import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
+
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    right: '2%',
+    width: '20%',
+    padding: '1%',
+  },
+  action_buttons: {
+    paddingRight: '2%',
+  },
+  select_element: {
+    right: '2%',
+    width: '220px',
+    padding: '1%',
+  },
+  title_type: {
+    textAlign: 'center',
+  },
+}))
 
 const words_he = require('../../utils/words_he').words_he
 
-const CreateEvent = () => {
+const CreateEvent = (props) => {
+  const classes = useStyles()
+
   const user = useSelector((state) => state.auth.userContent)
   const [date, setDate] = useState(moment().format(`YYYY-MM-DD`))
   const [start_time, setStartTime] = useState('10:00')
@@ -27,14 +50,18 @@ const CreateEvent = () => {
     } else {
       setEndAfterStart(true)
     }
+    event_info.status = 'approved'
     dispatch(action_event.create_event(event_info))
     setTimeout(() => {
+      const limit = props.limit
+      const offset = props.offset
+      dispatch(action_event.get_events({ limit, offset }))
       dispatch(action_popUp.disablePopUp())
     }, 1000)
   }
 
   useEffect(() => {
-    if (start_time >= end_time) {
+    if (!moment(`${date} ${start_time}`).isBefore(`${date} ${end_time}`)) {
       setEndAfterStart(false)
       return
     } else {
@@ -62,77 +89,97 @@ const CreateEvent = () => {
   }, [event_info, date, start_time, end_time])
 
   return (
-    <div>
-      <h3 className='text-muted'>{words_he['new_event']}</h3>
-      <EventAvailable style={{ width: '80px', height: '80px', margin: '4px' }} />
+    <Box
+      component='form'
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
+    >
+      <Grid container spacing={2} justifyContent='center'>
+        <Grid item xs={10}>
+          <Grid container justifyContent='center'>
+            <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
+              {words_he['new_event']}
+            </Typography>
+          </Grid>
+          <EventAvailable style={{ width: '80px', height: '80px', margin: '4px' }} />
+        </Grid>
+        <Grid item xs={10}>
+          <TextField
+            className={classes.textField}
+            id='standard-required'
+            label={' * ' + words_he['event_name']}
+            variant='standard'
+            onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })}
+          />
+        </Grid>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['event_name']}
-            </th>
-            <th scope='col' className='border-0 text-uppercase font-medium pl-4'>
-              {words_he['event_date']}
-            </th>
-            <th> {words_he['start_time']}</th>
-            <th> {words_he['end_time']}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input type='text' onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })} />
-            </td>
-            <td>
-              <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
-            </td>
-            <td>
-              <input
-                type='time'
-                value={start_time}
-                onChange={(e) => {
-                  setStartTime(e.target.value)
-                }}
-              />
-            </td>
-            <td>
-              <input
-                type='time'
-                value={end_time}
-                onChange={(e) => {
-                  setEndTime(e.target.value)
-                }}
-              />
-              {!end_after_start && <span style={{ color: 'red' }}> {words_he['end_after_start']}</span>}
-            </td>
-            <td>
-              <Select
-                className={'select'}
-                placeholder={words_he['public']}
-                options={types}
-                id='types'
-                label={words_he['type']}
-                onChange={(e) => {
-                  setEventInfo({ ...event_info, type: e.value })
-                }}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button className='btn btn-success m-4' onClick={handle_save} disabled={!enable_send}>
-        {words_he['save']}
-      </button>
-    </div>
+        <Grid item xs={10}>
+          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+            {' * ' + words_he['event_date']}
+          </InputLabel>
+          <Grid container item xs={12} justifyContent='center'>
+            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
+          </Grid>
+        </Grid>
+        <Grid item xs={10}>
+          <TextField
+            className={classes.textField}
+            label={' * ' + words_he['start_time']}
+            type='time'
+            variant='standard'
+            value={start_time}
+            onChange={(e) => {
+              setStartTime(e.target.value)
+            }}
+          />
+        </Grid>
+        <Grid item xs={10}>
+          <TextField
+            className={classes.textField}
+            label={' * ' + words_he['end_time']}
+            type='time'
+            variant='standard'
+            value={end_time}
+            onChange={(e) => {
+              setEndTime(e.target.value)
+            }}
+          />
+          {!end_after_start && <span style={{ color: 'red', display: 'block' }}> {words_he['end_after_start']}</span>}
+        </Grid>
+        <Grid item xs={10}>
+          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+            {' * ' + words_he['type']}
+          </InputLabel>
+
+          <Select
+            variant='standard'
+            defaultValue={'public'}
+            className={classes.select_element}
+            onChange={(e) => {
+              setEventInfo({ ...event_info, type: e.target.value })
+            }}
+          >
+            <MenuItem value='private'>{words_he['private']}</MenuItem>
+            <MenuItem value='public'>{words_he['public']}</MenuItem>
+            <MenuItem value='inside'>{words_he['inside']}</MenuItem>
+            <MenuItem value='photo_shot'>{words_he['photo_shot']}</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item xs={10} className={classes.action_buttons}>
+          <Grid container justifyContent='center'>
+            <Grid item>
+              <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
+                {words_he['save']}
+              </button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
 export default CreateEvent
-
-const types = [
-  { value: 'private', label: words_he['private'] },
-  { value: 'public', label: words_he['public'] },
-  { value: 'inside', label: words_he['inside'] },
-  { value: 'photo_shot', label: words_he['photo_shot'] },
-]

@@ -39,11 +39,11 @@ export const check_if_token_exist = (token) => async (dispatch) => {
   }
 }
 
-export const logout = () => async (dispatch, getState) => {
+export const logout = () => async (dispatch, ) => {
   try {
     dispatch({ type: LOGOUT_SUCCESS })
     await axios.delete(process.env.REACT_APP_REST_IMJ_URL + '/auth').catch((error) => {
-      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['logout_success']}`, 3000))
     })
     setAuthToken() // Set '' to Axios default header.
     localStorage.removeItem('TokenAccess')
@@ -57,7 +57,7 @@ export const forgotPassword = (username) => (dispatch) => {
     .post(process.env.REACT_APP_REST_IMJ_URL + '/forgot_password', { username })
     .then((res) => {
       // console.log(res.data)
-      dispatch(actionSnackBar.setSnackBar('success', 'Sent to email successfully', 2000))
+      dispatch(actionSnackBar.setSnackBar('success', `${words_he['email_success']}`, 2000))
     })
     .catch((error) => {
       // console.log(error.response)
@@ -71,7 +71,7 @@ export const reset_password = (password, token) => (dispatch) => {
     .put(process.env.REACT_APP_REST_IMJ_URL + '/forgot_password', { password }, { headers: { Authorization: 'Bearer ' + token } })
     .then((res) => {
       console.log(res)
-      dispatch(actionSnackBar.setSnackBar('success', res.statusText, 2000))
+      dispatch(actionSnackBar.setSnackBar('success', `${words_he['reset_password_success']}`, 2000))
       setTimeout(redirect_to_home, 2000)
     })
     .catch((error) => {

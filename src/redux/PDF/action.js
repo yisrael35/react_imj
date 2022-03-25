@@ -19,7 +19,7 @@ export const create_pdf =
           const content = <DownloadFile file_name={file_name} />
           dispatch(actionPopUp.setPopUp(content))
         }
-        dispatch(actionSnackBar.setSnackBar('success', 'create client successfully', 2000))
+        dispatch(actionSnackBar.setSnackBar('success', words_he['file_created'], 2000))
       })
       .catch((error) => {
         // console.log(error.response.data)

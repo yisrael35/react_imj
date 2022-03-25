@@ -36,7 +36,7 @@ src/services/ init a web-worker thats init a WS the BackEnd (Register to get eve
 If you want to see more of my projects:
 [My GitHub](https://github.com/yisrael35)
 
-### Create by: Yisrael Bar
+### Created by: Yisrael Bar
 
 ## Available Scripts
 

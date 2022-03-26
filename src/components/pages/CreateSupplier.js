@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const words_he = require('../../utils/words_he').words_he
-const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
+const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const CreateSupplier = (props) => {
   const classes = useStyles()
@@ -58,7 +58,7 @@ const CreateSupplier = (props) => {
         dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${supplier_info.email} `, 3000))
         return false
       }
-      if (invalid_email(supplier_info.email)) {
+      if (!validateEmail(supplier_info.email)) {
         return false
       }
     }

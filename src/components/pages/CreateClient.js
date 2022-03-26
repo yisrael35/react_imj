@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const words_he = require('../../utils/words_he').words_he
-const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
+const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const CreateClient = () => {
   const classes = useStyles()
@@ -59,7 +59,7 @@ const CreateClient = () => {
         dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${client_info.email} `, 3000))
         return false
       }
-      if (invalid_email(client_info.email)) {
+      if (!validateEmail(client_info.email)) {
         return false
       }
     }

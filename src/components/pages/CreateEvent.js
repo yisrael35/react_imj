@@ -118,11 +118,11 @@ const CreateEvent = (props) => {
         </Grid>
 
         <Grid item xs={10}>
-          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
+          {/* <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
             {' * ' + words_he['event_date']}
-          </InputLabel>
+          </InputLabel> */}
           <Grid container item xs={12} justifyContent='center'>
-            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} />
+            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} label={' * ' + words_he['event_date']} />
           </Grid>
         </Grid>
         <Grid item xs={10}>

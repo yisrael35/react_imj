@@ -131,6 +131,7 @@ const CreateClient = () => {
             id='standard-required'
             label={' * ' + words_he['name']}
             variant='standard'
+            inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })}
           />
         </Grid>
@@ -162,6 +163,7 @@ const CreateClient = () => {
             type='tel'
             id='standard-required'
             label={words_he['phone']}
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
           />
@@ -173,6 +175,7 @@ const CreateClient = () => {
             required
             type='email'
             id='standard-required'
+            inputProps={{ style: { textAlign: 'center' } }}
             label={words_he['email']}
             variant='standard'
             direction='ltr'

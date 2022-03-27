@@ -133,6 +133,7 @@ const UpdateSupplier = (props) => {
             className={classes.textField}
             id='standard-required'
             label={' * ' + words_he['name']}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={supplier_info.name}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, name: e.target.value })}
@@ -147,6 +148,7 @@ const UpdateSupplier = (props) => {
             id='standard-required'
             label={words_he['phone']}
             value={supplier_info.phone}
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, phone: e.target.value })}
           />
@@ -161,6 +163,7 @@ const UpdateSupplier = (props) => {
             label={words_he['email']}
             value={supplier_info.email}
             variant='standard'
+            inputProps={{ style: { textAlign: 'center' } }}
             direction='ltr'
             onChange={(e) => setSupplierInfo({ ...supplier_info, email: e.target.value })}
           />
@@ -172,6 +175,7 @@ const UpdateSupplier = (props) => {
             id='standard-required'
             label={words_he['account_name']}
             value={account_name}
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, account_name: e.target.value } })}
           />
@@ -182,6 +186,7 @@ const UpdateSupplier = (props) => {
             required
             id='standard-required'
             label={'IBAN'}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={iban}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, iban: e.target.value } })}
@@ -193,6 +198,7 @@ const UpdateSupplier = (props) => {
             required
             id='standard-required'
             label={'SWIFT'}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={swift}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, swift: e.target.value } })}

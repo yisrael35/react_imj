@@ -112,6 +112,7 @@ const CreateEvent = (props) => {
             id='standard-required'
             label={' * ' + words_he['event_name']}
             variant='standard'
+            inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })}
           />
         </Grid>
@@ -130,6 +131,7 @@ const CreateEvent = (props) => {
             label={' * ' + words_he['start_time']}
             type='time'
             variant='standard'
+            inputProps={{ style: { textAlign: 'center' } }}
             value={start_time}
             onChange={(e) => {
               setStartTime(e.target.value)
@@ -142,6 +144,7 @@ const CreateEvent = (props) => {
             label={' * ' + words_he['end_time']}
             type='time'
             variant='standard'
+            inputProps={{ style: { textAlign: 'center' } }}
             value={end_time}
             onChange={(e) => {
               setEndTime(e.target.value)

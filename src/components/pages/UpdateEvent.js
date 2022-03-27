@@ -4,7 +4,6 @@ import moment from 'moment'
 import * as action_event from '../../redux/Event/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import EventNote from '@material-ui/icons/EventNote'
-// import TextField from '@mui/material/TextField'
 import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -68,8 +67,8 @@ const UpdateEvent = (props) => {
   }, [date, start_time, end_time, end_after_start, event_info])
 
   useEffect(() => {
-    console.log(start_time, end_time);
-    console.log(moment(`${date} ${start_time}`).isBefore(`${date} ${end_time}`));
+    console.log(start_time, end_time)
+    console.log(moment(`${date} ${start_time}`).isBefore(`${date} ${end_time}`))
     if (!moment(`${date} ${start_time}`).isBefore(`${date} ${end_time}`)) {
       setEndAfterStart(false)
       return
@@ -128,6 +127,7 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             id='standard-required'
             label={' * ' + words_he['event_name']}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={event_info.name}
             variant='standard'
             onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })}
@@ -146,6 +146,8 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['start_time']}
             type='time'
+            inputProps={{ style: { textAlign: 'center' } }}
+            format='24'
             variant='standard'
             value={start_time}
             onChange={(e) => {
@@ -158,6 +160,7 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['end_time']}
             type='time'
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             value={end_time}
             onChange={(e) => {

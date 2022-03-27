@@ -76,23 +76,29 @@ const ProfileSettings = (props) => {
       <form onSubmit={submit} className='form-signin'>
         <label>
           {words_he['first_name']}
-          <input className='form-control' value={user_info.first_name} onChange={(e) => setUserInfo({ ...user_info, first_name: e.target.value })} />
+          <input style={{ textAlign: 'center' }} className='form-control' value={user_info.first_name} onChange={(e) => setUserInfo({ ...user_info, first_name: e.target.value })} />
         </label>
         <label>
           {words_he['last_name']}
-          <input className='form-control' value={user_info.last_name} onChange={(e) => setUserInfo({ ...user_info, last_name: e.target.value })} />
+          <input style={{ textAlign: 'center' }} className='form-control' value={user_info.last_name} onChange={(e) => setUserInfo({ ...user_info, last_name: e.target.value })} />
         </label>
         <label>
           {words_he['phone']}
-          <input type='text' className='form-control' value={user_info.phone} onChange={(e) => setUserInfo({ ...user_info, phone: e.target.value })} />
+          <input style={{ textAlign: 'center' }} type='text' className='form-control' value={user_info.phone} onChange={(e) => setUserInfo({ ...user_info, phone: e.target.value })} />
         </label>
         <label>
           {words_he['new_password']}
-          <input type='password' className='form-control' value={user_info.password} onChange={(e) => setUserInfo({ ...user_info, password: e.target.value })} />
+          <input style={{ textAlign: 'center' }} type='password' className='form-control' value={user_info.password} onChange={(e) => setUserInfo({ ...user_info, password: e.target.value })} />
         </label>
         <label>
           {words_he['confirm_password']}
-          <input type='password' className='form-control' value={user_info.confirm_password} onChange={(e) => setUserInfo({ ...user_info, confirm_password: e.target.value })} />
+          <input
+            style={{ textAlign: 'center' }}
+            type='password'
+            className='form-control'
+            value={user_info.confirm_password}
+            onChange={(e) => setUserInfo({ ...user_info, confirm_password: e.target.value })}
+          />
           {!passwordMatch && <span style={{ color: 'red' }}> {words_he['password_not_matched']}</span>}
         </label>
         <div>

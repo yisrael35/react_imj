@@ -105,6 +105,7 @@ const CreateSupplier = (props) => {
           <TextField
             className={classes.textField}
             id='standard-required'
+            inputProps={{ style: { textAlign: 'center' } }}
             label={' * ' + words_he['name']}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, name: e.target.value })}
@@ -116,6 +117,7 @@ const CreateSupplier = (props) => {
             className={classes.ltr_input}
             required
             type='tel'
+            inputProps={{ style: { textAlign: 'center' } }}
             id='standard-required'
             label={words_he['phone']}
             variant='standard'
@@ -129,6 +131,7 @@ const CreateSupplier = (props) => {
             required
             type='email'
             id='standard-required'
+            inputProps={{ style: { textAlign: 'center' } }}
             label={words_he['email']}
             variant='standard'
             direction='ltr'
@@ -140,6 +143,7 @@ const CreateSupplier = (props) => {
             className={classes.ltr_input}
             required
             id='standard-required'
+            inputProps={{ style: { textAlign: 'center' } }}
             label={words_he['account_name']}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, account_name: e.target.value } })}
@@ -149,6 +153,7 @@ const CreateSupplier = (props) => {
           <TextField
             className={classes.ltr_input}
             required
+            inputProps={{ style: { textAlign: 'center' } }}
             id='standard-required'
             label={'IBAN'}
             variant='standard'
@@ -159,6 +164,7 @@ const CreateSupplier = (props) => {
           <TextField
             className={classes.ltr_input}
             required
+            inputProps={{ style: { textAlign: 'center' } }}
             id='standard-required'
             label={'SWIFT'}
             variant='standard'

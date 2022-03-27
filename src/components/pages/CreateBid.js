@@ -118,6 +118,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               label={words_he['event_name']}
               variant='standard'
               value={bid_info.event_name}
+              inputProps={{ style: { textAlign: 'center' }}} 
               onChange={(e) => {
                 setBidInfo({ ...bid_info, event_name: e.target.value })
               }}

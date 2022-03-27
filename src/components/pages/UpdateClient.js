@@ -142,6 +142,7 @@ const UpdateClient = (props) => {
         <Grid item xs={10}>
           <TextField
             className={classes.textField}
+            inputProps={{ style: { textAlign: 'center' } }}
             id='standard-required'
             label={' * ' + words_he['name']}
             value={client_info.name}
@@ -179,6 +180,7 @@ const UpdateClient = (props) => {
             id='standard-required'
             label={words_he['phone']}
             value={client_info.phone}
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
           />
@@ -192,6 +194,7 @@ const UpdateClient = (props) => {
             id='standard-required'
             label={words_he['email']}
             value={client_info.email}
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             direction='ltr'
             onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}

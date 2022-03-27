@@ -4,7 +4,7 @@ import moment from 'moment'
 import * as action_event from '../../redux/Event/action'
 import { GrStatusInfo } from 'react-icons/gr'
 import { BiTimeFive, BiUser, BiBuildingHouse } from 'react-icons/bi'
-import { FiType } from 'react-icons/fi'
+// import { FiType } from 'react-icons/fi'
 import { BsCalendarDate } from 'react-icons/bs'
 
 const words_he = require('../../utils/words_he').words_he

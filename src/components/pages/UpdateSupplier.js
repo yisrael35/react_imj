@@ -8,33 +8,27 @@ import { Box, Grid, TextField, Typography } from '@mui/material/'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+const words_he = require('../../utils/words_he').words_he
+const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
+
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
-    right: '2%',
     width: '20%',
-    padding: '1%',
+    padding: '0px',
     direction: 'ltr',
   },
   textField: {
-    right: '2%',
     width: '20%',
-    padding: '1%',
-  },
-  action_buttons: {
-    paddingRight: '2%',
+    padding: '0px',
   },
   select_element: {
-    right: '2%',
     width: '220px',
-    padding: '1%',
+    padding: '0px',
   },
   title_type: {
     textAlign: 'center',
   },
 }))
-
-const words_he = require('../../utils/words_he').words_he
-const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const UpdateSupplier = (props) => {
   const classes = useStyles()
@@ -89,7 +83,6 @@ const UpdateSupplier = (props) => {
   const handle_delete = () => {
     dispatch(action_supplier.delete_supplier(props.supplier.uuid))
     setTimeout(() => {
-      setSupplierInfo({ ...supplier_info })
       const limit = props.limit
       const offset = props.offset
       dispatch(action_supplier.get_suppliers({ limit, offset }))
@@ -205,7 +198,7 @@ const UpdateSupplier = (props) => {
           />
         </Grid>
 
-        <Grid item xs={10} className={classes.action_buttons}>
+        <Grid item xs={10} >
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>

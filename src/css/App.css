@@ -46,7 +46,7 @@ html {
   width: 45%;
   margin: 0 auto;
   height: auto;
-  max-height: 95vh;
+  max-height: 85vh;
   margin-top: calc(100vh - 85vh - 20px);
   background: #fff;
   border-radius: 25px;

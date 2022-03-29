@@ -12,23 +12,17 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
-    right: '2%',
     width: '20%',
-    padding: '1%',
+    padding: '0px',
     direction: 'ltr',
   },
   textField: {
-    right: '2%',
     width: '20%',
-    padding: '1%',
-  },
-  action_buttons: {
-    paddingRight: '2%',
+    padding: '0px',
   },
   select_element: {
-    right: '2%',
     width: '220px',
-    padding: '1%',
+    padding: '0px',
   },
   title_type: {
     textAlign: 'center',
@@ -114,9 +108,8 @@ const UpdateClient = (props) => {
     dispatch(action_client.delete_client(props.client.uuid))
     const limit = props.limit
     const offset = props.offset
-    dispatch(action_client.get_clients({ limit, offset }))
-    setClientInfo({ ...client_info })
     setTimeout(() => {
+      dispatch(action_client.get_clients({ limit, offset }))
       dispatch(action_popUp.disablePopUp())
     }, 1000)
   }
@@ -200,7 +193,7 @@ const UpdateClient = (props) => {
             onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}
           />
         </Grid>
-        <Grid item xs={10} className={classes.action_buttons}>
+        <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>

@@ -47,7 +47,7 @@ const Bids = (props) => {
       }}
     />
   )
-  const handle_edit = (id, index) => {
+  const handle_download_pdf = (id, index) => {
     const content = <UpdateBid counter={index} id={id} limit={limit} offset={offset} />
     dispatch(action_popUp.setPopUp(content))
   }
@@ -117,7 +117,7 @@ const Bids = (props) => {
         }}
         title={words_he['bids']}
         offset={offset}
-        handle_click={handle_edit}
+        handle_click={handle_download_pdf}
         click_icon={pdf_icon}
       />
 

@@ -5,21 +5,16 @@ import moment from 'moment'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as action_event from '../../redux/Event/action'
 import EventAvailable from '@material-ui/icons/EventAvailable'
+import { makeStyles } from '@material-ui/core/styles'
 import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
 
-import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
-    right: '2%',
     width: '20%',
     padding: '1%',
   },
-  action_buttons: {
-    paddingRight: '2%',
-  },
   select_element: {
-    right: '2%',
     width: '220px',
     padding: '1%',
   },
@@ -118,9 +113,6 @@ const CreateEvent = (props) => {
         </Grid>
 
         <Grid item xs={10}>
-          {/* <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
-            {' * ' + words_he['event_date']}
-          </InputLabel> */}
           <Grid container item xs={12} justifyContent='center'>
             <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} label={' * ' + words_he['event_date']} />
           </Grid>
@@ -171,7 +163,7 @@ const CreateEvent = (props) => {
             <MenuItem value='photo_shot'>{words_he['photo_shot']}</MenuItem>
           </Select>
         </Grid>
-        <Grid item xs={10} className={classes.action_buttons}>
+        <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>

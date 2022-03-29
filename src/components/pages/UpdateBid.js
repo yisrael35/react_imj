@@ -6,14 +6,11 @@ const words_he = require('../../utils/words_he').words_he
 
 const UpdateBid = (props) => {
   const dispatch = useDispatch()
-  // const [bid_info, setBidInfo] = useState()
   const [email, setEmail] = useState()
 
   useEffect(() => {
     const get_bid = async () => {
       const bid = await dispatch(action_bid.get_bid_by_id(props.id))
-      // console.log(bid.bid)
-
       setEmail(bid.bid.client_email)
     }
     get_bid()

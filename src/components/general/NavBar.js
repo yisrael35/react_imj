@@ -43,18 +43,15 @@ const Nav = (props) => {
     if (permissions === 1) {
       menu = (
         <ul className='navbar-nav  sticky-top me-auto mb-2 mb-md-0'>
-          {/* <li className='nav-item active'>
+          <li className='nav-item active'>
             <Link to='/Tests' className='nav-link'>
               Tests
             </Link>
-          </li> */}
+          </li>
           <li className='nav-item active '>
             <span className='nav-link' onClick={handle_report_click}>
               {words_he['reports']}
             </span>
-            {/* <Link to='/Reports' className='nav-link'>
-              {words_he['reports']}
-            </Link> */}
           </li>
           <li className='nav-item active'>
             <Link to='/Suppliers' className='nav-link'>

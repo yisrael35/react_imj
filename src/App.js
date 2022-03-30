@@ -1,7 +1,7 @@
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './css/App.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import React, { useState } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import store from './redux/index'
 
@@ -28,13 +28,12 @@ import PrivateRoute from './components/general/PrivateRoutes'
 import PopUp from './components/general/PopUp'
 import Loading from './components/general/Loading'
 
-function App() {
-  const [name, setName] = useState('')
+const App = () => {
   return (
     <Provider store={store}>
       <div className='App'>
         <Router>
-          <NavBar name={name} setName={setName} />
+          <NavBar />
           <SnackBar />
           <PopUp />
           <Loading />
@@ -43,7 +42,7 @@ function App() {
               <Route path='/Login' component={() => <Login />} />
               <Route path='/ForgotPassword' component={() => <ForgotPassword />} />
               <Route path='/ResetPassword/:token' component={() => <ResetPassword />} />
-              <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
+              <PrivateRoute path='/Home' exact component={() => <Home />} />
               <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />
               <PrivateRoute path='/Bids' component={Bids} />

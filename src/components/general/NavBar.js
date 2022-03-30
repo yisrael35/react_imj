@@ -1,12 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../../redux/Auth/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import Reports from '../../pages/Reports'
-// import LogoutIcon from '@mui/icons-material/Logout';
+import { AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip, MenuItem } from '@mui/material/'
+import Menu from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import LogoutIcon from '@mui/icons-material/Logout'
 const words_he = require('../../utils/words_he').words_he
-
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#1976d2',
+    },
+  },
+})
 const Nav = (props) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const permissions = useSelector((state) => state.auth.permissions)
@@ -23,11 +34,75 @@ const Nav = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const [anchorElNav, setAnchorElNav] = useState(null)
+  const [anchorElUser, setAnchorElUser] = useState(null)
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget)
+  }
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget)
+  }
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null)
+  }
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
   const handle_report_click = () => {
+    handleCloseNavMenu()
     const reports = <Reports />
     dispatch(action_popUp.setPopUp(reports))
   }
-
+  let pages = []
+  if (permissions !== 3 && isAuthenticated) {
+    pages = [
+      <Link to='/Events' className='navbar_links' onClick={handleCloseNavMenu}>
+        {words_he['events']}
+      </Link>,
+      <Link to='/Bids' className='navbar_links' onClick={handleCloseNavMenu}>
+        {words_he['bids']}
+      </Link>,
+      <Link to='/Clients' className='navbar_links' onClick={handleCloseNavMenu}>
+        {words_he['clients']}
+      </Link>,
+      <Link to='/Suppliers' className='navbar_links' onClick={handleCloseNavMenu}>
+        {words_he['suppliers']}
+      </Link>,
+      <span className='navbar_links' onClick={handle_report_click}>
+        {words_he['reports']}
+      </span>,
+      <Link to='/Tests' className='navbar_links' onClick={handleCloseNavMenu}>
+        Tests
+      </Link>,
+    ]
+  }
+  let settings = []
+  if (permissions === 1 && isAuthenticated) {
+    settings.push(
+      <Link to='/Users' className='navbar_links' onClick={handleCloseNavMenu}>
+        {words_he['users']}
+      </Link>
+    )
+  }
+  settings.push(
+    <Link to='/ProfileSettings' className='navbar_links' onClick={handleCloseNavMenu}>
+      {words_he['profile_settings']}
+    </Link>,
+    <Link to='/Login' className='navbar_links' onClick={logout}>
+      {words_he['logout']} <LogoutIcon />
+    </Link>
+  )
+  if (!isAuthenticated) {
+    settings = [
+      <Link to='/Login' className='navbar_links' onClick={handleCloseNavMenu}>
+        {words_he['login']}
+      </Link>,
+    ]
+    pages = []
+  }
   let menu
   if (!isAuthenticated) {
     menu = (

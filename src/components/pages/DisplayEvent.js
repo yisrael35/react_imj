@@ -6,6 +6,7 @@ import { GrStatusInfo } from 'react-icons/gr'
 import { BiTimeFive, BiUser, BiBuildingHouse } from 'react-icons/bi'
 // import { FiType } from 'react-icons/fi'
 import { BsCalendarDate } from 'react-icons/bs'
+import { HiOutlineIdentification } from 'react-icons/hi'
 
 const words_he = require('../../utils/words_he').words_he
 
@@ -25,13 +26,12 @@ const DisplayEvent = (props) => {
   const iconStyles = {
     fontSize: '120%',
     margin: '6px',
-    
   }
   const hoverStyles = { position: 'absolute', backgroundColor: '#505050', color: 'white', paddingLeft: '2%', paddingRight: '2%' }
 
   return (
     <div>
-      <h3>{event_info.name}</h3>
+      <h3 style={{ margin: '1%', 'margin-bottom': '7%' }}>{event_info.name}</h3>
       <table>
         <tbody>
           <tr>
@@ -81,6 +81,18 @@ const DisplayEvent = (props) => {
             </td>
             <td>
               <b>{event_info.user}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {' '}
+              <HiOutlineIdentification style={iconStyles} onMouseEnter={() => setIsShown('id')} onMouseLeave={() => setIsShown('none')} />
+              {isShown === 'id' && <div style={hoverStyles}> {'Id'} </div>}
+            </td>
+            <td>
+              <div style={{ fontSize:'80%' }}>
+                <b>{event_info.id}</b>
+              </div>
             </td>
           </tr>
         </tbody>

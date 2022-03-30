@@ -12,7 +12,7 @@ import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_bid from '../redux/Bid/action'
 import { FaFileCsv, FaRegFilePdf } from 'react-icons/fa'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -22,6 +22,8 @@ const Bids = (props) => {
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
+  const [isShown, setIsShown] = useState(false)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_bid.get_bids({ limit, offset, search }))
@@ -64,8 +66,9 @@ const Bids = (props) => {
             {words_he['new_bid']}
           </button>
         </Link>
-        <button className='transparent_button' onClick={create_csv}>
+        <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+          {isShown && <div className='hoverStyles'> {words_he['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}

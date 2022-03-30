@@ -12,7 +12,7 @@ import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_user from '../redux/User/action'
 import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 
 const words_he = require('../utils/words_he').words_he
 
@@ -22,6 +22,8 @@ const Users = (props) => {
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
+  const [isShown, setIsShown] = useState(false)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_user.get_users({ limit, offset, search }))
@@ -81,6 +83,7 @@ const Users = (props) => {
     dispatch(action_user.get_users({ limit, offset, search, csv: true }))
     dispatch(action_loading.setLoading())
   }
+
   return (
     <div>
       <span className='field_search'>
@@ -89,8 +92,9 @@ const Users = (props) => {
             {words_he['create_new_user']}
           </button>
         </Link>
-        <button className='transparent_button' onClick={create_csv}>
+        <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+          {isShown && <div className='hoverStyles'> {words_he['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}

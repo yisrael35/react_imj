@@ -96,10 +96,15 @@ html {
   margin-right: 10px;
 }
 
-
-
 .table_header {
   background-color: rgb(83, 83, 83);
   color: white;
   text-align: center;
+}
+.hoverStyles {
+  position: absolute;
+  background: #505050;
+  color: white;
+  padding-left: 1%;
+  padding-right: 1%;
 }

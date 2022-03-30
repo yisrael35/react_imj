@@ -135,7 +135,7 @@ const UpdateEvent = (props) => {
         </Grid>
         <Grid item xs={10}>
           <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
-            {' * ' + words_he['event_date']}
+            {words_he['event_date']}
           </InputLabel>
           <Grid container item xs={12} justifyContent='center'>
             {date}

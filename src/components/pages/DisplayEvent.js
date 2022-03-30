@@ -40,7 +40,7 @@ const DisplayEvent = (props) => {
               {isShown === 'date' && <div style={hoverStyles}> {words_he[isShown]} </div>}
             </td>
             <td>
-              <b>{moment(event_info.from_date).format('YYYY-MM-DD')}</b>
+              <b>{moment(event_info.from_date).format('DD-MM-YYYY')}</b>
             </td>
           </tr>
           <tr>

@@ -175,7 +175,12 @@ const words_he = {
   date: 'תאריך',
   time: 'זמן',
   event: 'אירוע',
-  id:'מזהה אירוע',
+  id: 'מזהה אירוע',
+  name_english: 'שם באנגלית',
+  name_hebrew: 'שם בעברית',
+  mapping: 'מיקום במוזיאון',
+  new_location: 'מיקום חדש',
+  location_created: 'מיקום נוצר',
 }
 
 module.exports = {

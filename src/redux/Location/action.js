@@ -23,3 +23,15 @@ export const get_locations = () => (dispatch) => {
     })
 }
 
+export const create_location = (data) => (dispatch) => {
+  axios
+    .post(process.env.REACT_APP_REST_IMJ_URL + `/location`, data)
+    .then((res) => {
+      dispatch(actionSnackBar.setSnackBar('success', words_he['location_created'], 2000))
+    })
+    .catch((error) => {
+      dispatch(actionSnackBar.setSnackBar('error', error.response.statusText, 3000))
+    })
+}
+
+

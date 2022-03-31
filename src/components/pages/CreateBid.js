@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import CreateClient from './CreateClient'
+import CreateLocation from './CreateLocation'
 import CancelExit from '../general/CancelExit'
 import moment from 'moment'
 
@@ -68,6 +69,10 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
     const new_client = <CreateClient />
     dispatch(action_popUp.setPopUp(new_client))
   }
+  const handle_create_location = (e) => {
+    const new_location = <CreateLocation />
+    dispatch(action_popUp.setPopUp(new_location))
+  }
   const handle_cancel_and_exit = () => {
     const content = <CancelExit />
     dispatch(action_popUp.setPopUp(content))
@@ -90,7 +95,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
     margin: '6px',
     cursor: 'pointer',
   }
-  const hoverStyles = { position: 'absolute',left:'51%', width: '8%', backgroundColor: '#505050', color: 'white', 'text-align': 'center'}
+  const hoverStyles = { position: 'absolute', left: '51%', width: '8%', backgroundColor: '#505050', color: 'white', 'text-align': 'center' }
 
   return (
     <Box
@@ -171,7 +176,9 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               ))}
             </Select>
             <BsCalendarPlus style={iconStyles} onMouseEnter={() => setIsShown('add_event_type')} onMouseLeave={() => setIsShown('none')} />
-            {isShown === 'add_event_type' && <div style={{ position: 'absolute',left:'49%', width: '10%', backgroundColor: '#505050', color: 'white', 'text-align': 'center'}}> {words_he[isShown]} </div>}
+            {isShown === 'add_event_type' && (
+              <div style={{ position: 'absolute', left: '49%', width: '10%', backgroundColor: '#505050', color: 'white', 'text-align': 'center' }}> {words_he[isShown]} </div>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextareaAutosize
@@ -205,7 +212,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               ))}
             </Select>
 
-            <MdOutlineAddLocationAlt style={iconStyles} onMouseEnter={() => setIsShown('add_location')} onMouseLeave={() => setIsShown('none')} />
+            <MdOutlineAddLocationAlt style={iconStyles} onClick={handle_create_location} onMouseEnter={() => setIsShown('add_location')} onMouseLeave={() => setIsShown('none')} />
             {isShown === 'add_location' && <div style={hoverStyles}> {words_he[isShown]} </div>}
           </Grid>
           <Grid item xs={6}>

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography, TextareaAutosize } from '@mui/material/'
 import PersonAddOutlined from '@material-ui/icons/PersonAddOutlined'
+import { MdOutlineAddLocationAlt } from 'react-icons/md'
+import { BsCalendarPlus } from 'react-icons/bs'
+
 import { makeStyles } from '@material-ui/core/styles'
 import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
@@ -38,6 +41,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   const locations = useSelector((state) => state.utils.locations)
   const clients = useSelector((state) => state.utils.clients)
   const events_type = useSelector((state) => state.utils.events_type)
+  const [isShown, setIsShown] = useState('none')
 
   useEffect(() => {
     dispatch(action_utils.get_utils())
@@ -81,7 +85,13 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
       language: 'he',
     })
   }
-  console.log(bid_info)
+  const iconStyles = {
+    fontSize: '140%',
+    margin: '6px',
+    cursor: 'pointer',
+  }
+  const hoverStyles = { position: 'absolute',left:'51%', width: '8%', backgroundColor: '#505050', color: 'white', 'text-align': 'center'}
+
   return (
     <Box
       sx={{
@@ -118,7 +128,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               label={words_he['event_name']}
               variant='standard'
               value={bid_info.event_name}
-              inputProps={{ style: { textAlign: 'center' }}} 
+              inputProps={{ style: { textAlign: 'center' } }}
               onChange={(e) => {
                 setBidInfo({ ...bid_info, event_name: e.target.value })
               }}
@@ -160,6 +170,8 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
                 </MenuItem>
               ))}
             </Select>
+            <BsCalendarPlus style={iconStyles} onMouseEnter={() => setIsShown('add_event_type')} onMouseLeave={() => setIsShown('none')} />
+            {isShown === 'add_event_type' && <div style={{ position: 'absolute',left:'49%', width: '10%', backgroundColor: '#505050', color: 'white', 'text-align': 'center'}}> {words_he[isShown]} </div>}
           </Grid>
           <Grid item xs={6}>
             <TextareaAutosize
@@ -192,6 +204,9 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
                 </MenuItem>
               ))}
             </Select>
+
+            <MdOutlineAddLocationAlt style={iconStyles} onMouseEnter={() => setIsShown('add_location')} onMouseLeave={() => setIsShown('none')} />
+            {isShown === 'add_location' && <div style={hoverStyles}> {words_he[isShown]} </div>}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -229,7 +244,8 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
                 </MenuItem>
               ))}
             </Select>
-            <PersonAddOutlined onClick={handle_create_client} />
+            <PersonAddOutlined style={iconStyles} onClick={handle_create_client} onMouseEnter={() => setIsShown('add_client')} onMouseLeave={() => setIsShown('none')} />
+            {isShown === 'add_client' && <div style={hoverStyles}> {words_he[isShown]} </div>}
           </Grid>
           <Grid item xs={12}>
             <button className='btn btn-success m-4' onClick={handle_save_bid} disabled={!enable_send}>

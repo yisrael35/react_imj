@@ -87,7 +87,7 @@ const DisplayEvent = (props) => {
             <td>
               {' '}
               <HiOutlineIdentification style={iconStyles} onMouseEnter={() => setIsShown('id')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'id' && <div style={hoverStyles}> {'Id'} </div>}
+              {isShown === 'id' && <div style={hoverStyles}> {words_he[isShown]} </div>}
             </td>
             <td>
               <div style={{ fontSize:'80%' }}>

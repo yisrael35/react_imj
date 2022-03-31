@@ -175,6 +175,7 @@ const words_he = {
   date: 'תאריך',
   time: 'זמן',
   event: 'אירוע',
+  id:'מזהה אירוע',
 }
 
 module.exports = {

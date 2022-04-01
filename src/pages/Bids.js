@@ -1,30 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { DebounceInput } from 'react-debounce-input'
-import { InputLabel, Select, MenuItem } from '@mui/material/'
+
+import { useDispatch, useSelector } from 'react-redux'
+import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
+import * as action_bid from '../redux/Bid/action'
 
 import TableBuilder from '../components/general/TableBuilder'
 import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateBid from '../components/pages/UpdateBid'
 
-import * as action_popUp from '../redux/PopUp/action'
-import * as action_loading from '../redux/Loading/action'
-import * as action_bid from '../redux/Bid/action'
+
 import { FaFileCsv, FaRegFilePdf } from 'react-icons/fa'
 import SearchIcon from '@mui/icons-material/Search'
+import { InputLabel, Select, MenuItem } from '@mui/material/'
 
 const words_he = require('../utils/words_he').words_he
 
 const Bids = (props) => {
+  const dispatch = useDispatch()
+  
   const items = useSelector((state) => state.bid.bids)
   const meta_data = useSelector((state) => state.bid.meta_data)
+  
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
   const [isShown, setIsShown] = useState(false)
 
-  const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_bid.get_bids({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,7 +45,6 @@ const Bids = (props) => {
     setOffset(new_offset)
   }
   const pdf_icon = (
-    // <PictureAsPdfTwoTone />
     <FaRegFilePdf
       style={{
         fontSize: '20px',
@@ -123,7 +126,6 @@ const Bids = (props) => {
         handle_click={handle_download_pdf}
         click_icon={pdf_icon}
       />
-
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
     </div>
   )

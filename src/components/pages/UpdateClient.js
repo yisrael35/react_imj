@@ -7,8 +7,10 @@ import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 
 import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
-
 import { makeStyles } from '@material-ui/core/styles'
+
+const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
+const words_he = require('../../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
@@ -29,15 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
-const words_he = require('../../utils/words_he').words_he
-
 const UpdateClient = (props) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const { name, type, email, phone } = props.client
   const [client_info, setClientInfo] = useState({ name, type, phone, email })
-  const dispatch = useDispatch()
   const [enable_send, setEnableSend] = useState(false)
 
   useEffect(() => {
@@ -116,7 +115,6 @@ const UpdateClient = (props) => {
 
   return (
     <Box
-      component='form'
       sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
@@ -172,7 +170,7 @@ const UpdateClient = (props) => {
             type='tel'
             id='standard-required'
             label={words_he['phone']}
-            value={client_info.phone}
+            value={client_info.phone || ''}
             inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}

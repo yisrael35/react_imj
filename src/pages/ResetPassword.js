@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
+
 import { useDispatch } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
+
 const words_he = require('../utils/words_he').words_he
 
 const ForgotPassword = (props) => {

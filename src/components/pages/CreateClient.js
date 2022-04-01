@@ -6,8 +6,10 @@ import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
-
 import { makeStyles } from '@material-ui/core/styles'
+
+const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
+const words_he = require('../../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
@@ -29,14 +31,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const words_he = require('../../utils/words_he').words_he
-const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
-
 const CreateClient = () => {
   const classes = useStyles()
 
   const [enable_send, setEnableSend] = useState(false)
-  const [client_info, setClientInfo] = useState({ name: '', type: words_he['private'], phone: '', email: '' })
+  const [client_info, setClientInfo] = useState({ name: '', type: '', phone: '', email: '' })
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -104,7 +103,6 @@ const CreateClient = () => {
 
   return (
     <Box
-      component='form'
       sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
@@ -130,17 +128,16 @@ const CreateClient = () => {
             onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })}
           />
         </Grid>
-
         <Grid item xs={10}>
           <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
             {' * ' + words_he['type']}
           </InputLabel>
-
           <Select
             variant='standard'
             required
             id='type'
             className={classes.select_element}
+            defaultValue={''}
             onChange={(e) => {
               setClientInfo({ ...client_info, type: e.target.value })
             }}
@@ -150,7 +147,6 @@ const CreateClient = () => {
             <MenuItem value={words_he['department']}>{words_he['department']}</MenuItem>
           </Select>
         </Grid>
-
         <Grid item xs={10}>
           <TextField
             className={classes.ltr_input}
@@ -163,7 +159,6 @@ const CreateClient = () => {
             onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
           />
         </Grid>
-
         <Grid item xs={10}>
           <TextField
             className={classes.ltr_input}

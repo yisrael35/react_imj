@@ -2,13 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import '../../css/loading.css'
 
-
 const Loading = (props) => {
   const loading_visible = useSelector((state) => state.loading.visible)
-  // const dispatch = useDispatch()
-  // const handle_close = () => {
-  //   dispatch(action_PopUp.disableLoading())
-  // }
   if (loading_visible) {
     return (
       <div className='loading'>

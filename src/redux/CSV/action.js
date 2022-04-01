@@ -23,9 +23,13 @@ export const get_table =
         }
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error.response)
         dispatch(actionLoading.disableLoading())
-        dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
+        if (error.response.status === 404) {
+          dispatch(actionSnackBar.setSnackBar('error', ` ${words_he['code_404']}`, 3000))
+        } else {
+          dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']} ${words_he['failed_load_data']}`, 3000))
+        }
       })
   }
 

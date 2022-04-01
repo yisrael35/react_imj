@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import moment from 'moment'
+
+import { useDispatch } from 'react-redux'
 import * as action_event from '../../redux/Event/action'
+
 import { GrStatusInfo } from 'react-icons/gr'
 import { BiTimeFive, BiUser, BiBuildingHouse } from 'react-icons/bi'
-// import { FiType } from 'react-icons/fi'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineIdentification } from 'react-icons/hi'
 
 const words_he = require('../../utils/words_he').words_he
 
 const DisplayEvent = (props) => {
+  const dispatch = useDispatch()
+
   const [event_info, setEventInfo] = useState({})
   const [isShown, setIsShown] = useState('none')
 
-  const dispatch = useDispatch()
   useEffect(() => {
     const get_event_by_id = async () => {
       const event = await dispatch(action_event.get_event_by_id(props.id))
@@ -52,7 +54,6 @@ const DisplayEvent = (props) => {
               <b>{moment(event_info.to_date).format('HH:mm') + ' - ' + moment(event_info.from_date).format('HH:mm')}</b>
             </td>
           </tr>
-
           <tr>
             <td>
               {' '}
@@ -90,7 +91,7 @@ const DisplayEvent = (props) => {
               {isShown === 'id' && <div style={hoverStyles}> {words_he[isShown]} </div>}
             </td>
             <td>
-              <div style={{ fontSize:'80%' }}>
+              <div style={{ fontSize: '80%' }}>
                 <b>{event_info.id}</b>
               </div>
             </td>
@@ -103,15 +104,3 @@ const DisplayEvent = (props) => {
 
 export default DisplayEvent
 
-// budget: null
-// check_list: null
-// clients: null
-// comment: null
-// from_date: "2022-02-21T22:00:00.000Z"
-// id: "f56649a8-8531-11ec-ae77-005056c00001"
-// name: "test tde event if you want"
-// status: "pending"
-// suppliers: null
-// to_date: "2022-02-21T22:00:00.000Z"
-// type: "public"
-// user: "yi"

@@ -176,11 +176,17 @@ const words_he = {
   time: 'זמן',
   event: 'אירוע',
   id: 'מזהה אירוע',
+  show_more: 'הצג עוד',
   name_english: 'שם באנגלית',
   name_hebrew: 'שם בעברית',
   mapping: 'מיקום במוזיאון',
   new_location: 'מיקום חדש',
   location_created: 'מיקום נוצר',
+  work_week: 'שבוע עבודה',
+  yesterday: 'אתמול',
+  tomorrow: 'מחר',
+  noEventsInRange: 'אין אירועים בטווח תאריכים אלו',
+  code_404: 'לא נמצא מידע',
 }
 
 module.exports = {

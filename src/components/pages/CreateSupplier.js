@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import '../../css/suppliers.css'
+
 import { useDispatch } from 'react-redux'
 import * as action_supplier from '../../redux/Supplier/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
-import { Box, Grid, TextField, Typography } from '@mui/material/'
 
+import { Box, Grid, TextField, Typography } from '@mui/material/'
 import { makeStyles } from '@material-ui/core/styles'
+
+const words_he = require('../../utils/words_he').words_he
+const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
@@ -20,14 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const words_he = require('../../utils/words_he').words_he
-const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
-
 const CreateSupplier = (props) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const [supplier_info, setSupplierInfo] = useState({ name: '', account: { account_name: '', iban: '', swift: '' }, phone: '', email: '' })
-  const dispatch = useDispatch()
   const [enable_send, setEnableSend] = useState(false)
 
   useEffect(() => {
@@ -72,7 +73,6 @@ const CreateSupplier = (props) => {
 
   return (
     <Box
-      component='form'
       sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
@@ -87,7 +87,6 @@ const CreateSupplier = (props) => {
             </Typography>
           </Grid>
         </Grid>
-
         <Grid item xs={10}>
           <TextField
             className={classes.textField}
@@ -98,7 +97,6 @@ const CreateSupplier = (props) => {
             onChange={(e) => setSupplierInfo({ ...supplier_info, name: e.target.value })}
           />
         </Grid>
-
         <Grid item xs={10}>
           <TextField
             className={classes.ltr_input}
@@ -111,7 +109,6 @@ const CreateSupplier = (props) => {
             onChange={(e) => setSupplierInfo({ ...supplier_info, phone: e.target.value })}
           />
         </Grid>
-
         <Grid item xs={10}>
           <TextField
             className={classes.ltr_input}
@@ -158,8 +155,7 @@ const CreateSupplier = (props) => {
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, swift: e.target.value } })}
           />
         </Grid>
-
-        <Grid item xs={10} >
+        <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>

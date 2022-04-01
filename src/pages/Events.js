@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 import { DebounceInput } from 'react-debounce-input'
-import { InputLabel, Select, MenuItem } from '@mui/material/'
+
+import { useDispatch, useSelector } from 'react-redux'
+import * as action_event from '../redux/Event/action'
+import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
+
 import TableBuilder from '../components/general/TableBuilder'
 import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateEvent from '../components/pages/UpdateEvent'
 import CreateEvent from '../components/pages/CreateEvent'
-import * as action_event from '../redux/Event/action'
-import * as action_popUp from '../redux/PopUp/action'
-import * as action_loading from '../redux/Loading/action'
-import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
+
+import { InputLabel, Select, MenuItem } from '@mui/material/'
 import SearchIcon from '@mui/icons-material/Search'
 
 const words_he = require('../utils/words_he').words_he
 
 const Events = (props) => {
+  const dispatch = useDispatch()
+
   const items = useSelector((state) => state.event.events)
   const meta_data = useSelector((state) => state.event.meta_data)
 
@@ -23,7 +28,6 @@ const Events = (props) => {
   const [search, setSearch] = useState(undefined)
   const [isShown, setIsShown] = useState(false)
 
-  const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_event.get_events({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -147,8 +151,6 @@ const Events = (props) => {
       {/* search */}
       <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
       <SearchIcon />
-
-      {/* <button class="fa-duotone fa-file-csv">11111</button> */}
       <TableBuilder
         items={items}
         cols={['name', 'from_date', 'to_date', 'first_name', 'status', 'type']}
@@ -165,7 +167,6 @@ const Events = (props) => {
         handle_click={handle_edit}
         click_icon={edit_icon}
       />
-
       <PaginationBottom limit={limit} offset={offset} meta_data={meta_data} next_page={next_page} previous_page={previous_page} />
     </div>
   )
@@ -180,19 +181,3 @@ const limits = [
   { value: '100', label: 100 },
 ]
 
-// budget: null​
-// check_list: null​
-// clients: null​
-// comment: null​
-// created_at: "2022-01-29T09:39:08.000Z"​
-// from_date: "2022-01-29 10:00:00"​
-// id: 12​
-// name: "sadasd"​
-// status: "pending"​
-// suppliers: null​
-// template_data_id: null​
-// to_date: "2022-01-29 11:00:00"​
-// type: "public"​
-// updated_at: "2022-01-29T09:39:08.000Z"​
-// user_id: 1​
-// uuid: "4e5cd2bd-80e7-11ec-ae77-005056c00001"

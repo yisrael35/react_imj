@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import '../../css/suppliers.css'
+
 import { useDispatch } from 'react-redux'
 import * as action_supplier from '../../redux/Supplier/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
-import { Box, Grid, TextField, Typography } from '@mui/material/'
 
+import { Box, Grid, TextField, Typography } from '@mui/material/'
 import { makeStyles } from '@material-ui/core/styles'
+
 
 const words_he = require('../../utils/words_he').words_he
 const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
@@ -32,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
 
 const UpdateSupplier = (props) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const { name, email, phone, account } = props.supplier
   const [supplier_info, setSupplierInfo] = useState({ name, account, phone, email })
-  const dispatch = useDispatch()
   const [enable_send, setEnableSend] = useState(false)
 
   useEffect(() => {

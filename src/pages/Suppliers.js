@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 import { DebounceInput } from 'react-debounce-input'
+
+import { useDispatch, useSelector } from 'react-redux'
+import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
+import * as action_supplier from '../redux/Supplier/action'
+
+import SearchIcon from '@mui/icons-material/Search'
 import { InputLabel, Select, MenuItem } from '@mui/material/'
 
 import TableBuilder from '../components/general/TableBuilder'
@@ -8,23 +15,19 @@ import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateSupplier from '../components/pages/UpdateSupplier'
 import CreateSupplier from '../components/pages/CreateSupplier'
 
-import * as action_popUp from '../redux/PopUp/action'
-import * as action_loading from '../redux/Loading/action'
-import * as action_supplier from '../redux/Supplier/action'
-import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
-import SearchIcon from '@mui/icons-material/Search'
-
 const words_he = require('../utils/words_he').words_he
 
 const Suppliers = () => {
+  const dispatch = useDispatch()
+
   const items = useSelector((state) => state.supplier.suppliers)
   const meta_data = useSelector((state) => state.supplier.meta_data)
+  
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
   const [isShown, setIsShown] = useState(false)
 
-  const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action_supplier.get_suppliers({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps

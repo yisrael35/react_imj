@@ -1,4 +1,5 @@
 import React from 'react'
+
 export default function TableRow({ index, costs_array, setCosts }) {
   const handle_description = (e) => {
     costs_array[index].description = e
@@ -14,10 +15,6 @@ export default function TableRow({ index, costs_array, setCosts }) {
     costs_array[index].total_cost = (Number(e) * Number(costs_array[index].amount)).toFixed(2)
     setCosts([...costs_array])
   }
-  // const handle_total_cost = (e) => {
-  //   costs_array[index].total_cost = e
-  //   setCosts([...costs_array])
-  // }
   const handle_discount = (e) => {
     costs_array[index].discount = e
     setCosts([...costs_array])
@@ -61,15 +58,7 @@ export default function TableRow({ index, costs_array, setCosts }) {
         />
       </td>
       <td>
-        <input
-          type='number'
-          min='0'
-          step='any'
-          value={costs_array[index].total_cost}
-          onChange={(e) => {
-            // handle_total_cost(e.target.value)
-          }}
-        />
+        <input type='number' min='0' step='any' value={costs_array[index].total_cost} />
       </td>
       <td>
         <input

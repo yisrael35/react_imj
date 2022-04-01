@@ -133,7 +133,6 @@ const CreateBid = (props) => {
       )
       dispatch(action_popUp.setPopUp(error_msg))
     }
-    // props.history.push('/Home')
   }
 
   const handle_save_schedule_event = async () => {
@@ -297,14 +296,6 @@ const CreateBid = (props) => {
         ) : (
           <div>
             <Grid className={classes.instructions}>{getStepContent(activeStep)}</Grid>
-            {/* <button
-              className='btn btn-outline-dark m-2'
-              onClick={() => {
-                setActiveStep((prevActiveStep) => prevActiveStep + 1)
-              }}
-            >
-              {words_he['skip']}
-            </button> */}
           </div>
         )}
       </div>

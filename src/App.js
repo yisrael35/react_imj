@@ -31,10 +31,10 @@ import Loading from './components/general/Loading'
 const App = () => {
   return (
     <Provider store={store}>
-      <div className='App'>
+      <div>
         <Router>
-          <NavBar />
           <SnackBar />
+          <NavBar />
           <PopUp />
           <Loading />
           <main>

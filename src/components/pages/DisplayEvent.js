@@ -77,8 +77,8 @@ const DisplayEvent = (props) => {
           <tr>
             <td>
               {' '}
-              <BiUser style={iconStyles} onMouseEnter={() => setIsShown('client_name')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'client_name' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+              <BiUser style={iconStyles} onMouseEnter={() => setIsShown('employee_name')} onMouseLeave={() => setIsShown('none')} />
+              {isShown === 'employee_name' && <div style={hoverStyles}> {words_he[isShown]} </div>}
             </td>
             <td>
               <b>{event_info.user}</b>

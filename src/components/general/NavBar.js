@@ -109,7 +109,7 @@ const Nav = (props) => {
     <div style={{ position: 'sticky', top: 0 }}>
       <ThemeProvider theme={darkTheme}>
         <AppBar style={{ marginBottom: '24px' }} position='sticky'>
-          <Container maxWidth='xl'>
+          <Container maxWidth={false}>
             <Toolbar disableGutters>
               <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
                 <Link to='/Home'>

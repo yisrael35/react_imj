@@ -86,7 +86,6 @@ const words_he = {
   draft: 'טיוטה',
   sent: 'נשלח',
   approved: 'אושר',
-  bid_status: 'סטטוס הצעה',
   search: 'חיפוש...',
   sum_rows: 'סך התוצאות: ',
   rows_to_display: 'שורות להצגה',

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const words_he = require('../../utils/words_he').words_he
 
-const CancelExit = (props) => {
+const ConfirmAlert = (props) => {
   const dispatch = useDispatch()
 
   const handle_click = () => {
@@ -14,7 +14,7 @@ const CancelExit = (props) => {
 
   return (
     <div>
-      <div>{words_he['cancel_exit']} </div>
+      <div>{props.message} </div>
       <button className='btn btn-lg btn-success m-2' onClick={handle_click}>
         {words_he['no']}
       </button>
@@ -27,4 +27,4 @@ const CancelExit = (props) => {
   )
 }
 
-export default CancelExit
+export default ConfirmAlert

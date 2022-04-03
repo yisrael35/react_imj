@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
-import * as action_location from '../../redux/Location/action'
+import * as action_event_type from '../../redux/EventType/action'
 import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 
@@ -31,12 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CreateLocation = () => {
+const CreateEventType = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
   const [enable_send, setEnableSend] = useState(false)
-  const [location_info, setLocationInfo] = useState({ name_en: '', name_he: '', mapping: '' })
+  const [event_type_info, setEventTypeInfo] = useState({ name: '', language: '' })
 
   useEffect(() => {
     if (validate_fields()) {
@@ -45,13 +45,13 @@ const CreateLocation = () => {
       setEnableSend(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location_info])
+  }, [event_type_info])
 
   const validate_fields = () => {
     // if (location_info.name_en || location_info.name_he || location_info.mapping) {
     //   return true
     // }
-    if (all_fields_filled(location_info)) {
+    if (all_fields_filled(event_type_info)) {
       return true
     }
 
@@ -59,8 +59,8 @@ const CreateLocation = () => {
   }
 
   const handle_save = () => {
-    const data = location_info
-    dispatch(action_location.create_location(data))
+    const data = event_type_info
+    dispatch(action_event_type.create_event_type(data))
     dispatch(action_utils.get_utils())
     setTimeout(() => {
       dispatch(action_popUp.disablePopUp())
@@ -79,7 +79,7 @@ const CreateLocation = () => {
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
-              {words_he['new_location']}
+              {words_he['new_event_type']}
             </Typography>
           </Grid>
         </Grid>
@@ -87,32 +87,13 @@ const CreateLocation = () => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['name_english']}
+            label={' * ' + words_he['name']}
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
-            onChange={(e) => setLocationInfo({ ...location_info, name_en: e.target.value })}
+            onChange={(e) => setEventTypeInfo({ ...event_type_info, name: e.target.value })}
           />
         </Grid>
-        <Grid item xs={10}>
-          <TextField
-            className={classes.textField}
-            id='standard-required'
-            label={' * ' + words_he['name_hebrew']}
-            variant='standard'
-            inputProps={{ style: { textAlign: 'center' } }}
-            onChange={(e) => setLocationInfo({ ...location_info, name_he: e.target.value })}
-          />
-        </Grid>
-        <Grid item xs={10}>
-          <TextField
-            className={classes.textField}
-            id='standard-required'
-            label={' * ' + words_he['mapping']}
-            variant='standard'
-            inputProps={{ style: { textAlign: 'center' } }}
-            onChange={(e) => setLocationInfo({ ...location_info, mapping: e.target.value })}
-          />
-        </Grid>
+
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Grid item>
@@ -127,4 +108,4 @@ const CreateLocation = () => {
   )
 }
 
-export default CreateLocation
+export default CreateEventType

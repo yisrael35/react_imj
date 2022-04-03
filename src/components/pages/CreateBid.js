@@ -10,7 +10,8 @@ import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import CreateClient from './CreateClient'
 import CreateLocation from './CreateLocation'
-import CancelExit from '../general/CancelExit'
+import CreateEventType from './CreateEventType'
+import ConfirmAlert from '../general/ConfirmAlert'
 import moment from 'moment'
 
 const words_he = require('../../utils/words_he').words_he
@@ -73,8 +74,12 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
     const new_location = <CreateLocation />
     dispatch(action_popUp.setPopUp(new_location))
   }
+  const handle_create_event_type = (e) => {
+    const new_event_type = <CreateEventType />
+    dispatch(action_popUp.setPopUp(new_event_type))
+  }
   const handle_cancel_and_exit = () => {
-    const content = <CancelExit />
+    const content = <ConfirmAlert message={words_he['cancel_exit']} />
     dispatch(action_popUp.setPopUp(content))
   }
 
@@ -175,7 +180,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
                 </MenuItem>
               ))}
             </Select>
-            <BsCalendarPlus style={iconStyles} onMouseEnter={() => setIsShown('add_event_type')} onMouseLeave={() => setIsShown('none')} />
+            <BsCalendarPlus style={iconStyles} onClick={handle_create_event_type} onMouseEnter={() => setIsShown('add_event_type')} onMouseLeave={() => setIsShown('none')} />
             {isShown === 'add_event_type' && (
               <div style={{ position: 'absolute', left: '49%', width: '10%', backgroundColor: '#505050', color: 'white', 'text-align': 'center' }}> {words_he[isShown]} </div>
             )}

@@ -186,6 +186,8 @@ const words_he = {
   tomorrow: 'מחר',
   noEventsInRange: 'אין אירועים בטווח תאריכים אלו',
   code_404: 'לא נמצא מידע',
+  new_event_type: 'סוג אירוע חדש',
+  event_type_created: 'סוג האירוע נוצר',
 }
 
 module.exports = {

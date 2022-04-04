@@ -4,6 +4,7 @@ import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography, Textare
 import PersonAddOutlined from '@material-ui/icons/PersonAddOutlined'
 import { MdOutlineAddLocationAlt } from 'react-icons/md'
 import { BsCalendarPlus } from 'react-icons/bs'
+import * as actionSnackBar from '../../redux/SnackBar/action'
 
 import { makeStyles } from '@material-ui/core/styles'
 import * as action_utils from '../../redux/Utils/action'
@@ -60,7 +61,11 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   }, [bid_info])
 
   const validate_fields = () => {
-    if (bid_info.event_type && bid_info.location && bid_info.user && bid_info.event_date && bid_info.client_id && bid_info.event_name && bid_info.max_participants) {
+    if (bid_info.max_participants < 0) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character'] + ': '} ${bid_info.max_participants} `, 3000))
+      return false
+    }
+    if (bid_info.event_type && bid_info.location && bid_info.user && bid_info.event_date && bid_info.client_id && bid_info.event_name) {
       return true
     }
     return false

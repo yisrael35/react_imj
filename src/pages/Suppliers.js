@@ -22,7 +22,7 @@ const Suppliers = () => {
 
   const items = useSelector((state) => state.supplier.suppliers)
   const meta_data = useSelector((state) => state.supplier.meta_data)
-  
+
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
@@ -67,23 +67,14 @@ const Suppliers = () => {
     const new_supplier = <CreateSupplier />
     dispatch(action_popUp.setPopUp(new_supplier))
   }
-
-  for (let i = 0; i < items.length; i++) {
-    let account_details_str = ''
-    for (let key in items[i].account) {
-      let key_to_display
-      if (key === 'iban' || key === 'swift') {
-        key_to_display = key.toUpperCase()
-      } else {
-        key_to_display = key
-      }
-      account_details_str += key_to_display + ': ' + items[i].account[key] + ' |  \n'
-    }
-    items[i] = { ...items[i], account_details: account_details_str }
-  }
   const create_csv = () => {
     dispatch(action_supplier.get_suppliers({ limit, offset, search, csv: true }))
     dispatch(action_loading.setLoading())
+  }
+  const unstruct_items = (items) => {
+    return items.map((item) => {
+      return { ...item, account_owner_name: item.account?.account_name, iban: item.account?.iban, swift: item.account?.swift }
+    })
   }
 
   return (
@@ -132,13 +123,15 @@ const Suppliers = () => {
       <SearchIcon />
 
       <TableBuilder
-        items={items}
-        cols={['name', 'phone', 'email', 'account_details', 'created_at']}
+        items={unstruct_items(items)}
+        cols={['name', 'phone', 'email', 'account_owner_name', 'iban', 'swift', 'created_at']}
         headers={{
           name: words_he['name'],
           phone: words_he['phone'],
           email: words_he['email'],
-          account_details: words_he['account_details'],
+          account_owner_name: words_he['account_name'],
+          iban: 'IBAN',
+          swift: 'SWIFT',
           created_at: words_he['created_at'],
         }}
         title={words_he['suppliers']}

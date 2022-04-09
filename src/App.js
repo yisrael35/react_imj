@@ -1,7 +1,7 @@
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './css/App.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import React, { useState } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import store from './redux/index'
 
@@ -18,8 +18,9 @@ import ProfileSettings from './pages/ProfileSettings'
 import Reports from './pages/Reports'
 import Events from './pages/Events'
 import Clients from './pages/Clients.js'
-import Tests from './pages/Tests'
+import TwoFaVerification from './pages/TwoFaVerification'
 import Suppliers from './pages/Suppliers'
+import Tests from './pages/Tests'
 
 //components
 import NavBar from './components/general/NavBar'
@@ -28,14 +29,13 @@ import PrivateRoute from './components/general/PrivateRoutes'
 import PopUp from './components/general/PopUp'
 import Loading from './components/general/Loading'
 
-function App() {
-  const [name, setName] = useState('')
+const App = () => {
   return (
     <Provider store={store}>
-      <div className='App'>
+      <div>
         <Router>
-          <NavBar name={name} setName={setName} />
           <SnackBar />
+          <NavBar />
           <PopUp />
           <Loading />
           <main>
@@ -43,7 +43,8 @@ function App() {
               <Route path='/Login' component={() => <Login />} />
               <Route path='/ForgotPassword' component={() => <ForgotPassword />} />
               <Route path='/ResetPassword/:token' component={() => <ResetPassword />} />
-              <PrivateRoute path='/Home' exact component={() => <Home name={name} />} />
+              <Route path='/TwoFaVerification' component={TwoFaVerification} />
+              <PrivateRoute path='/Home' exact component={() => <Home />} />
               <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />
               <PrivateRoute path='/Bids' component={Bids} />

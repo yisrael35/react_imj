@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+
+//calendar
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import 'moment/locale/he'
 
 //redux
+import { useDispatch, useSelector } from 'react-redux'
 import * as action_home from '../redux/Home/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
 import * as action_popUp from '../redux/PopUp/action'
@@ -21,14 +23,15 @@ import workerInstances from '../services'
 import { words_he } from '../utils/words_he'
 
 const localizer = momentLocalizer(moment)
+
 //  Yisrael Bar  yisrael35@gmail.com
 const Home = (props) => {
+  const dispatch = useDispatch()
   const events = useSelector((state) => state.home.events)
   const token = useSelector((state) => state.auth.token)
   const saved_date = useSelector((state) => state.home.saved_date)
   const permissions = useSelector((state) => state.auth.permissions)
 
-  const dispatch = useDispatch()
   //connect to the ws
   useEffect(() => {
     workerInstances.init_ws({ token })
@@ -39,14 +42,10 @@ const Home = (props) => {
   useEffect(() => {
     const receiveData = (message) => {
       if (message?.data?.type === 'login' && !message?.data?.error) {
-        // const response = { ...message.data }
         dispatch(actionSnackBar.setSnackBar('success', words_he['login_success'], 2000))
       } else if (message?.data?.type === 'events' && !message?.data?.error) {
         const response = { ...message.data }
         dispatch(action_home.set_events(response.content))
-      } else {
-        // const response = { ...message.data }
-        // console.log(response)
       }
     }
     workerInstances.addEventListener('message', receiveData)
@@ -55,9 +54,9 @@ const Home = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   const get_event_by_month = (date) => {
     const data = { from_date: moment(date).startOf('month').format('YYYY-MM-DD'), to_date: moment(date).endOf('month').format('YYYY-MM-DD') }
-
     dispatch(action_home.save_date(date))
     dispatch(action_home.get_events(data))
   }
@@ -67,20 +66,27 @@ const Home = (props) => {
     dispatch(action_popUp.setPopUp(content))
   }
   const event_icon = <Event className='floating_button' />
+
   //translate calender values to hebrew
   const messages = {
-    allDay: words_he['allDay'],
-    previous: words_he['previous'],
-    next: words_he['next'],
-    today: words_he['today'],
-    month: words_he['month'],
-    week: words_he['week'],
-    day: words_he['day'],
-    agenda: words_he['agenda'],
     date: words_he['date'],
     time: words_he['time'],
     event: words_he['event'],
+    allDay: words_he['allDay'],
+    week: words_he['week'],
+    work_week: words_he['work_week'],
+    day: words_he['day'],
+    month: words_he['month'],
+    previous: words_he['previous'],
+    next: words_he['next'],
+    yesterday: words_he['yesterday'],
+    tomorrow: words_he['tomorrow'],
+    today: words_he['today'],
+    agenda: words_he['agenda'],
+    showMore: (total) => `${words_he['show_more']}  ${total}+`,
+    noEventsInRange: words_he['noEventsInRange'],
   }
+
   return (
     <div style={{ textAlign: 'center' }}>
       <h3 className='text-muted'>{words_he['welcome']}</h3>

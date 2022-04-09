@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react'
+import { FaUserPlus } from 'react-icons/fa'
+
 import { useDispatch } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
-import { FaUserPlus } from 'react-icons/fa'
+
 
 const { invalid_email_characters, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
 const words_he = require('../utils/words_he').words_he
 
 const Register = () => {
+  const dispatch = useDispatch()
+
   const [first_name, setFirstName] = useState('')
   const [last_name, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [enable_send, setEnableSend] = useState(false)
 
-  const dispatch = useDispatch()
 
   useEffect(() => {
     if (validate_fields()) {
@@ -34,9 +37,6 @@ const Register = () => {
       dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${phone} `, 3000))
       return false
     }
-    // if (first_name.trim() !== '' && email.trim() !== '' && last_name.trim() !== '' && phone.trim() !== '') {
-    //   return true
-    // }
     if (all_fields_filled([first_name, email, last_name, phone])) {
       return true
     }

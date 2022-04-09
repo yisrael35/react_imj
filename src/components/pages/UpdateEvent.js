@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import moment from 'moment'
+
+import { useDispatch } from 'react-redux'
 import * as action_event from '../../redux/Event/action'
 import * as action_popUp from '../../redux/PopUp/action'
-import EventNote from '@material-ui/icons/EventNote'
-// import TextField from '@mui/material/TextField'
-import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
 
+import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
 import { makeStyles } from '@material-ui/core/styles'
+import EventNote from '@material-ui/icons/EventNote'
+
+import MyDatePicker from '../general/DatePicker'
+
+const words_he = require('../../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   textField: {
-    right: '2%',
     width: '20%',
     padding: '1%',
   },
-  action_buttons: {
-    paddingRight: '2%',
-  },
   select_element: {
-    right: '2%',
     width: '220px',
     padding: '1%',
   },
@@ -28,35 +27,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const words_he = require('../../utils/words_he').words_he
-
 const UpdateEvent = (props) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  
+  const { from_date, to_date, name, status, type } = props.data
 
-  const [date, setDate] = useState(moment(props.data.from_date).format(`YYYY-MM-DD`))
-  const [start_time, setStartTime] = useState(moment(props.data.from_date).format(`HH:mm:ss`))
-  const [end_time, setEndTime] = useState(moment(props.data.to_date).format(`HH:mm:ss`))
+  const [date, setDate] = useState(moment(from_date, ['HH:mm:ss YYYY-MM-DD']).format('YYYY-MM-DD'))
+  const [start_time, setStartTime] = useState(moment(from_date, ['HH:mm:ss YYYY-MM-DD']).format(`HH:mm`))
+  const [end_time, setEndTime] = useState(moment(to_date, ['HH:mm:ss YYYY-MM-DD']).format(`HH:mm`))
   const [end_after_start, setEndAfterStart] = useState(true)
-  const [event_info, setEventInfo] = useState({ name: '', from_date: '', to_date: '' })
+  const [event_info, setEventInfo] = useState({ name, status: convert_status(status), type: convert_type(type), from_date, to_date })
   const [enable_send, setEnableSend] = useState(false)
 
-  const dispatch = useDispatch()
-  useEffect(() => {
-    const get_event_by_id = async () => {
-      const event = await dispatch(action_event.get_event_by_id(props.id))
-      delete event.id
-      delete event.user
-
-      setEventInfo({ ...event })
-
-      setDate(moment(event.from_date).format(`YYYY-MM-DD`))
-      setStartTime(moment(event.from_date).format(`HH:mm`))
-      setEndTime(moment(event.to_date).format(`HH:mm`))
-    }
-    get_event_by_id()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     if (end_after_start && start_time && end_time && date && event_info.name) {
@@ -92,7 +75,6 @@ const UpdateEvent = (props) => {
       }
     }
 
-    // console.log(date)
     dispatch(action_event.update_event(event_info, props.id))
     const limit = props.limit
     const offset = props.offset
@@ -105,7 +87,6 @@ const UpdateEvent = (props) => {
 
   return (
     <Box
-      component='form'
       sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
@@ -126,17 +107,15 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             id='standard-required'
             label={' * ' + words_he['event_name']}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={event_info.name}
             variant='standard'
             onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })}
           />
         </Grid>
         <Grid item xs={10}>
-          <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
-            {' * ' + words_he['event_date']}
-          </InputLabel>
           <Grid container item xs={12} justifyContent='center'>
-            {date}
+            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} label={' * ' + words_he['event_date']} />
           </Grid>
         </Grid>
         <Grid item xs={10}>
@@ -144,6 +123,8 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['start_time']}
             type='time'
+            inputProps={{ style: { textAlign: 'center' } }}
+            format='24'
             variant='standard'
             value={start_time}
             onChange={(e) => {
@@ -156,6 +137,7 @@ const UpdateEvent = (props) => {
             className={classes.textField}
             label={' * ' + words_he['end_time']}
             type='time'
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             value={end_time}
             onChange={(e) => {
@@ -172,6 +154,7 @@ const UpdateEvent = (props) => {
           <Select
             variant='standard'
             value={String(event_info.status)}
+            // defaultValue={String(event_info.status)}
             className={classes.select_element}
             onChange={(e) => {
               setEventInfo({ ...event_info, status: e.target.value })
@@ -190,6 +173,7 @@ const UpdateEvent = (props) => {
           <Select
             variant='standard'
             value={String(event_info.type)}
+            // defaultValue={String(event_info.type)}
             className={classes.select_element}
             onChange={(e) => {
               setEventInfo({ ...event_info, type: e.target.value })
@@ -201,7 +185,7 @@ const UpdateEvent = (props) => {
             <MenuItem value='photo_shot'>{words_he['photo_shot']}</MenuItem>
           </Select>
         </Grid>
-        <Grid item xs={10} className={classes.action_buttons}>
+        <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
@@ -217,15 +201,29 @@ const UpdateEvent = (props) => {
 
 export default UpdateEvent
 
-// budget: null
-// check_list: null
-// clients: null
-// comment: null
-// from_date: "2022-02-21T22:00:00.000Z"
-// id: "f56649a8-8531-11ec-ae77-005056c00001"
-// name: "test the event if you want"
-// status: "pending"
-// suppliers: null
-// to_date: "2022-02-21T22:00:00.000Z"
-// type: "public"
-// user: "yi"
+const convert_status = (status) => {
+  switch (status) {
+    case words_he['pending']:
+      return 'pending'
+    case words_he['approved']:
+      return 'approved'
+    case words_he['canceled']:
+      return 'canceled'
+    default:
+      break
+  }
+}
+const convert_type = (type) => {
+  switch (type) {
+    case words_he['private']:
+      return 'private'
+    case words_he['public']:
+      return 'public'
+    case words_he['inside']:
+      return 'inside'
+    case words_he['photo_shot']:
+      return 'photo_shot'
+    default:
+      break
+  }
+}

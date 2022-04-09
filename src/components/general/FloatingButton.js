@@ -9,10 +9,6 @@ export default function FloatingActionButtons({ handle_click, button_content }) 
       bottom: theme.spacing(2),
       left: theme.spacing(5),
     },
-    content: {
-      // fontSize: '50px',
-      // width: '40px',
-    },
   }))
   const classes = useStyles()
   return (

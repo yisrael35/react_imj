@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
+import { Redirect, Link } from 'react-router-dom'
+
 import { useDispatch, useSelector } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
-import { Redirect, Link } from 'react-router-dom'
 
 const words_he = require('../utils/words_he').words_he
 
 const Login = (props) => {
+  const dispatch = useDispatch()
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const type = useSelector((state) => state.auth.type)
+  let currentRoute = useSelector((state) => state.auth.currentRoute)
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
-  const dispatch = useDispatch()
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
-  let currentRoute = useSelector((state) => state.auth.currentRoute)
 
   const submit = async (e) => {
     e.preventDefault()
@@ -22,13 +25,15 @@ const Login = (props) => {
     if (currentRoute.toUpperCase() === '/LOGIN' || currentRoute === '/') {
       currentRoute = 'Home'
     }
+
     return <Redirect to={currentRoute} />
+  } else if (type === 'login') {
+    return <Redirect to={'/TwoFaVerification'} />
   }
 
   return (
     <div className='form-signin'>
       <form onSubmit={submit}>
-        {/* <h3>{words_he['welcome']}</h3> */}
         <img src='logo2.png' alt='logo' />
         <h1 className='h3 mb-3 fw-normal'>{words_he['please_sign_in']}</h1>
         <input type='text' className='form-control' placeholder={words_he['username']} required onChange={(e) => setUsername(e.target.value)} />

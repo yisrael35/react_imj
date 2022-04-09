@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 import { DebounceInput } from 'react-debounce-input'
-import { InputLabel, Select, MenuItem } from '@mui/material/'
 
 import TableBuilder from '../components/general/TableBuilder'
 import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateUser from '../components/pages/UpdateUser'
 
+import { useDispatch, useSelector } from 'react-redux'
 import * as action_popUp from '../redux/PopUp/action'
 import * as action_loading from '../redux/Loading/action'
 import * as action_user from '../redux/User/action'
-import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
-import SearchIcon from '@mui/icons-material/Search';
+
+import { InputLabel, Select, MenuItem } from '@mui/material/'
+import SearchIcon from '@mui/icons-material/Search'
 
 const words_he = require('../utils/words_he').words_he
 
 const Users = (props) => {
+  const dispatch = useDispatch()
+
   const items = useSelector((state) => state.user.users)
   const meta_data = useSelector((state) => state.user.meta_data)
+
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
-  const dispatch = useDispatch()
+  const [isShown, setIsShown] = useState(false)
+
   useEffect(() => {
     dispatch(action_user.get_users({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,6 +86,7 @@ const Users = (props) => {
     dispatch(action_user.get_users({ limit, offset, search, csv: true }))
     dispatch(action_loading.setLoading())
   }
+
   return (
     <div>
       <span className='field_search'>
@@ -89,8 +95,9 @@ const Users = (props) => {
             {words_he['create_new_user']}
           </button>
         </Link>
-        <button className='transparent_button' onClick={create_csv}>
+        <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+          {isShown && <div className='hoverStyles'> {words_he['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}
@@ -126,7 +133,6 @@ const Users = (props) => {
       {/* search */}
       <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
       <SearchIcon />
-
       <TableBuilder
         items={items}
         cols={['username', 'email', 'first_name', 'last_name', 'phone', 'updated_at', 'is_active', 'level']}

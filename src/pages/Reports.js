@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { FaFileCsv } from 'react-icons/fa'
+
 import { useDispatch, useSelector } from 'react-redux'
 import * as action_utils from '../redux/Utils/action'
 import * as action_loading from '../redux/Loading/action'
@@ -6,9 +8,10 @@ import * as action_csv from '../redux/CSV/action'
 import * as action_popUp from '../redux/PopUp/action'
 
 import RangeDatePicker from '../components/general/RangeDatePicker'
-import { FaFileCsv } from 'react-icons/fa'
 import { makeStyles } from '@material-ui/core/styles'
 import { MenuItem, Select, Grid, InputLabel } from '@mui/material/'
+
+const words_he = require('../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   textStyle: {
@@ -21,23 +24,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const words_he = require('../utils/words_he').words_he
-
 const Reports = (props) => {
   const classes = useStyles()
-
   const dispatch = useDispatch()
+
+  const tables = useSelector((state) => state.utils.tables)
+  const file_name = useSelector((state) => state.csv.file_name)
+
   const [from_date, setFromDate] = useState(undefined)
   const [to_date, setToDate] = useState(undefined)
+  const [table, setTable] = useState('')
 
   useEffect(() => {
     dispatch(action_utils.get_utils())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const [table, setTable] = useState(undefined)
 
-  const tables = useSelector((state) => state.utils.tables)
-  const file_name = useSelector((state) => state.csv.file_name)
   const create_csv = async () => {
     dispatch(action_popUp.disablePopUp())
     dispatch(action_loading.setLoading())
@@ -48,7 +50,6 @@ const Reports = (props) => {
     <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
       <h4>{words_he['reports']}</h4>
       <FaFileCsv style={{ fontSize: '100px', margin: '20px' }} />
-
       <h6 className={classes.textStyle}>
         {words_he['reports_content_row1']}
         <br />
@@ -62,13 +63,13 @@ const Reports = (props) => {
           {words_he['reports_content_row5']}
         </span>
       </h6>
-
       <RangeDatePicker from_date={from_date} setFromDate={setFromDate} to_date={to_date} setToDate={setToDate} />
       <Grid>
         <InputLabel required id='demo-simple-select-disabled-label'>
           {words_he['tables']}
         </InputLabel>
         <Select
+          value={table}
           variant='standard'
           className={'report_select'}
           id='standard-required'

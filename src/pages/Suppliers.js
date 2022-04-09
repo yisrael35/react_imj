@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
 import { DebounceInput } from 'react-debounce-input'
+
+import { useDispatch, useSelector } from 'react-redux'
+import * as action_popUp from '../redux/PopUp/action'
+import * as action_loading from '../redux/Loading/action'
+import * as action_supplier from '../redux/Supplier/action'
+
+import SearchIcon from '@mui/icons-material/Search'
 import { InputLabel, Select, MenuItem } from '@mui/material/'
 
 import TableBuilder from '../components/general/TableBuilder'
@@ -8,21 +15,19 @@ import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateSupplier from '../components/pages/UpdateSupplier'
 import CreateSupplier from '../components/pages/CreateSupplier'
 
-import * as action_popUp from '../redux/PopUp/action'
-import * as action_loading from '../redux/Loading/action'
-import * as action_supplier from '../redux/Supplier/action'
-import { FaFileCsv, FaRegEdit } from 'react-icons/fa'
-import SearchIcon from '@mui/icons-material/Search';
-
 const words_he = require('../utils/words_he').words_he
 
 const Suppliers = () => {
+  const dispatch = useDispatch()
+
   const items = useSelector((state) => state.supplier.suppliers)
   const meta_data = useSelector((state) => state.supplier.meta_data)
+
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
-  const dispatch = useDispatch()
+  const [isShown, setIsShown] = useState(false)
+
   useEffect(() => {
     dispatch(action_supplier.get_suppliers({ limit, offset, search }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,32 +67,25 @@ const Suppliers = () => {
     const new_supplier = <CreateSupplier />
     dispatch(action_popUp.setPopUp(new_supplier))
   }
-
-  for (let i = 0; i < items.length; i++) {
-    let account_details_str = ''
-    for (let key in items[i].account) {
-      let key_to_display
-      if (key === 'iban' || key === 'swift') {
-        key_to_display = key.toUpperCase()
-      } else {
-        key_to_display = key
-      }
-      account_details_str += key_to_display + ': ' + items[i].account[key] + ' |  \n'
-    }
-    items[i] = { ...items[i], account_details: account_details_str }
-  }
   const create_csv = () => {
     dispatch(action_supplier.get_suppliers({ limit, offset, search, csv: true }))
     dispatch(action_loading.setLoading())
   }
+  const unstruct_items = (items) => {
+    return items.map((item) => {
+      return { ...item, account_owner_name: item.account?.account_name, iban: item.account?.iban, swift: item.account?.swift }
+    })
+  }
+
   return (
     <div>
       <span className='field_search'>
         <button type='button' className='btn btn-info' onClick={handle_create}>
           {words_he['add_supplier']}
         </button>
-        <button className='transparent_button' onClick={create_csv}>
+        <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
+          {isShown && <div className={'hoverStyles'}> {words_he['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}
@@ -125,13 +123,15 @@ const Suppliers = () => {
       <SearchIcon />
 
       <TableBuilder
-        items={items}
-        cols={['name', 'phone', 'email', 'account_details', 'created_at']}
+        items={unstruct_items(items)}
+        cols={['name', 'phone', 'email', 'account_owner_name', 'iban', 'swift', 'created_at']}
         headers={{
           name: words_he['name'],
           phone: words_he['phone'],
           email: words_he['email'],
-          account_details: words_he['account_details'],
+          account_owner_name: words_he['account_name'],
+          iban: 'IBAN',
+          swift: 'SWIFT',
           created_at: words_he['created_at'],
         }}
         title={words_he['suppliers']}

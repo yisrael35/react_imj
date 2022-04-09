@@ -6,8 +6,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    // border: '1px solid',
-    // borderRadius: '4px',
   },
   textField: {
     marginLeft: theme.spacing(1),

@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography, TextareaAutosize } from '@mui/material/'
 import PersonAddOutlined from '@material-ui/icons/PersonAddOutlined'
+import { MdOutlineAddLocationAlt } from 'react-icons/md'
+import { BsCalendarPlus } from 'react-icons/bs'
+import * as actionSnackBar from '../../redux/SnackBar/action'
+
 import { makeStyles } from '@material-ui/core/styles'
 import * as action_utils from '../../redux/Utils/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import CreateClient from './CreateClient'
-import CancelExit from '../general/CancelExit'
+import CreateLocation from './CreateLocation'
+import CreateEventType from './CreateEventType'
+import ConfirmAlert from '../general/ConfirmAlert'
 import moment from 'moment'
 
 const words_he = require('../../utils/words_he').words_he
@@ -38,6 +44,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   const locations = useSelector((state) => state.utils.locations)
   const clients = useSelector((state) => state.utils.clients)
   const events_type = useSelector((state) => state.utils.events_type)
+  const [isShown, setIsShown] = useState('none')
 
   useEffect(() => {
     dispatch(action_utils.get_utils())
@@ -54,7 +61,11 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   }, [bid_info])
 
   const validate_fields = () => {
-    if (bid_info.event_type && bid_info.location && bid_info.user && bid_info.event_date && bid_info.client_id && bid_info.event_name && bid_info.max_participants) {
+    if (bid_info.max_participants < 0) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character'] + ': '} ${bid_info.max_participants} `, 3000))
+      return false
+    }
+    if (bid_info.event_type && bid_info.location && bid_info.user && bid_info.event_date && bid_info.client_id && bid_info.event_name) {
       return true
     }
     return false
@@ -64,8 +75,16 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
     const new_client = <CreateClient />
     dispatch(action_popUp.setPopUp(new_client))
   }
+  const handle_create_location = (e) => {
+    const new_location = <CreateLocation />
+    dispatch(action_popUp.setPopUp(new_location))
+  }
+  const handle_create_event_type = (e) => {
+    const new_event_type = <CreateEventType />
+    dispatch(action_popUp.setPopUp(new_event_type))
+  }
   const handle_cancel_and_exit = () => {
-    const content = <CancelExit />
+    const content = <ConfirmAlert message={words_he['cancel_exit']} />
     dispatch(action_popUp.setPopUp(content))
   }
 
@@ -81,7 +100,13 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
       language: 'he',
     })
   }
-  console.log(bid_info)
+  const iconStyles = {
+    fontSize: '140%',
+    margin: '6px',
+    cursor: 'pointer',
+  }
+  const hoverStyles = { position: 'absolute', left: '51%', width: '8%', backgroundColor: '#505050', color: 'white', 'text-align': 'center' }
+
   return (
     <Box
       sx={{
@@ -118,6 +143,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               label={words_he['event_name']}
               variant='standard'
               value={bid_info.event_name}
+              inputProps={{ style: { textAlign: 'center' } }}
               onChange={(e) => {
                 setBidInfo({ ...bid_info, event_name: e.target.value })
               }}
@@ -159,6 +185,10 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
                 </MenuItem>
               ))}
             </Select>
+            <BsCalendarPlus style={iconStyles} onClick={handle_create_event_type} onMouseEnter={() => setIsShown('add_event_type')} onMouseLeave={() => setIsShown('none')} />
+            {isShown === 'add_event_type' && (
+              <div style={{ position: 'absolute', left: '49%', width: '10%', backgroundColor: '#505050', color: 'white', 'text-align': 'center' }}> {words_he[isShown]} </div>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextareaAutosize
@@ -191,6 +221,9 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
                 </MenuItem>
               ))}
             </Select>
+
+            <MdOutlineAddLocationAlt style={iconStyles} onClick={handle_create_location} onMouseEnter={() => setIsShown('add_location')} onMouseLeave={() => setIsShown('none')} />
+            {isShown === 'add_location' && <div style={hoverStyles}> {words_he[isShown]} </div>}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -228,7 +261,8 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
                 </MenuItem>
               ))}
             </Select>
-            <PersonAddOutlined onClick={handle_create_client} />
+            <PersonAddOutlined style={iconStyles} onClick={handle_create_client} onMouseEnter={() => setIsShown('add_client')} onMouseLeave={() => setIsShown('none')} />
+            {isShown === 'add_client' && <div style={hoverStyles}> {words_he[isShown]} </div>}
           </Grid>
           <Grid item xs={12}>
             <button className='btn btn-success m-4' onClick={handle_save_bid} disabled={!enable_send}>

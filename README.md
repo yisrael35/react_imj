@@ -5,13 +5,13 @@
 I built this project for The Israel Museum, Jerusalem.
 The technology stack:
 
-> For the DB I used MySQL [Link](https://github.com/yisrael35/rest_imj/tree/main/sql/structure)
-> For the FrontEnd I used React with Redux - current repository
-> For the BackEnd I used REST-API and WebSocket (NodeJS) [Link](https://github.com/yisrael35/rest_imj)
-> For the deployment I used AWS-EC2 [Link](http://yisraelbar.xyz/Login)
-> For the documentation I used wiki.js [Link](https://wiki-imj.herokuapp.com/)
-> To menage all the project I used Monday and Git
-> The project goal is to build a Management events system for IMJ.
+> For the DB I used MySQL [Link](https://github.com/yisrael35/rest_imj/tree/main/sql/structure)<br>
+> For the FrontEnd I used React with Redux - current repository<br>
+> For the BackEnd I used REST-API and WebSocket (NodeJS) [Link](https://github.com/yisrael35/rest_imj)<br>
+> For the deployment I used AWS-EC2 [Link](http://yisraelbar.xyz/Login)<br>
+> For the documentation I used wiki.js [Link](https://wiki-imj.herokuapp.com/)<br>
+> To menage all the project I used Monday and Git<br>
+> The project goal is to build a Management events system for IMJ.<br>
 
 ### About this repository
 
@@ -30,11 +30,11 @@ src/pages/Home.js The main page of the events
 src/redux/ contain the store and all redux file, and all calls to BackEnd happens in "action" files
 src/services/ init a web-worker thats init a WS the BackEnd (Register to get events - Design patterns observer)
 
-👀 All rights reserved to Yisrael Bar
-🌱 How to reach me:
-[My Linkedin](https://www.linkedin.com/in/yisrael-bar-7534a842/)
-If you want to see more of my projects:
-[My GitHub](https://github.com/yisrael35)
+👀 All rights reserved to Yisrael Bar<br>
+🌱 How to reach me:<br>
+[My Linkedin](https://www.linkedin.com/in/yisrael-bar-7534a842/)<br>
+If you want to see more of my projects:<br>
+[My GitHub](https://github.com/yisrael35)<br>
 
 ### Created by: Yisrael Bar
 

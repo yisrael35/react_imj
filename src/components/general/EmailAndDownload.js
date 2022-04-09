@@ -4,14 +4,14 @@ import { useDispatch } from 'react-redux'
 import * as action_pdf from '../../redux/PDF/action'
 import * as action_loading from '../../redux/Loading/action'
 import * as action_popUp from '../../redux/PopUp/action'
-import { TextField } from '@mui/material/'
 
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material/'
 
 import { FaRegFilePdf } from 'react-icons/fa'
+
 const words_he = require('../../utils/words_he').words_he
 const { validateEmail } = require('../../utils/validate_helper')
+
 const EmailAndDownload = (props) => {
   const { message, bid_id, email } = props
   const [client_email, setClientEmail] = useState(email)

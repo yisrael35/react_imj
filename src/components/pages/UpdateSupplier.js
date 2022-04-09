@@ -1,47 +1,43 @@
 import React, { useState, useEffect } from 'react'
 import '../../css/suppliers.css'
+
 import { useDispatch } from 'react-redux'
 import * as action_supplier from '../../redux/Supplier/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
-import { Box, Grid, TextField, Typography } from '@mui/material/'
 
+import { Box, Grid, TextField, Typography } from '@mui/material/'
 import { makeStyles } from '@material-ui/core/styles'
+
+
+const words_he = require('../../utils/words_he').words_he
+const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
-    right: '2%',
     width: '20%',
-    padding: '1%',
+    padding: '0px',
     direction: 'ltr',
   },
   textField: {
-    right: '2%',
     width: '20%',
-    padding: '1%',
-  },
-  action_buttons: {
-    paddingRight: '2%',
+    padding: '0px',
   },
   select_element: {
-    right: '2%',
     width: '220px',
-    padding: '1%',
+    padding: '0px',
   },
   title_type: {
     textAlign: 'center',
   },
 }))
 
-const words_he = require('../../utils/words_he').words_he
-const { invalid_email, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
-
 const UpdateSupplier = (props) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const { name, email, phone, account } = props.supplier
   const [supplier_info, setSupplierInfo] = useState({ name, account, phone, email })
-  const dispatch = useDispatch()
   const [enable_send, setEnableSend] = useState(false)
 
   useEffect(() => {
@@ -59,7 +55,7 @@ const UpdateSupplier = (props) => {
         dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${supplier_info.email} `, 3000))
         return false
       }
-      if (invalid_email(supplier_info.email)) {
+      if (!validateEmail(supplier_info.email)) {
         return false
       }
     }
@@ -89,7 +85,6 @@ const UpdateSupplier = (props) => {
   const handle_delete = () => {
     dispatch(action_supplier.delete_supplier(props.supplier.uuid))
     setTimeout(() => {
-      setSupplierInfo({ ...supplier_info })
       const limit = props.limit
       const offset = props.offset
       dispatch(action_supplier.get_suppliers({ limit, offset }))
@@ -133,6 +128,7 @@ const UpdateSupplier = (props) => {
             className={classes.textField}
             id='standard-required'
             label={' * ' + words_he['name']}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={supplier_info.name}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, name: e.target.value })}
@@ -147,6 +143,7 @@ const UpdateSupplier = (props) => {
             id='standard-required'
             label={words_he['phone']}
             value={supplier_info.phone}
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, phone: e.target.value })}
           />
@@ -161,6 +158,7 @@ const UpdateSupplier = (props) => {
             label={words_he['email']}
             value={supplier_info.email}
             variant='standard'
+            inputProps={{ style: { textAlign: 'center' } }}
             direction='ltr'
             onChange={(e) => setSupplierInfo({ ...supplier_info, email: e.target.value })}
           />
@@ -172,6 +170,7 @@ const UpdateSupplier = (props) => {
             id='standard-required'
             label={words_he['account_name']}
             value={account_name}
+            inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, account_name: e.target.value } })}
           />
@@ -182,6 +181,7 @@ const UpdateSupplier = (props) => {
             required
             id='standard-required'
             label={'IBAN'}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={iban}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, iban: e.target.value } })}
@@ -193,13 +193,14 @@ const UpdateSupplier = (props) => {
             required
             id='standard-required'
             label={'SWIFT'}
+            inputProps={{ style: { textAlign: 'center' } }}
             value={swift}
             variant='standard'
             onChange={(e) => setSupplierInfo({ ...supplier_info, account: { ...supplier_info.account, swift: e.target.value } })}
           />
         </Grid>
 
-        <Grid item xs={10} className={classes.action_buttons}>
+        <Grid item xs={10} >
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>

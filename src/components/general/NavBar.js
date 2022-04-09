@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import { useSelector, useDispatch } from 'react-redux'
 import * as authActions from '../../redux/Auth/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import Reports from '../../pages/Reports'
-import { AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip, MenuItem } from '@mui/material/'
+
+import { AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip, MenuItem, FormControlLabel, Switch } from '@mui/material/'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-
 import LogoutIcon from '@mui/icons-material/Logout'
+
 const words_he = require('../../utils/words_he').words_he
 const darkTheme = createTheme({
   palette: {
@@ -22,6 +24,7 @@ const darkTheme = createTheme({
 const Nav = (props) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const permissions = useSelector((state) => state.auth.permissions)
+  const two_fa_status = useSelector((state) => state.auth.two_fa_status)
   const dispatch = useDispatch()
   const logout = async () => {
     dispatch(authActions.logout())
@@ -32,6 +35,7 @@ const Nav = (props) => {
     if (token) {
       dispatch(authActions.check_if_token_exist(token))
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -57,6 +61,15 @@ const Nav = (props) => {
     const reports = <Reports />
     dispatch(action_popUp.setPopUp(reports))
   }
+
+  const handle_switch_2fa = () => {
+    dispatch(authActions.update_2fa_status(!two_fa_status))
+  }
+  const handle_go_to_login = () => {
+    handleCloseNavMenu()
+    dispatch(authActions.update_type(''))
+  }
+
   let pages = []
   if (permissions !== 3 && isAuthenticated) {
     pages = [
@@ -83,6 +96,7 @@ const Nav = (props) => {
   let settings = []
   if (permissions === 1 && isAuthenticated) {
     settings.push(
+      <FormControlLabel control={<Switch checked={two_fa_status} onChange={handle_switch_2fa} />} label='2FA' />,
       <Link to='/Users' key={'Users'} className='navbar_links' onClick={handleCloseNavMenu}>
         {words_he['users']}
       </Link>
@@ -98,7 +112,7 @@ const Nav = (props) => {
   )
   if (!isAuthenticated) {
     settings = [
-      <Link to='/Login' key={'Login'} className='navbar_links' onClick={handleCloseNavMenu}>
+      <Link to='/Login' key={'Login'} className='navbar_links' onClick={handle_go_to_login}>
         {words_he['login']}
       </Link>,
     ]
@@ -174,8 +188,10 @@ const Nav = (props) => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting, index) => (
-                    <MenuItem key={index} onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>{setting}</Typography>
+                    <MenuItem key={index}>
+                      <Typography textAlign='center' onClick={handleCloseUserMenu}>
+                        {setting}
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -189,4 +205,3 @@ const Nav = (props) => {
 }
 
 export default Nav
-// , index

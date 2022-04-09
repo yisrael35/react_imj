@@ -10,6 +10,7 @@ const Login = (props) => {
   const dispatch = useDispatch()
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const type = useSelector((state) => state.auth.type)
   let currentRoute = useSelector((state) => state.auth.currentRoute)
 
   const [username, setUsername] = useState('')
@@ -24,7 +25,10 @@ const Login = (props) => {
     if (currentRoute.toUpperCase() === '/LOGIN' || currentRoute === '/') {
       currentRoute = 'Home'
     }
+
     return <Redirect to={currentRoute} />
+  } else if (type === 'login') {
+    return <Redirect to={'/TwoFaVerification'} />
   }
 
   return (

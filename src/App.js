@@ -18,8 +18,9 @@ import ProfileSettings from './pages/ProfileSettings'
 import Reports from './pages/Reports'
 import Events from './pages/Events'
 import Clients from './pages/Clients.js'
-import Tests from './pages/Tests'
+import TwoFaVerification from './pages/TwoFaVerification'
 import Suppliers from './pages/Suppliers'
+import Tests from './pages/Tests'
 
 //components
 import NavBar from './components/general/NavBar'
@@ -42,6 +43,7 @@ const App = () => {
               <Route path='/Login' component={() => <Login />} />
               <Route path='/ForgotPassword' component={() => <ForgotPassword />} />
               <Route path='/ResetPassword/:token' component={() => <ResetPassword />} />
+              <Route path='/TwoFaVerification' component={TwoFaVerification} />
               <PrivateRoute path='/Home' exact component={() => <Home />} />
               <PrivateRoute path='/Register' component={Register} />
               <PrivateRoute path='/Users' component={Users} />

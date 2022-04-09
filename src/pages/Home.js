@@ -86,7 +86,7 @@ const Home = (props) => {
     showMore: (total) => `${words_he['show_more']}  ${total}+`,
     noEventsInRange: words_he['noEventsInRange'],
   }
-  
+
   return (
     <div style={{ textAlign: 'center' }}>
       <h3 className='text-muted'>{words_he['welcome']}</h3>

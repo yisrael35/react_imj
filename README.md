@@ -5,7 +5,7 @@
 I built this project for The Israel Museum, Jerusalem.
 The technology stack:
 
-> For the DB I used MySQL [Link](https://github.com/yisrael35/rest_imj/tree/main/sql/structure)<br>
+> For the DB I used MySQL [Structure-Link](https://github.com/yisrael35/rest_imj/tree/main/sql/structure)<br>
 > For the FrontEnd I used React with Redux - current repository<br>
 > For the BackEnd I used REST-API and WebSocket (NodeJS) [Link](https://github.com/yisrael35/rest_imj)<br>
 > For the deployment I used AWS-EC2 [Link](http://yisraelbar.xyz/Login)<br>

@@ -61,7 +61,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   }, [bid_info])
 
   const validate_fields = () => {
-    if (bid_info.max_participants < 0) {
+    if (bid_info.max_participants < 2) {
       dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character'] + ': '} ${bid_info.max_participants} `, 3000))
       return false
     }
@@ -231,7 +231,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               label={words_he['participants_amount']}
               type='number'
               required
-              min='0'
+              min='2'
               value={bid_info.max_participants}
               InputLabelProps={{
                 shrink: true,

@@ -96,7 +96,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
       event_comment: '',
       client_id: '',
       event_name: '',
-      max_participants: 0,
+      max_participants: 2,
       language: 'he',
     })
   }

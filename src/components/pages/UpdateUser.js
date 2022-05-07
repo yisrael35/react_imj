@@ -1,15 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../css/users.css'
 import { useDispatch } from 'react-redux'
 import * as action_user from '../../redux/User/action'
 import * as action_popUp from '../../redux/PopUp/action'
+import * as actionSnackBar from '../../redux/SnackBar/action'
 import { FaUserEdit } from 'react-icons/fa'
+
+const { validateEmail, invalid_email_characters } = require('../../utils/validate_helper')
 
 const words_he = require('../../utils/words_he').words_he
 
 const UpdateUser = (props) => {
   const [is_active, setIsActive] = useState(props.user.is_active === words_he['active'] ? 1 : 0)
   const [level, setLevel] = useState(props.user.level)
+  const [email, setEmail] = useState(props.user.email)
+  const [enable_send, setEnableSend] = useState(false)
+
+  useEffect(() => {
+    if (invalid_email_characters(email)) {
+      dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${email} `, 3000))
+      return false
+    }
+    if (validateEmail(email)) {
+      setEnableSend(true)
+    } else {
+      setEnableSend(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email])
+
   const dispatch = useDispatch()
   const handle_status = (val) => {
     setIsActive(Number(val))
@@ -18,7 +37,7 @@ const UpdateUser = (props) => {
     setLevel(Number(val))
   }
   const handle_save = () => {
-    const data = { level, is_active }
+    const data = { email, level, is_active }
     dispatch(action_user.update_user_by_id(data, props.user.id))
     const limit = props.limit
     const offset = props.offset
@@ -41,6 +60,7 @@ const UpdateUser = (props) => {
         <thead>
           <tr>
             <th className='text-muted'>{words_he['name']}</th>
+            <th className='text-muted'>{words_he['email']}</th>
             <th className='text-muted'>{words_he['permissions']}</th>
             <th className='text-muted'>{words_he['status']}</th>
           </tr>
@@ -49,6 +69,18 @@ const UpdateUser = (props) => {
           <tr>
             <td>
               <span>{props.user.first_name + ' ' + props.user.last_name}</span>
+            </td>
+            <td>
+              <input
+                style={{ textAlign: 'center', marginRight: '4px', marginLeft: '4px' }}
+                type='text'
+                className='form-control'
+                value={email}
+                required
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
+              />
             </td>
             <td>
               <ul>
@@ -77,7 +109,7 @@ const UpdateUser = (props) => {
           </tr>
         </tbody>
       </table>
-      <button type='button' className='btn btn-success mt-2' onClick={handle_save}>
+      <button type='button' className='btn btn-success mt-2' onClick={handle_save} disabled={!enable_send}>
         {words_he['save']}
       </button>
     </div>

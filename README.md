@@ -13,6 +13,23 @@ The technology stack:
 > To menage all the project I used Monday and Git<br>
 > The project goal is to build a Management events system for IMJ.<br>
 
+### Client API
+<b>Production:</b>
+<a href="https://www.yisraelbar.xyz">https://www.yisraelbar.xyz</a>
+<b>Local:</b>
+<a href="http://localhost:3001">http://localhost:3000</a>
+
+
+### Server API
+<b>Production:</b>
+
+> <ol><li>Rest: <a href="https://rest-api.yisraelbar.xyz">https://rest-api.yisraelbar.xyz</a></li><li>WebSocket: <a href="wss://ws-api.yisraelbar.xyz">wss://ws-api.yisraelbar.xyz</a></li></ol>
+
+
+<b>Local:</b>
+> <ol><li>Rest: <a href="http://localhost:3001">http://localhost:3001</a></li><li>WebSocket: <a href="ws://localhost:3020">ws://localhost:3020</a></li></ol>
+
+
 ### About this repository
 
 There are 3 type of users:

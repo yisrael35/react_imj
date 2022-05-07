@@ -93,7 +93,13 @@ const ProfileSettings = (props) => {
         </label>
         <label>
           {words_he['new_password']}
-          <input style={{ textAlign: 'center', marginBottom:'0px' }} type='password' className='form-control' value={user_info.password} onChange={(e) => setUserInfo({ ...user_info, password: e.target.value })} />
+          <input
+            style={{ textAlign: 'center', marginBottom: '0px' }}
+            type='password'
+            className='form-control'
+            value={user_info.password}
+            onChange={(e) => setUserInfo({ ...user_info, password: e.target.value })}
+          />
         </label>
         <label>
           {words_he['confirm_password']}

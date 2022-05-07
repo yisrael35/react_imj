@@ -1,5 +1,7 @@
 REACT_APP_REST_IMJ_URL=http://localhost:3001
 REACT_APP_WS_IMJ_URL=ws://localhost:3020
+REACT_APP_REST_IMJ_URL_SERVER= https://rest-api.yisraelbar.xyz
+REACT_APP_WS_IMJ_URL_SERVER= wss://ws-api.yisraelbar.xyz
 REACT_APP_FIRST_USER_PASSWORD= 
 REACT_APP_IMJ_EMAIL= @imj.org.il
 REACT_APP_LIMIT= 15

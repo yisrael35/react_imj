@@ -72,7 +72,7 @@ const CreateBid = (props) => {
     event_comment: '',
     client_id: '',
     event_name: '',
-    max_participants: 0,
+    max_participants: 2,
     language: 'he',
   })
   const [enable_send, setEnableSend] = useState(false)

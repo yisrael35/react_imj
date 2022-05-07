@@ -6,6 +6,9 @@ const invalid_email_characters = (email) => {
 }
 
 const validateEmail = (email) => {
+  if (!email) {
+    return false
+  }
   var re = /\S+@\S+\.\S+/
   return re.test(email)
 }

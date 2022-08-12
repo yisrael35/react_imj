@@ -22,7 +22,7 @@ import * as action_bid from '../redux/Bid/action'
 import * as action_popUp from '../redux/PopUp/action'
 import moment from 'moment'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateBid = (props) => {
   const user = useSelector((state) => state.auth.userContent)
+  const dictionary = Dictionary()
+  const currencies = [
+    { value: 'nis', label: dictionary['nis'] },
+    { value: 'usd', label: dictionary['dollar'] },
+  ]
   const dispatch = useDispatch()
 
   const classes = useStyles()
@@ -86,7 +91,7 @@ const CreateBid = (props) => {
     { start_time: '', end_time: '', activity_description: '' },
     { start_time: '', end_time: '', activity_description: '' },
   ])
-  const steps = [words_he['new_bid'], words_he['time_schedule'], words_he['costs']]
+  const steps = [dictionary['new_bid'], dictionary['time_schedule'], dictionary['costs']]
 
   useEffect(() => {
     setEnableSend(true)
@@ -111,8 +116,8 @@ const CreateBid = (props) => {
     const message = (
       <Grid>
         <span>
-          <h3 className='text-muted'>{words_he['bid_created']}</h3>
-          <h5>{`${words_he['bid_id']}: ${bid_id}`}</h5>
+          <h3 className='text-muted'>{dictionary['bid_created']}</h3>
+          <h5>{`${dictionary['bid_id']}: ${bid_id}`}</h5>
         </span>
       </Grid>
     )
@@ -128,7 +133,7 @@ const CreateBid = (props) => {
     } else {
       const error_msg = (
         <div>
-          <div> {words_he['error_accord']}</div>
+          <div> {dictionary['error_accord']}</div>
         </div>
       )
       dispatch(action_popUp.setPopUp(error_msg))
@@ -148,7 +153,7 @@ const CreateBid = (props) => {
     } else {
       const error_msg = (
         <div>
-          <div> {words_he['error_accord']}</div>
+          <div> {dictionary['error_accord']}</div>
         </div>
       )
       dispatch(action_popUp.setPopUp(error_msg))
@@ -169,7 +174,7 @@ const CreateBid = (props) => {
     } else {
       const error_msg = (
         <div>
-          <div> {words_he['error_accord']}</div>
+          <div> {dictionary['error_accord']}</div>
         </div>
       )
       dispatch(action_popUp.setPopUp(error_msg))
@@ -190,16 +195,16 @@ const CreateBid = (props) => {
             <Grid container>
               <Grid item xs={12}>
                 <span>
-                  <h3 className='text-muted'>{words_he['bid_created']}</h3>
+                  <h3 className='text-muted'>{dictionary['bid_created']}</h3>
                 </span>
-                {`${words_he['bid_id']}: ${bid_id}`}
+                {`${dictionary['bid_id']}: ${bid_id}`}
               </Grid>
               <Grid item className={classes.table}>
                 <TableScheduleTimeEvent setScheduleTimeEvent={setScheduleTimeEvent} schedule_time_event={schedule_time_event} />
               </Grid>
               <Grid item xs={12}>
                 <button className='btn btn-success m-4' onClick={handle_save_schedule_event} disabled={!enable_send}>
-                  {words_he['save']}
+                  {dictionary['save']}
                 </button>
                 <button
                   className='btn btn-outline-dark m-2'
@@ -207,7 +212,7 @@ const CreateBid = (props) => {
                     setActiveStep((prevActiveStep) => prevActiveStep + 1)
                   }}
                 >
-                  {words_he['skip']}
+                  {dictionary['skip']}
                 </button>
               </Grid>
             </Grid>
@@ -218,9 +223,9 @@ const CreateBid = (props) => {
           <Grid>
             <Grid item xs={12}>
               <span>
-                <h3 className='text-muted'>{words_he['bid_created']}</h3>
+                <h3 className='text-muted'>{dictionary['bid_created']}</h3>
               </span>
-              {`${words_he['bid_id']}: ${bid_id}`}
+              {`${dictionary['bid_id']}: ${bid_id}`}
             </Grid>
             <TableCosts
               setCosts={setCosts}
@@ -236,7 +241,7 @@ const CreateBid = (props) => {
             />
             <Select
               className={classes.currencies}
-              placeholder={words_he['nis']}
+              placeholder={dictionary['nis']}
               options={currencies}
               id='currency'
               label='currency'
@@ -246,17 +251,17 @@ const CreateBid = (props) => {
             />
             <div>
               <div>
-                {words_he['total_cost_before_discount']} {total_b_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
+                {dictionary['total_cost_before_discount']} {total_b_discount} {currency === 'nis' ? dictionary['nis'] : dictionary['dollar']}
               </div>
               <div>
-                {words_he['total_discount']} {total_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
+                {dictionary['total_discount']} {total_discount} {currency === 'nis' ? dictionary['nis'] : dictionary['dollar']}
               </div>
               <div>
-                {words_he['total_cost_after_discount']} {total_a_discount} {currency === 'nis' ? words_he['nis'] : words_he['dollar']}
+                {dictionary['total_cost_after_discount']} {total_a_discount} {currency === 'nis' ? dictionary['nis'] : dictionary['dollar']}
               </div>
             </div>
             <button className='btn btn-success m-4' onClick={handle_save_costs} disabled={!enable_send}>
-              {words_he['save']}
+              {dictionary['save']}
             </button>
             <button
               className='btn btn-outline-dark m-2'
@@ -264,7 +269,7 @@ const CreateBid = (props) => {
                 setActiveStep((prevActiveStep) => prevActiveStep + 1)
               }}
             >
-              {words_he['skip']}
+              {dictionary['skip']}
             </button>
           </Grid>
         )
@@ -291,7 +296,7 @@ const CreateBid = (props) => {
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography className={classes.instructions}> {words_he['bid_created']}</Typography>
+            <Typography className={classes.instructions}> {dictionary['bid_created']}</Typography>
           </div>
         ) : (
           <div>
@@ -304,8 +309,3 @@ const CreateBid = (props) => {
 }
 
 export default CreateBid
-
-const currencies = [
-  { value: 'nis', label: words_he['nis'] },
-  { value: 'usd', label: words_he['dollar'] },
-]

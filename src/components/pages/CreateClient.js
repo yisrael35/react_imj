@@ -7,9 +7,9 @@ import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '@mui/material/'
 import { makeStyles } from '@material-ui/core/styles'
+import Dictionary from '../../utils/dictionary'
 
 const { validateEmail, invalid_phone, all_fields_filled, invalid_email_characters } = require('../../utils/validate_helper')
-const words_he = require('../../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 const CreateClient = () => {
   const classes = useStyles()
 
+  const dictionary = Dictionary()
+
   const [enable_send, setEnableSend] = useState(false)
   const [client_info, setClientInfo] = useState({ name: '', type: '', phone: '', email: '' })
   const dispatch = useDispatch()
@@ -50,7 +52,7 @@ const CreateClient = () => {
   const validate_fields = () => {
     if (client_info.email) {
       if (invalid_email_characters(client_info.email)) {
-        dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${client_info.email} `, 3000))
+        dispatch(actionSnackBar.setSnackBar('error', `${dictionary['invalid_character']} ${client_info.email} `, 3000))
         return false
       }
       if (!validateEmail(client_info.email)) {
@@ -58,7 +60,7 @@ const CreateClient = () => {
       }
     }
     if (client_info.phone && invalid_phone(client_info.phone)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${client_info.phone} `, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${dictionary['type_number']} ${client_info.phone} `, 3000))
       return false
     }
 
@@ -70,11 +72,11 @@ const CreateClient = () => {
 
   const convert_type = (type) => {
     switch (type) {
-      case words_he['private']:
+      case dictionary['private']:
         return 'private'
-      case words_he['company']:
+      case dictionary['company']:
         return 'company'
-      case words_he['department']:
+      case dictionary['department']:
         return 'department'
       default:
         break
@@ -113,7 +115,7 @@ const CreateClient = () => {
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
-              {words_he['new_client']}
+              {dictionary['new_client']}
             </Typography>
           </Grid>
         </Grid>
@@ -122,7 +124,7 @@ const CreateClient = () => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['name']}
+            label={' * ' + dictionary['name']}
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setClientInfo({ ...client_info, name: e.target.value })}
@@ -130,7 +132,7 @@ const CreateClient = () => {
         </Grid>
         <Grid item xs={10}>
           <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
-            {' * ' + words_he['type']}
+            {' * ' + dictionary['type']}
           </InputLabel>
           <Select
             variant='standard'
@@ -142,9 +144,9 @@ const CreateClient = () => {
               setClientInfo({ ...client_info, type: e.target.value })
             }}
           >
-            <MenuItem value={words_he['private']}>{words_he['private']}</MenuItem>
-            <MenuItem value={words_he['company']}>{words_he['company']}</MenuItem>
-            <MenuItem value={words_he['department']}>{words_he['department']}</MenuItem>
+            <MenuItem value={dictionary['private']}>{dictionary['private']}</MenuItem>
+            <MenuItem value={dictionary['company']}>{dictionary['company']}</MenuItem>
+            <MenuItem value={dictionary['department']}>{dictionary['department']}</MenuItem>
           </Select>
         </Grid>
         <Grid item xs={10}>
@@ -153,7 +155,7 @@ const CreateClient = () => {
             required
             type='tel'
             id='standard-required'
-            label={words_he['phone']}
+            label={dictionary['phone']}
             inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
             onChange={(e) => setClientInfo({ ...client_info, phone: e.target.value })}
@@ -166,7 +168,7 @@ const CreateClient = () => {
             type='email'
             id='standard-required'
             inputProps={{ style: { textAlign: 'center' } }}
-            label={words_he['email']}
+            label={dictionary['email']}
             variant='standard'
             direction='ltr'
             onChange={(e) => setClientInfo({ ...client_info, email: e.target.value })}
@@ -176,7 +178,7 @@ const CreateClient = () => {
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
-                {words_he['save']}
+                {dictionary['save']}
               </button>
             </Grid>
           </Grid>

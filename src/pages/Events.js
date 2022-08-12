@@ -15,11 +15,11 @@ import CreateEvent from '../components/pages/CreateEvent'
 import { InputLabel, Select, MenuItem } from '@mui/material/'
 import SearchIcon from '@mui/icons-material/Search'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 
 const Events = (props) => {
   const dispatch = useDispatch()
-
+  const dictionary = Dictionary()
   const items = useSelector((state) => state.event.events)
   const meta_data = useSelector((state) => state.event.meta_data)
 
@@ -66,29 +66,29 @@ const Events = (props) => {
   for (const item of items) {
     switch (item['type']) {
       case 'private':
-        item['type'] = words_he['private']
+        item['type'] = dictionary['private']
         break
       case 'public':
-        item['type'] = words_he['public']
+        item['type'] = dictionary['public']
         break
       case 'inside':
-        item['type'] = words_he['inside']
+        item['type'] = dictionary['inside']
         break
       case 'photo_shot':
-        item['type'] = words_he['photo_shot']
+        item['type'] = dictionary['photo_shot']
         break
       default:
         break
     }
     switch (item['status']) {
       case 'pending':
-        item['status'] = words_he['pending']
+        item['status'] = dictionary['pending']
         break
       case 'approved':
-        item['status'] = words_he['approved']
+        item['status'] = dictionary['approved']
         break
       case 'canceled':
-        item['status'] = words_he['canceled']
+        item['status'] = dictionary['canceled']
         break
 
       default:
@@ -111,11 +111,11 @@ const Events = (props) => {
             dispatch(action_popUp.setPopUp(content))
           }}
         >
-          {words_he['create_event']}
+          {dictionary['create_event']}
         </button>
         <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
-          {isShown && <div className='hoverStyles'> {words_he['create_csv']} </div>}{' '}
+          {isShown && <div className='hoverStyles'> {dictionary['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}
@@ -127,7 +127,7 @@ const Events = (props) => {
               display: 'inline',
             }}
           >
-            {words_he['rows_to_display']}
+            {dictionary['rows_to_display']}
           </InputLabel>
           <Select
             variant='standard'
@@ -149,20 +149,20 @@ const Events = (props) => {
         </span>
       </span>
       {/* search */}
-      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={dictionary['search']} onChange={(e) => setSearch(e.target.value)} />
       <SearchIcon />
       <TableBuilder
         items={items}
         cols={['name', 'from_date', 'to_date', 'first_name', 'status', 'type']}
         headers={{
-          name: words_he['name'],
-          from_date: words_he['from_date'],
-          to_date: words_he['to_date'],
-          first_name: words_he['employee_name'],
-          status: words_he['status'],
-          type: words_he['type'],
+          name: dictionary['name'],
+          from_date: dictionary['from_date'],
+          to_date: dictionary['to_date'],
+          first_name: dictionary['employee_name'],
+          status: dictionary['status'],
+          type: dictionary['type'],
         }}
-        title={words_he['events']}
+        title={dictionary['events']}
         offset={offset}
         handle_click={handle_edit}
         click_icon={edit_icon}
@@ -180,4 +180,3 @@ const limits = [
   { value: '50', label: 50 },
   { value: '100', label: 100 },
 ]
-

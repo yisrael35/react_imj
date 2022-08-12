@@ -7,9 +7,8 @@ import * as action_popUp from '../../redux/PopUp/action'
 
 import { Box, Grid, TextField, Typography } from '@mui/material/'
 import { makeStyles } from '@material-ui/core/styles'
+import Dictionary from '../../utils/dictionary'
 const { all_fields_filled } = require('../../utils/validate_helper')
-
-const words_he = require('../../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const CreateEventType = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const dictionary = Dictionary()
 
   const [enable_send, setEnableSend] = useState(false)
   const [event_type_info, setEventTypeInfo] = useState({ name: '', language: '' })
@@ -79,7 +79,7 @@ const CreateEventType = () => {
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
-              {words_he['new_event_type']}
+              {dictionary['new_event_type']}
             </Typography>
           </Grid>
         </Grid>
@@ -87,7 +87,7 @@ const CreateEventType = () => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['name']}
+            label={' * ' + dictionary['name']}
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setEventTypeInfo({ ...event_type_info, name: e.target.value })}
@@ -98,7 +98,7 @@ const CreateEventType = () => {
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
-                {words_he['save']}
+                {dictionary['save']}
               </button>
             </Grid>
           </Grid>

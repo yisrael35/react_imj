@@ -1,11 +1,12 @@
 import React from 'react'
-
 import IconButton from '@mui/material/IconButton'
 import NavigateNext from '@mui/icons-material/NavigateNext'
 import NavigateBefore from '@mui/icons-material/NavigateBefore'
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 
 const PaginationBottom = ({ limit, offset, meta_data, previous_page, next_page }) => {
+  const dictionary = Dictionary()
+
   return (
     <div style={{ textAlign: 'center', marginBottom: '40px' }}>
       <IconButton color='primary' onClick={previous_page} disabled={offset === 0} style={{ padding: '6px', margin: '2px' }}>
@@ -19,7 +20,7 @@ const PaginationBottom = ({ limit, offset, meta_data, previous_page, next_page }
       >
         <NavigateBefore />
       </IconButton>
-      <div>{words_he['sum_rows'] + meta_data.sum_rows}</div>
+      <div>{dictionary['sum_rows'] + meta_data.sum_rows}</div>
     </div>
   )
 }

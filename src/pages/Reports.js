@@ -11,7 +11,7 @@ import RangeDatePicker from '../components/general/RangeDatePicker'
 import { makeStyles } from '@material-ui/core/styles'
 import { MenuItem, Select, Grid, InputLabel } from '@mui/material/'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 
 const useStyles = makeStyles((theme) => ({
   textStyle: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const Reports = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-
+  const dictionary = Dictionary()
   const tables = useSelector((state) => state.utils.tables)
   const file_name = useSelector((state) => state.csv.file_name)
 
@@ -48,32 +48,32 @@ const Reports = (props) => {
 
   return (
     <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
-      <h4>{words_he['reports']}</h4>
+      <h4>{dictionary['reports']}</h4>
       <FaFileCsv style={{ fontSize: '100px', margin: '20px' }} />
       <h6 className={classes.textStyle}>
-        {words_he['reports_content_row1']}
+        {dictionary['reports_content_row1']}
         <br />
-        {words_he['reports_content_row2']}
+        {dictionary['reports_content_row2']}
         <br />
         <span className={classes.rtl}>
-          {words_he['reports_content_row3']}
+          {dictionary['reports_content_row3']}
           <br />
-          {words_he['reports_content_row4']}
+          {dictionary['reports_content_row4']}
           <br />
-          {words_he['reports_content_row5']}
+          {dictionary['reports_content_row5']}
         </span>
       </h6>
       <RangeDatePicker from_date={from_date} setFromDate={setFromDate} to_date={to_date} setToDate={setToDate} />
       <Grid>
         <InputLabel required id='demo-simple-select-disabled-label'>
-          {words_he['tables']}
+          {dictionary['tables']}
         </InputLabel>
         <Select
           value={table}
           variant='standard'
           className={'report_select'}
           id='standard-required'
-          label={words_he['tables']}
+          label={dictionary['tables']}
           onChange={(e) => {
             setTable(e.target.value)
           }}
@@ -86,7 +86,7 @@ const Reports = (props) => {
         </Select>
       </Grid>
       <button className='w-45 m-4 btn btn-success' onClick={create_csv} disabled={file_name || !table}>
-        {words_he['create_csv']}
+        {dictionary['create_csv']}
       </button>
     </div>
   )

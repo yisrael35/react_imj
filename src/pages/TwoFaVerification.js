@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
 import OtpInput from 'react-otp-input'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 const TwoFaVerification = () => {
   const dispatch = useDispatch()
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   let phone = useSelector((state) => state.auth.phone)
   let email = useSelector((state) => state.auth.email)
+  const dictionary = Dictionary()
 
   const [send_to, setSendTo] = useState('')
   const [six_digits, setSixDigits] = useState(0)
@@ -42,10 +43,10 @@ const TwoFaVerification = () => {
         <img alt='logo' src={`logo2.png`} width={70} height='auto' />
       </Grid>
       <Grid item xs={12} style={{ margin: 24 }}>
-        <Typography variant='h4'>{words_he['two_fa_title']}</Typography>
+        <Typography variant='h4'>{dictionary['two_fa_title']}</Typography>
       </Grid>
       <Grid item xs={12} style={{ margin: 24, width: '70%' }}>
-        <Typography variant='h5'>{words_he['select_your_choice']}</Typography>
+        <Typography variant='h5'>{dictionary['select_your_choice']}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Button onClick={() => handle_select_send('sms')} disabled={!phone}>
@@ -54,7 +55,7 @@ const TwoFaVerification = () => {
               <PhoneIphoneIcon sx={{ fontSize: 80 }} />
             </Grid>
             <Grid item xs={10}>
-              <Typography>{`${words_he['phone']}:`}</Typography>
+              <Typography>{`${dictionary['phone']}:`}</Typography>
               {phone ? <Typography style={{ direction: 'ltr' }}>{phone}</Typography> : <span></span>}
             </Grid>
           </Grid>
@@ -67,8 +68,8 @@ const TwoFaVerification = () => {
               <EmailIcon sx={{ fontSize: 80 }} />
             </Grid>
             <Grid item xs={10}>
-              <Typography>{`${words_he['email']}:`}</Typography>
-              <Typography style={{ textTransform: 'none' }}>{email ||' example@mail.il'}</Typography>
+              <Typography>{`${dictionary['email']}:`}</Typography>
+              <Typography style={{ textTransform: 'none' }}>{email || ' example@mail.il'}</Typography>
             </Grid>
           </Grid>
         </Button>
@@ -80,7 +81,7 @@ const TwoFaVerification = () => {
             dispatch(authActions.update_type(''))
           }}
         >
-          <u style={{ color: 'black', textAlign: 'right' }}>{words_he['go_back']}</u>
+          <u style={{ color: 'black', textAlign: 'right' }}>{dictionary['go_back']}</u>
         </Link>
       </Grid>
     </Grid>
@@ -89,15 +90,15 @@ const TwoFaVerification = () => {
     <Grid container style={{ textAlign: 'center', direction: 'ltr' }} alignItems='center' direction='column'>
       <Grid item xs={12} style={{ textAlign: 'right' }}>
         <Typography variant='h4' style={{ margin: '20px', textAlign: 'center' }}>
-          {words_he['identity_verification']}
+          {dictionary['identity_verification']}
         </Typography>
         <Typography variant='h6' style={{ margin: '2px', direction: 'rtl' }}>
-          <Typography>{words_he['verification_message1']}</Typography>
+          <Typography>{dictionary['verification_message1']}</Typography>
           <Typography>
-            {words_he['to']} {send_to === 'email' ? email : phone ? <Typography style={{ direction: 'ltr', display: 'inline' }}>{phone}</Typography> : <span></span>}
+            {dictionary['to']} {send_to === 'email' ? email : phone ? <Typography style={{ direction: 'ltr', display: 'inline' }}>{phone}</Typography> : <span></span>}
           </Typography>
-          <Typography>{words_he['verification_message2']}</Typography>
-          <Typography style={{ fontWeight: '600' }}>{words_he['six_digits_verification']}</Typography>
+          <Typography>{dictionary['verification_message2']}</Typography>
+          <Typography style={{ fontWeight: '600' }}>{dictionary['six_digits_verification']}</Typography>
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -132,7 +133,7 @@ const TwoFaVerification = () => {
               setSendTo('')
             }}
           >
-            {words_he['go_back']}
+            {dictionary['go_back']}
           </u>
         </Grid>
 
@@ -145,7 +146,7 @@ const TwoFaVerification = () => {
             size='large'
             endIcon={<SendIcon />}
           >
-            {words_he['send']}
+            {dictionary['send']}
           </Button>
         ) : (
           <CircularProgress />

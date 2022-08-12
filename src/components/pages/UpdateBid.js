@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import * as action_bid from '../../redux/Bid/action'
 import EmailAndDownload from '../general/EmailAndDownload'
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 
 const UpdateBid = (props) => {
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
+  const dictionary = Dictionary()
 
   useEffect(() => {
     const get_bid = async () => {
@@ -19,7 +20,7 @@ const UpdateBid = (props) => {
 
   return (
     <div>
-      <EmailAndDownload bid_id={props.id} email={email} message={words_he['download_pdf_title']} />
+      <EmailAndDownload bid_id={props.id} email={email} message={dictionary['download_pdf_title']} />
     </div>
   )
 }

@@ -15,13 +15,14 @@ import * as action_user from '../redux/User/action'
 import { InputLabel, Select, MenuItem } from '@mui/material/'
 import SearchIcon from '@mui/icons-material/Search'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 
 const Users = (props) => {
   const dispatch = useDispatch()
 
   const items = useSelector((state) => state.user.users)
   const meta_data = useSelector((state) => state.user.meta_data)
+  const dictionary = Dictionary()
 
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
@@ -52,11 +53,11 @@ const Users = (props) => {
       }
     }
 
-    if (user['level'] === words_he['admin']) {
+    if (user['level'] === dictionary['admin']) {
       user['level'] = 1
-    } else if (user['level'] === words_he['user']) {
+    } else if (user['level'] === dictionary['user']) {
       user['level'] = 2
-    } else if (user['level'] === words_he['guest']) {
+    } else if (user['level'] === dictionary['guest']) {
       user['level'] = 3
     }
     const content = <UpdateUser user={user} counter={index} key={user.id} limit={limit} offset={offset} />
@@ -73,13 +74,13 @@ const Users = (props) => {
   )
 
   for (const item of items) {
-    item['is_active'] = item['is_active'] ? words_he['active'] : words_he['not_active']
+    item['is_active'] = item['is_active'] ? dictionary['active'] : dictionary['not_active']
     if (item['level'] === 1) {
-      item['level'] = words_he['admin']
+      item['level'] = dictionary['admin']
     } else if (item['level'] === 2) {
-      item['level'] = words_he['user']
+      item['level'] = dictionary['user']
     } else if (item['level'] === 3) {
-      item['level'] = words_he['guest']
+      item['level'] = dictionary['guest']
     }
   }
   const create_csv = () => {
@@ -92,12 +93,12 @@ const Users = (props) => {
       <span className='field_search'>
         <Link to='/Register'>
           <button type='button' className='btn btn-info'>
-            {words_he['create_new_user']}
+            {dictionary['create_new_user']}
           </button>
         </Link>
         <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
-          {isShown && <div className='hoverStyles'> {words_he['create_csv']} </div>}{' '}
+          {isShown && <div className='hoverStyles'> {dictionary['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}
@@ -109,7 +110,7 @@ const Users = (props) => {
               display: 'inline',
             }}
           >
-            {words_he['rows_to_display']}
+            {dictionary['rows_to_display']}
           </InputLabel>
           <Select
             variant='standard'
@@ -131,22 +132,22 @@ const Users = (props) => {
         </span>
       </span>
       {/* search */}
-      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={dictionary['search']} onChange={(e) => setSearch(e.target.value)} />
       <SearchIcon />
       <TableBuilder
         items={items}
         cols={['username', 'email', 'first_name', 'last_name', 'phone', 'updated_at', 'is_active', 'level']}
         headers={{
-          username: words_he['username'],
-          first_name: words_he['first_name'],
-          last_name: words_he['last_name'],
-          email: words_he['email'],
-          phone: words_he['phone'],
-          updated_at: words_he['updated_at'],
-          is_active: words_he['status'],
-          level: words_he['permissions'],
+          username: dictionary['username'],
+          first_name: dictionary['first_name'],
+          last_name: dictionary['last_name'],
+          email: dictionary['email'],
+          phone: dictionary['phone'],
+          updated_at: dictionary['updated_at'],
+          is_active: dictionary['status'],
+          level: dictionary['permissions'],
         }}
-        title={words_he['users']}
+        title={dictionary['users']}
         offset={offset}
         handle_click={handle_edit}
         click_icon={edit_icon}

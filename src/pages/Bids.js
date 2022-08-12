@@ -11,19 +11,18 @@ import TableBuilder from '../components/general/TableBuilder'
 import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateBid from '../components/pages/UpdateBid'
 
-
 import { FaFileCsv, FaRegFilePdf } from 'react-icons/fa'
 import SearchIcon from '@mui/icons-material/Search'
 import { InputLabel, Select, MenuItem } from '@mui/material/'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 
 const Bids = (props) => {
   const dispatch = useDispatch()
-  
+  const dictionary = Dictionary()
   const items = useSelector((state) => state.bid.bids)
   const meta_data = useSelector((state) => state.bid.meta_data)
-  
+
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
   const [search, setSearch] = useState(undefined)
@@ -66,12 +65,12 @@ const Bids = (props) => {
       <span className='field_search'>
         <Link to='/CreateBid'>
           <button type='button' className='btn btn-info'>
-            {words_he['new_bid']}
+            {dictionary['new_bid']}
           </button>
         </Link>
         <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
-          {isShown && <div className='hoverStyles'> {words_he['create_csv']} </div>}{' '}
+          {isShown && <div className='hoverStyles'> {dictionary['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}
@@ -83,7 +82,7 @@ const Bids = (props) => {
               display: 'inline',
             }}
           >
-            {words_he['rows_to_display']}
+            {dictionary['rows_to_display']}
           </InputLabel>
           <Select
             variant='standard'
@@ -105,23 +104,23 @@ const Bids = (props) => {
         </span>
       </span>
       {/* search */}
-      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={dictionary['search']} onChange={(e) => setSearch(e.target.value)} />
       <SearchIcon />
 
       <TableBuilder
         items={items}
         cols={['event_name', 'client', 'event_date', 'event_type', 'location', 'first_name', 'language', 'status']}
         headers={{
-          event_name: words_he['event_name'],
-          event_type: words_he['event_type'],
-          location: words_he['location'],
-          first_name: words_he['employee_name'],
-          event_date: words_he['event_date'],
-          client: words_he['client_name'],
-          language: words_he['language'],
-          status: words_he['status'],
+          event_name: dictionary['event_name'],
+          event_type: dictionary['event_type'],
+          location: dictionary['location'],
+          first_name: dictionary['employee_name'],
+          event_date: dictionary['event_date'],
+          client: dictionary['client_name'],
+          language: dictionary['language'],
+          status: dictionary['status'],
         }}
-        title={words_he['bids']}
+        title={dictionary['bids']}
         offset={offset}
         handle_click={handle_download_pdf}
         click_icon={pdf_icon}

@@ -7,9 +7,8 @@ import * as action_popUp from '../../redux/PopUp/action'
 
 import { Box, Grid, TextField, Typography } from '@mui/material/'
 import { makeStyles } from '@material-ui/core/styles'
+import Dictionary from '../../utils/dictionary'
 const { all_fields_filled } = require('../../utils/validate_helper')
-
-const words_he = require('../../utils/words_he').words_he
 
 const useStyles = makeStyles((theme) => ({
   ltr_input: {
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const CreateLocation = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const dictionary = Dictionary()
 
   const [enable_send, setEnableSend] = useState(false)
   const [location_info, setLocationInfo] = useState({ name_en: '', name_he: '', mapping: '' })
@@ -79,7 +79,7 @@ const CreateLocation = () => {
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
-              {words_he['new_location']}
+              {dictionary['new_location']}
             </Typography>
           </Grid>
         </Grid>
@@ -87,7 +87,7 @@ const CreateLocation = () => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['name_english']}
+            label={' * ' + dictionary['name_english']}
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setLocationInfo({ ...location_info, name_en: e.target.value })}
@@ -97,7 +97,7 @@ const CreateLocation = () => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['name_hebrew']}
+            label={' * ' + dictionary['name_hebrew']}
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setLocationInfo({ ...location_info, name_he: e.target.value })}
@@ -107,7 +107,7 @@ const CreateLocation = () => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['mapping']}
+            label={' * ' + dictionary['mapping']}
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setLocationInfo({ ...location_info, mapping: e.target.value })}
@@ -117,7 +117,7 @@ const CreateLocation = () => {
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
-                {words_he['save']}
+                {dictionary['save']}
               </button>
             </Grid>
           </Grid>

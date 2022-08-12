@@ -8,6 +8,8 @@ const initialState = {
   isAuthenticated: false,
   currentRoute: window.location.pathname || '/Home',
   type: '',
+  language: 'en',
+  language_direction: 'rtl',
   phone: undefined,
   email: undefined,
   two_fa_status: true,

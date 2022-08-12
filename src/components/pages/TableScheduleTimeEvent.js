@@ -1,8 +1,11 @@
 import TableRow from './TableRowScheduleTimeEvent'
 import { Grid } from '@mui/material/'
-const words_he = require('../../utils/words_he').words_he
+
+import Dictionary from '../../utils/dictionary'
 
 export default function ScheduleTimeEvent({ schedule_time_event, setScheduleTimeEvent }) {
+  const dictionary = Dictionary()
+
   const handle_add_row = () => {
     setScheduleTimeEvent([...schedule_time_event, { start_time: '', end_time: '', activity_description: '' }])
   }
@@ -12,7 +15,7 @@ export default function ScheduleTimeEvent({ schedule_time_event, setScheduleTime
       <Grid item xs={8} style={{ paddingBottom: '10px' }}>
         <Grid container justifyContent={'space-between'} alignItems={'center'}>
           <Grid item>
-            <h4 className='text-muted'> {words_he['time_schedule_for_event']}</h4>
+            <h4 className='text-muted'> {dictionary['time_schedule_for_event']}</h4>
           </Grid>
         </Grid>
       </Grid>
@@ -20,9 +23,9 @@ export default function ScheduleTimeEvent({ schedule_time_event, setScheduleTime
         <table>
           <thead className='table_header'>
             <tr>
-              <th> {words_he['start_time']}</th>
-              <th> {words_he['end_time']}</th>
-              <th> {words_he['activity_description']}</th>
+              <th> {dictionary['start_time']}</th>
+              <th> {dictionary['end_time']}</th>
+              <th> {dictionary['activity_description']}</th>
             </tr>
           </thead>
           <tbody>

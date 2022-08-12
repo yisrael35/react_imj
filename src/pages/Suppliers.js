@@ -15,13 +15,14 @@ import PaginationBottom from '../components/general/PaginationBottom'
 import UpdateSupplier from '../components/pages/UpdateSupplier'
 import CreateSupplier from '../components/pages/CreateSupplier'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 
 const Suppliers = () => {
   const dispatch = useDispatch()
 
   const items = useSelector((state) => state.supplier.suppliers)
   const meta_data = useSelector((state) => state.supplier.meta_data)
+  const dictionary = Dictionary()
 
   const [limit, setLimit] = useState(process.env.REACT_APP_LIMIT)
   const [offset, setOffset] = useState(0)
@@ -81,11 +82,11 @@ const Suppliers = () => {
     <div>
       <span className='field_search'>
         <button type='button' className='btn btn-info' onClick={handle_create}>
-          {words_he['add_supplier']}
+          {dictionary['add_supplier']}
         </button>
         <button className='transparent_button' onClick={create_csv} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <FaFileCsv style={{ fontSize: '28px', margin: '4px' }} />
-          {isShown && <div className={'hoverStyles'}> {words_he['create_csv']} </div>}{' '}
+          {isShown && <div className={'hoverStyles'}> {dictionary['create_csv']} </div>}{' '}
         </button>
         <span>
           {/* Pagination Top */}
@@ -97,7 +98,7 @@ const Suppliers = () => {
               display: 'inline',
             }}
           >
-            {words_he['rows_to_display']}
+            {dictionary['rows_to_display']}
           </InputLabel>
           <Select
             variant='standard'
@@ -119,22 +120,22 @@ const Suppliers = () => {
         </span>
       </span>
       {/* search */}
-      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={words_he['search']} onChange={(e) => setSearch(e.target.value)} />
+      <DebounceInput className='debounce_search' minLength={2} debounceTimeout={1000} placeholder={dictionary['search']} onChange={(e) => setSearch(e.target.value)} />
       <SearchIcon />
 
       <TableBuilder
         items={unstruct_items(items)}
         cols={['name', 'phone', 'email', 'account_owner_name', 'iban', 'swift', 'created_at']}
         headers={{
-          name: words_he['name'],
-          phone: words_he['phone'],
-          email: words_he['email'],
-          account_owner_name: words_he['account_name'],
+          name: dictionary['name'],
+          phone: dictionary['phone'],
+          email: dictionary['email'],
+          account_owner_name: dictionary['account_name'],
           iban: 'IBAN',
           swift: 'SWIFT',
-          created_at: words_he['created_at'],
+          created_at: dictionary['created_at'],
         }}
-        title={words_he['suppliers']}
+        title={dictionary['suppliers']}
         offset={offset}
         handle_click={handle_edit}
         click_icon={edit_icon}

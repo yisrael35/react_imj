@@ -11,7 +11,7 @@ import { InputLabel, MenuItem, Select, Box, Grid, TextField, Typography } from '
 
 import MyDatePicker from '../general/DatePicker'
 
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 const CreateEvent = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
+
+  const dictionary = Dictionary()
 
   const user = useSelector((state) => state.auth.userContent)
   const [date, setDate] = useState(moment().format(`YYYY-MM-DD`))
@@ -96,7 +98,7 @@ const CreateEvent = (props) => {
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
-              {words_he['new_event']}
+              {dictionary['new_event']}
             </Typography>
           </Grid>
           <EventAvailable style={{ width: '80px', height: '80px', margin: '4px' }} />
@@ -105,7 +107,7 @@ const CreateEvent = (props) => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['event_name']}
+            label={' * ' + dictionary['event_name']}
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
             onChange={(e) => setEventInfo({ ...event_info, name: e.target.value })}
@@ -114,13 +116,13 @@ const CreateEvent = (props) => {
 
         <Grid item xs={10}>
           <Grid container item xs={12} justifyContent='center'>
-            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} label={' * ' + words_he['event_date']} />
+            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} label={' * ' + dictionary['event_date']} />
           </Grid>
         </Grid>
         <Grid item xs={10}>
           <TextField
             className={classes.textField}
-            label={' * ' + words_he['start_time']}
+            label={' * ' + dictionary['start_time']}
             type='time'
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
@@ -133,7 +135,7 @@ const CreateEvent = (props) => {
         <Grid item xs={10}>
           <TextField
             className={classes.textField}
-            label={' * ' + words_he['end_time']}
+            label={' * ' + dictionary['end_time']}
             type='time'
             variant='standard'
             inputProps={{ style: { textAlign: 'center' } }}
@@ -142,11 +144,11 @@ const CreateEvent = (props) => {
               setEndTime(e.target.value)
             }}
           />
-          {!end_after_start && <span style={{ color: 'red', display: 'block' }}> {words_he['end_after_start']}</span>}
+          {!end_after_start && <span style={{ color: 'red', display: 'block' }}> {dictionary['end_after_start']}</span>}
         </Grid>
         <Grid item xs={10}>
           <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
-            {' * ' + words_he['type']}
+            {' * ' + dictionary['type']}
           </InputLabel>
           <Select
             variant='standard'
@@ -156,17 +158,17 @@ const CreateEvent = (props) => {
               setEventInfo({ ...event_info, type: e.target.value })
             }}
           >
-            <MenuItem value='private'>{words_he['private']}</MenuItem>
-            <MenuItem value='public'>{words_he['public']}</MenuItem>
-            <MenuItem value='inside'>{words_he['inside']}</MenuItem>
-            <MenuItem value='photo_shot'>{words_he['photo_shot']}</MenuItem>
+            <MenuItem value='private'>{dictionary['private']}</MenuItem>
+            <MenuItem value='public'>{dictionary['public']}</MenuItem>
+            <MenuItem value='inside'>{dictionary['inside']}</MenuItem>
+            <MenuItem value='photo_shot'>{dictionary['photo_shot']}</MenuItem>
           </Select>
         </Grid>
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
-                {words_he['save']}
+                {dictionary['save']}
               </button>
             </Grid>
           </Grid>

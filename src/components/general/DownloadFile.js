@@ -3,12 +3,14 @@ import { useDispatch } from 'react-redux'
 import * as action_loading from '../../redux/Loading/action'
 import { FaCloudDownloadAlt } from 'react-icons/fa'
 
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 
 const DownloadFile = (props) => {
   const file_name = props.file_name
   const url = process.env.REACT_APP_REST_IMJ_URL
   const file_path = `${url}/assets/${file_name}`
+
+  const dictionary = Dictionary()
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -17,13 +19,13 @@ const DownloadFile = (props) => {
   }, [])
   return (
     <div>
-      <h3 className='text-muted'> {words_he['download_file_title']}</h3>
+      <h3 className='text-muted'> {dictionary['download_file_title']}</h3>
       <FaCloudDownloadAlt style={{ fontSize: '100px', margin: '14px' }} />
 
       <div className='AiOutlineDownload'></div>
       <a href={file_path}>
         <button className='w-45 btn m-2 btn-success' disabled={!file_name}>
-          {words_he['download_file']}
+          {dictionary['download_file']}
         </button>
       </a>
     </div>

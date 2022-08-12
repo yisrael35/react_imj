@@ -9,10 +9,12 @@ import { BiTimeFive, BiUser, BiBuildingHouse } from 'react-icons/bi'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineIdentification } from 'react-icons/hi'
 
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 
 const DisplayEvent = (props) => {
   const dispatch = useDispatch()
+
+  const dictionary = Dictionary()
 
   const [event_info, setEventInfo] = useState({})
   const [isShown, setIsShown] = useState('none')
@@ -39,7 +41,7 @@ const DisplayEvent = (props) => {
           <tr>
             <td>
               <BsCalendarDate style={iconStyles} onMouseEnter={() => setIsShown('date')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'date' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+              {isShown === 'date' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
             </td>
             <td>
               <b>{moment(event_info.from_date).format('DD-MM-YYYY')}</b>
@@ -48,7 +50,7 @@ const DisplayEvent = (props) => {
           <tr>
             <td>
               <BiTimeFive style={iconStyles} onMouseEnter={() => setIsShown('time')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'time' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+              {isShown === 'time' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
             </td>
             <td>
               <b>{moment(event_info.to_date).format('HH:mm') + ' - ' + moment(event_info.from_date).format('HH:mm')}</b>
@@ -58,27 +60,27 @@ const DisplayEvent = (props) => {
             <td>
               {' '}
               <GrStatusInfo style={iconStyles} onMouseEnter={() => setIsShown('status')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'status' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+              {isShown === 'status' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
             </td>
             <td>
-              <b>{words_he[event_info.status]}</b>
+              <b>{dictionary[event_info.status]}</b>
             </td>
           </tr>
           <tr>
             <td>
               {' '}
               <BiBuildingHouse style={iconStyles} onMouseEnter={() => setIsShown('type')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'type' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+              {isShown === 'type' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
             </td>
             <td>
-              <b>{words_he[event_info.type]}</b>
+              <b>{dictionary[event_info.type]}</b>
             </td>
           </tr>
           <tr>
             <td>
               {' '}
               <BiUser style={iconStyles} onMouseEnter={() => setIsShown('employee_name')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'employee_name' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+              {isShown === 'employee_name' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
             </td>
             <td>
               <b>{event_info.user}</b>
@@ -88,7 +90,7 @@ const DisplayEvent = (props) => {
             <td>
               {' '}
               <HiOutlineIdentification style={iconStyles} onMouseEnter={() => setIsShown('id')} onMouseLeave={() => setIsShown('none')} />
-              {isShown === 'id' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+              {isShown === 'id' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
             </td>
             <td>
               <div style={{ fontSize: '80%' }}>
@@ -103,4 +105,3 @@ const DisplayEvent = (props) => {
 }
 
 export default DisplayEvent
-

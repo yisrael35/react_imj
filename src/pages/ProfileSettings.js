@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 const { invalid_phone } = require('../utils/validate_helper')
 
 const ProfileSettings = (props) => {
   const dispatch = useDispatch()
+  const dictionary = Dictionary()
   const user = useSelector((state) => state.user.user)
   const [user_info, setUserInfo] = useState({ first_name: '', last_name: '', phone: '', password: '', confirm_password: '' })
   const [passwordMatch, setPasswordMatch] = useState(true)
@@ -47,7 +48,7 @@ const ProfileSettings = (props) => {
 
   const validate_fields = () => {
     if (user_info.phone && invalid_phone(user_info.phone)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${user_info.phone} `, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${dictionary['type_number']} ${user_info.phone} `, 3000))
       return false
     }
 
@@ -71,7 +72,7 @@ const ProfileSettings = (props) => {
 
   return (
     <div style={{ lineHeight: '2', verticalAlign: 'middle', textAlign: 'center' }}>
-      <h4>{words_he['profile_settings']}</h4>
+      <h4>{dictionary['profile_settings']}</h4>
       <FaUserEdit
         style={{
           fontSize: '60px',
@@ -80,19 +81,19 @@ const ProfileSettings = (props) => {
       />
       <form onSubmit={submit} className='form-signin'>
         <label>
-          {words_he['first_name']}
+          {dictionary['first_name']}
           <input style={{ textAlign: 'center' }} className='form-control' value={user_info.first_name} onChange={(e) => setUserInfo({ ...user_info, first_name: e.target.value })} />
         </label>
         <label>
-          {words_he['last_name']}
+          {dictionary['last_name']}
           <input style={{ textAlign: 'center' }} className='form-control' value={user_info.last_name} onChange={(e) => setUserInfo({ ...user_info, last_name: e.target.value })} />
         </label>
         <label>
-          {words_he['phone']}
+          {dictionary['phone']}
           <input style={{ textAlign: 'center' }} type='text' className='form-control' value={user_info.phone} onChange={(e) => setUserInfo({ ...user_info, phone: e.target.value })} />
         </label>
         <label>
-          {words_he['new_password']}
+          {dictionary['new_password']}
           <input
             style={{ textAlign: 'center', marginBottom: '0px' }}
             type='password'
@@ -102,7 +103,7 @@ const ProfileSettings = (props) => {
           />
         </label>
         <label>
-          {words_he['confirm_password']}
+          {dictionary['confirm_password']}
           <input
             style={{ textAlign: 'center' }}
             type='password'
@@ -110,11 +111,11 @@ const ProfileSettings = (props) => {
             value={user_info.confirm_password}
             onChange={(e) => setUserInfo({ ...user_info, confirm_password: e.target.value })}
           />
-          {!passwordMatch && <span style={{ color: 'red' }}> {words_he['password_not_matched']}</span>}
+          {!passwordMatch && <span style={{ color: 'red' }}> {dictionary['password_not_matched']}</span>}
         </label>
         <div>
           <button className='w-45 btn m-2 btn-success' type='submit' disabled={!enable_send}>
-            {words_he['send']}
+            {dictionary['send']}
           </button>
         </div>
       </form>

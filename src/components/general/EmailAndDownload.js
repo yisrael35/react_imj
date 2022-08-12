@@ -9,7 +9,8 @@ import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material/'
 
 import { FaRegFilePdf } from 'react-icons/fa'
 
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
+
 const { validateEmail } = require('../../utils/validate_helper')
 
 const EmailAndDownload = (props) => {
@@ -17,6 +18,8 @@ const EmailAndDownload = (props) => {
   const [client_email, setClientEmail] = useState(email)
   const [email_valid, setEmailValid] = useState(true)
   const [toggle_file, setToggleFile] = useState('download_pdf')
+
+  const dictionary = Dictionary()
 
   const dispatch = useDispatch()
 
@@ -53,8 +56,8 @@ const EmailAndDownload = (props) => {
       <FaRegFilePdf style={{ fontSize: '160px', margin: '4px' }} />
       <div className='mt-3'>
         <ToggleButtonGroup color='primary' value={toggle_file} exclusive onChange={toggle_buttons}>
-          <ToggleButton value='download_pdf'> {words_he['download_pdf']}</ToggleButton>
-          <ToggleButton value='send_to_email'> {words_he['send_to_email']}</ToggleButton>
+          <ToggleButton value='download_pdf'> {dictionary['download_pdf']}</ToggleButton>
+          <ToggleButton value='send_to_email'> {dictionary['send_to_email']}</ToggleButton>
         </ToggleButtonGroup>
       </div>
       <table>
@@ -69,7 +72,7 @@ const EmailAndDownload = (props) => {
           <TextField
             required
             id='standard-required'
-            label={words_he['email']}
+            label={dictionary['email']}
             variant='standard'
             placeholder={email ? email : 'example@gmail.com'}
             value={client_email}
@@ -78,13 +81,13 @@ const EmailAndDownload = (props) => {
             }}
           />
           <button type='button' className='btn btn-success m-2' disabled={!email_valid} onClick={handle_send_email}>
-            {words_he['send']}
+            {dictionary['send']}
           </button>
         </div>
       ) : (
         <span>
           <button type='button' className='btn btn-success m-4' onClick={handle_get_pdf} disabled={false}>
-            {words_he['create_pdf']}
+            {dictionary['create_pdf']}
           </button>
         </span>
       )}

@@ -6,19 +6,19 @@ import * as action_popUp from '../../redux/PopUp/action'
 import * as actionSnackBar from '../../redux/SnackBar/action'
 import { FaUserEdit } from 'react-icons/fa'
 
+import Dictionary from '../../utils/dictionary'
 const { validateEmail, invalid_email_characters } = require('../../utils/validate_helper')
 
-const words_he = require('../../utils/words_he').words_he
-
 const UpdateUser = (props) => {
-  const [is_active, setIsActive] = useState(props.user.is_active === words_he['active'] ? 1 : 0)
+  const dictionary = Dictionary()
+  const [is_active, setIsActive] = useState(props.user.is_active === dictionary['active'] ? 1 : 0)
   const [level, setLevel] = useState(props.user.level)
   const [email, setEmail] = useState(props.user.email)
   const [enable_send, setEnableSend] = useState(false)
 
   useEffect(() => {
     if (invalid_email_characters(email)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${email} `, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${dictionary['invalid_character']} ${email} `, 3000))
       return false
     }
     if (validateEmail(email)) {
@@ -49,7 +49,7 @@ const UpdateUser = (props) => {
 
   return (
     <div>
-      <h3 className='text-muted'>{words_he['update_user']}</h3>
+      <h3 className='text-muted'>{dictionary['update_user']}</h3>
       <FaUserEdit
         style={{
           fontSize: '80px',
@@ -59,10 +59,10 @@ const UpdateUser = (props) => {
       <table>
         <thead>
           <tr>
-            <th className='text-muted'>{words_he['name']}</th>
-            <th className='text-muted'>{words_he['email']}</th>
-            <th className='text-muted'>{words_he['permissions']}</th>
-            <th className='text-muted'>{words_he['status']}</th>
+            <th className='text-muted'>{dictionary['name']}</th>
+            <th className='text-muted'>{dictionary['email']}</th>
+            <th className='text-muted'>{dictionary['permissions']}</th>
+            <th className='text-muted'>{dictionary['status']}</th>
           </tr>
         </thead>
         <tbody>
@@ -85,23 +85,23 @@ const UpdateUser = (props) => {
             <td>
               <ul>
                 <li>
-                  <input type='radio' value='1' name={'level'} checked={level === 1} onChange={(e) => handle_level(1)} /> {words_he['admin']}
+                  <input type='radio' value='1' name={'level'} checked={level === 1} onChange={(e) => handle_level(1)} /> {dictionary['admin']}
                 </li>
                 <li>
-                  <input type='radio' value='2' name={'level'} checked={level === 2} onChange={(e) => handle_level(2)} /> {words_he['user']}
+                  <input type='radio' value='2' name={'level'} checked={level === 2} onChange={(e) => handle_level(2)} /> {dictionary['user']}
                 </li>
                 <li>
-                  <input type='radio' value='3' name={'level'} checked={level === 3} onChange={(e) => handle_level(3)} /> {words_he['guest']}
+                  <input type='radio' value='3' name={'level'} checked={level === 3} onChange={(e) => handle_level(3)} /> {dictionary['guest']}
                 </li>
               </ul>
             </td>
             <td>
               <ul>
                 <li>
-                  <input type='radio' value='1' name={'status'} checked={is_active === 1} onChange={(e) => handle_status(e.target.value)} /> {words_he['active']}
+                  <input type='radio' value='1' name={'status'} checked={is_active === 1} onChange={(e) => handle_status(e.target.value)} /> {dictionary['active']}
                 </li>
                 <li>
-                  <input type='radio' value='0' name={'status'} checked={is_active === 0} onChange={(e) => handle_status(e.target.value)} /> {words_he['not_active']}
+                  <input type='radio' value='0' name={'status'} checked={is_active === 0} onChange={(e) => handle_status(e.target.value)} /> {dictionary['not_active']}
                 </li>
               </ul>
             </td>
@@ -110,7 +110,7 @@ const UpdateUser = (props) => {
         </tbody>
       </table>
       <button type='button' className='btn btn-success mt-2' onClick={handle_save} disabled={!enable_send}>
-        {words_he['save']}
+        {dictionary['save']}
       </button>
     </div>
   )

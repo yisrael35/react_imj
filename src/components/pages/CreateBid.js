@@ -15,7 +15,7 @@ import CreateEventType from './CreateEventType'
 import ConfirmAlert from '../general/ConfirmAlert'
 import moment from 'moment'
 
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
@@ -44,6 +44,12 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   const locations = useSelector((state) => state.utils.locations)
   const clients = useSelector((state) => state.utils.clients)
   const events_type = useSelector((state) => state.utils.events_type)
+  const dictionary = Dictionary()
+
+  const languages = [
+    { value: 'he', label: dictionary['hebrew'] },
+    { value: 'en', label: 'English' },
+  ]
   const [isShown, setIsShown] = useState('none')
 
   useEffect(() => {
@@ -62,7 +68,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
 
   const validate_fields = () => {
     if (bid_info.max_participants < 2) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character'] + ': '} ${bid_info.max_participants} `, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${dictionary['invalid_character'] + ': '} ${bid_info.max_participants} `, 3000))
       return false
     }
     if (bid_info.event_type && bid_info.location && bid_info.user && bid_info.event_date && bid_info.client_id && bid_info.event_name) {
@@ -84,7 +90,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
     dispatch(action_popUp.setPopUp(new_event_type))
   }
   const handle_cancel_and_exit = () => {
-    const content = <ConfirmAlert message={words_he['cancel_exit']} />
+    const content = <ConfirmAlert message={dictionary['cancel_exit']} />
     dispatch(action_popUp.setPopUp(content))
   }
 
@@ -120,7 +126,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
         className={classes.select_language}
         value={bid_info.language}
         id='standard-required'
-        label={words_he['languages']}
+        label={dictionary['languages']}
         onChange={(e) => {
           setBidInfo({ ...bid_info, language: e.target.value })
         }}
@@ -133,14 +139,14 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
       </Select>
       <div className={classes.root}>
         <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
-          {words_he['new_bid']}
+          {dictionary['new_bid']}
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
               required
               id='standard-required'
-              label={words_he['event_name']}
+              label={dictionary['event_name']}
               variant='standard'
               value={bid_info.event_name}
               inputProps={{ style: { textAlign: 'center' } }}
@@ -153,7 +159,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
             <TextField
               required
               id='standard-required'
-              label={words_he['event_date']}
+              label={dictionary['event_date']}
               type='date'
               variant='standard'
               value={bid_info.event_date}
@@ -167,7 +173,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
           </Grid>
           <Grid item xs={6}>
             <InputLabel required id='demo-simple-select-disabled-label'>
-              {words_he['event_type']}
+              {dictionary['event_type']}
             </InputLabel>
             <Select
               required
@@ -187,14 +193,14 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
             </Select>
             <BsCalendarPlus style={iconStyles} onClick={handle_create_event_type} onMouseEnter={() => setIsShown('add_event_type')} onMouseLeave={() => setIsShown('none')} />
             {isShown === 'add_event_type' && (
-              <div style={{ position: 'absolute', left: '49%', width: '10%', backgroundColor: '#505050', color: 'white', 'text-align': 'center' }}> {words_he[isShown]} </div>
+              <div style={{ position: 'absolute', left: '49%', width: '10%', backgroundColor: '#505050', color: 'white', 'text-align': 'center' }}> {dictionary[isShown]} </div>
             )}
           </Grid>
           <Grid item xs={6}>
             <TextareaAutosize
               aria-label='minimum height'
               minRows={3}
-              placeholder={words_he['comments']}
+              placeholder={dictionary['comments']}
               value={bid_info.event_comment}
               onChange={(e) => {
                 setBidInfo({ ...bid_info, event_comment: e.target.value })
@@ -203,7 +209,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
           </Grid>
           <Grid item xs={6}>
             <InputLabel required id='demo-simple-select-disabled-label'>
-              {words_he['location']}{' '}
+              {dictionary['location']}{' '}
             </InputLabel>
             <Select
               variant='standard'
@@ -223,12 +229,12 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
             </Select>
 
             <MdOutlineAddLocationAlt style={iconStyles} onClick={handle_create_location} onMouseEnter={() => setIsShown('add_location')} onMouseLeave={() => setIsShown('none')} />
-            {isShown === 'add_location' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+            {isShown === 'add_location' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
           </Grid>
           <Grid item xs={6}>
             <TextField
               id='standard-number'
-              label={words_he['participants_amount']}
+              label={dictionary['participants_amount']}
               type='number'
               required
               min='2'
@@ -244,7 +250,7 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
           </Grid>
           <Grid item xs={6}>
             <InputLabel required id='demo-simple-select-disabled-label'>
-              {words_he['client_name']}
+              {dictionary['client_name']}
             </InputLabel>
             <Select
               required
@@ -262,17 +268,17 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
               ))}
             </Select>
             <PersonAddOutlined style={iconStyles} onClick={handle_create_client} onMouseEnter={() => setIsShown('add_client')} onMouseLeave={() => setIsShown('none')} />
-            {isShown === 'add_client' && <div style={hoverStyles}> {words_he[isShown]} </div>}
+            {isShown === 'add_client' && <div style={hoverStyles}> {dictionary[isShown]} </div>}
           </Grid>
           <Grid item xs={12}>
             <button className='btn btn-success m-4' onClick={handle_save_bid} disabled={!enable_send}>
-              {words_he['save']}
+              {dictionary['save']}
             </button>
             <button type='button' className='btn btn-danger m-2' onClick={handle_cancel_and_exit}>
-              {words_he['cancel_and_exit']}
+              {dictionary['cancel_and_exit']}
             </button>
             <button className='btn btn-outline-dark m-2' onClick={handle_clear}>
-              {words_he['clear_all']}
+              {dictionary['clear_all']}
             </button>
           </Grid>
         </Grid>
@@ -281,8 +287,4 @@ const CreateBid = ({ bid_info, setBidInfo, handle_save_bid }) => {
   )
 }
 
-const languages = [
-  { value: 'he', label: words_he['hebrew'] },
-  { value: 'en', label: 'English' },
-]
 export default CreateBid

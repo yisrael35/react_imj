@@ -12,7 +12,7 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import LogoutIcon from '@mui/icons-material/Logout'
 
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -25,6 +25,9 @@ const Nav = (props) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const permissions = useSelector((state) => state.auth.permissions)
   const two_fa_status = useSelector((state) => state.auth.two_fa_status)
+
+  const dictionary = Dictionary()
+
   const dispatch = useDispatch()
   const logout = async () => {
     dispatch(authActions.logout())
@@ -74,19 +77,19 @@ const Nav = (props) => {
   if (permissions !== 3 && isAuthenticated) {
     pages = [
       <Link to='/Events' key={'Events'} className='navbar_links' onClick={handleCloseNavMenu}>
-        {words_he['events']}
+        {dictionary['events']}
       </Link>,
       <Link to='/Bids' key={'Bids'} className='navbar_links' onClick={handleCloseNavMenu}>
-        {words_he['bids']}
+        {dictionary['bids']}
       </Link>,
       <Link to='/Clients' key={'Clients'} className='navbar_links' onClick={handleCloseNavMenu}>
-        {words_he['clients']}
+        {dictionary['clients']}
       </Link>,
       <Link to='/Suppliers' key={'Suppliers'} className='navbar_links' onClick={handleCloseNavMenu}>
-        {words_he['suppliers']}
+        {dictionary['suppliers']}
       </Link>,
       <span className='navbar_links' key={'reports'} onClick={handle_report_click}>
-        {words_he['reports']}
+        {dictionary['reports']}
       </span>,
       // <Link to='/Tests' className='navbar_links' key={'Tests'} onClick={handleCloseNavMenu}>
       //   Tests
@@ -98,22 +101,22 @@ const Nav = (props) => {
     settings.push(
       <FormControlLabel control={<Switch checked={two_fa_status} onChange={handle_switch_2fa} />} label='2FA' />,
       <Link to='/Users' key={'Users'} className='navbar_links' onClick={handleCloseNavMenu}>
-        {words_he['users']}
+        {dictionary['users']}
       </Link>
     )
   }
   settings.push(
     <Link to='/ProfileSettings' key={'ProfileSettings'} className='navbar_links' onClick={handleCloseNavMenu}>
-      {words_he['profile_settings']}
+      {dictionary['profile_settings']}
     </Link>,
     <Link to='/Login' key={'Login'} className='navbar_links' onClick={logout}>
-      {words_he['logout']} <LogoutIcon />
+      {dictionary['logout']} <LogoutIcon />
     </Link>
   )
   if (!isAuthenticated) {
     settings = [
       <Link to='/Login' key={'Login'} className='navbar_links' onClick={handle_go_to_login}>
-        {words_he['login']}
+        {dictionary['login']}
       </Link>,
     ]
     pages = []

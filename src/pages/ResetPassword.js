@@ -4,14 +4,14 @@ import { Redirect, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as authActions from '../redux/Auth/action'
 
-const words_he = require('../utils/words_he').words_he
+import Dictionary from '../utils/dictionary'
 
 const ForgotPassword = (props) => {
   const [password, setPassword] = useState('')
   const [confirm_password, setConfirmPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [passwordMatch, setPasswordMatch] = useState(true)
-
+  const dictionary = Dictionary()
   let { token } = useParams()
   const dispatch = useDispatch()
 
@@ -41,13 +41,13 @@ const ForgotPassword = (props) => {
   return (
     <div className='form-signin'>
       <form onSubmit={submit}>
-        <h1 className='h3 mb-3 fw-normal'>{words_he['reset_password']}</h1>
+        <h1 className='h3 mb-3 fw-normal'>{dictionary['reset_password']}</h1>
 
-        <input type='password' className='form-control' placeholder={words_he['new_password']} required onChange={(e) => setPassword(e.target.value)} />
-        <input type='password' className='form-control' placeholder={words_he['confirm_password']} required onChange={(e) => setConfirmPassword(e.target.value)} />
-        {!passwordMatch && <span style={{ color: 'red' }}> {words_he['password_not_matched']}</span>}
+        <input type='password' className='form-control' placeholder={dictionary['new_password']} required onChange={(e) => setPassword(e.target.value)} />
+        <input type='password' className='form-control' placeholder={dictionary['confirm_password']} required onChange={(e) => setConfirmPassword(e.target.value)} />
+        {!passwordMatch && <span style={{ color: 'red' }}> {dictionary['password_not_matched']}</span>}
         <button className='w-100 btn btn-lg btn-success' type='submit' disabled={!passwordMatch}>
-          {words_he['send']}
+          {dictionary['send']}
         </button>
       </form>
     </div>

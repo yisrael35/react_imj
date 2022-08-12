@@ -1,8 +1,11 @@
 import TableRow from './TableRowCosts'
 import { Grid } from '@mui/material/'
-const words_he = require('../../utils/words_he').words_he
+
+import Dictionary from '../../utils/dictionary'
 
 export default function TableCosts({ costs, setCosts }) {
+  const dictionary = Dictionary()
+
   const handle_add_row = () => {
     setCosts([...costs, { description: '', amount: '', unit_cost: '', total_cost: '', discount: '', comment: '' }])
   }
@@ -12,7 +15,7 @@ export default function TableCosts({ costs, setCosts }) {
       <Grid item xs={8} style={{ paddingBottom: '10px' }}>
         <Grid container justifyContent={'space-between'} alignItems={'center'}>
           <Grid item>
-            <h4 className='text-muted'> {words_he['costs']}</h4>
+            <h4 className='text-muted'> {dictionary['costs']}</h4>
           </Grid>
         </Grid>
       </Grid>
@@ -20,12 +23,12 @@ export default function TableCosts({ costs, setCosts }) {
         <table>
           <thead className='table_header'>
             <tr>
-              <th>{words_he['description']}</th>
-              <th>{words_he['amount']}</th>
-              <th>{words_he['unit_cost']}</th>
-              <th>{words_he['total_cost']}</th>
-              <th>{words_he['discount']}</th>
-              <th>{words_he['comment']}</th>
+              <th>{dictionary['description']}</th>
+              <th>{dictionary['amount']}</th>
+              <th>{dictionary['unit_cost']}</th>
+              <th>{dictionary['total_cost']}</th>
+              <th>{dictionary['discount']}</th>
+              <th>{dictionary['comment']}</th>
             </tr>
           </thead>
           <tbody>

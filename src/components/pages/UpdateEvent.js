@@ -11,7 +11,7 @@ import EventNote from '@material-ui/icons/EventNote'
 
 import MyDatePicker from '../general/DatePicker'
 
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -30,7 +30,34 @@ const useStyles = makeStyles((theme) => ({
 const UpdateEvent = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  
+  const dictionary = Dictionary()
+  const convert_status = (status) => {
+    switch (status) {
+      case dictionary['pending']:
+        return 'pending'
+      case dictionary['approved']:
+        return 'approved'
+      case dictionary['canceled']:
+        return 'canceled'
+      default:
+        break
+    }
+  }
+  const convert_type = (type) => {
+    switch (type) {
+      case dictionary['private']:
+        return 'private'
+      case dictionary['public']:
+        return 'public'
+      case dictionary['inside']:
+        return 'inside'
+      case dictionary['photo_shot']:
+        return 'photo_shot'
+      default:
+        break
+    }
+  }
+
   const { from_date, to_date, name, status, type } = props.data
 
   const [date, setDate] = useState(moment(from_date, ['HH:mm:ss YYYY-MM-DD']).format('YYYY-MM-DD'))
@@ -39,7 +66,6 @@ const UpdateEvent = (props) => {
   const [end_after_start, setEndAfterStart] = useState(true)
   const [event_info, setEventInfo] = useState({ name, status: convert_status(status), type: convert_type(type), from_date, to_date })
   const [enable_send, setEnableSend] = useState(false)
-
 
   useEffect(() => {
     if (end_after_start && start_time && end_time && date && event_info.name) {
@@ -97,7 +123,7 @@ const UpdateEvent = (props) => {
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Typography className={classes.title} variant='h4' sx={{ color: 'text.secondary' }}>
-              {words_he['edit_event']}
+              {dictionary['edit_event']}
             </Typography>
           </Grid>
           <EventNote style={{ width: '80px', height: '80px', margin: '4px' }} />
@@ -106,7 +132,7 @@ const UpdateEvent = (props) => {
           <TextField
             className={classes.textField}
             id='standard-required'
-            label={' * ' + words_he['event_name']}
+            label={' * ' + dictionary['event_name']}
             inputProps={{ style: { textAlign: 'center' } }}
             value={event_info.name}
             variant='standard'
@@ -115,13 +141,13 @@ const UpdateEvent = (props) => {
         </Grid>
         <Grid item xs={10}>
           <Grid container item xs={12} justifyContent='center'>
-            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} label={' * ' + words_he['event_date']} />
+            <MyDatePicker date={date} setDate={setDate} className={MyDatePicker} label={' * ' + dictionary['event_date']} />
           </Grid>
         </Grid>
         <Grid item xs={10}>
           <TextField
             className={classes.textField}
-            label={' * ' + words_he['start_time']}
+            label={' * ' + dictionary['start_time']}
             type='time'
             inputProps={{ style: { textAlign: 'center' } }}
             format='24'
@@ -135,7 +161,7 @@ const UpdateEvent = (props) => {
         <Grid item xs={10}>
           <TextField
             className={classes.textField}
-            label={' * ' + words_he['end_time']}
+            label={' * ' + dictionary['end_time']}
             type='time'
             inputProps={{ style: { textAlign: 'center' } }}
             variant='standard'
@@ -144,11 +170,11 @@ const UpdateEvent = (props) => {
               setEndTime(e.target.value)
             }}
           />
-          {!end_after_start && <span style={{ color: 'red', display: 'block' }}> {words_he['end_after_start']}</span>}
+          {!end_after_start && <span style={{ color: 'red', display: 'block' }}> {dictionary['end_after_start']}</span>}
         </Grid>
         <Grid item xs={10}>
           <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
-            {' * ' + words_he['status']}
+            {' * ' + dictionary['status']}
           </InputLabel>
 
           <Select
@@ -160,14 +186,14 @@ const UpdateEvent = (props) => {
               setEventInfo({ ...event_info, status: e.target.value })
             }}
           >
-            <MenuItem value='pending'>{words_he['pending']}</MenuItem>
-            <MenuItem value='approved'>{words_he['approved']}</MenuItem>
-            <MenuItem value='canceled'>{words_he['canceled']}</MenuItem>
+            <MenuItem value='pending'>{dictionary['pending']}</MenuItem>
+            <MenuItem value='approved'>{dictionary['approved']}</MenuItem>
+            <MenuItem value='canceled'>{dictionary['canceled']}</MenuItem>
           </Select>
         </Grid>
         <Grid item xs={10}>
           <InputLabel className={classes.title_type} style={{ fontSize: 'small' }}>
-            {' * ' + words_he['type']}
+            {' * ' + dictionary['type']}
           </InputLabel>
 
           <Select
@@ -179,17 +205,17 @@ const UpdateEvent = (props) => {
               setEventInfo({ ...event_info, type: e.target.value })
             }}
           >
-            <MenuItem value='private'>{words_he['private']}</MenuItem>
-            <MenuItem value='public'>{words_he['public']}</MenuItem>
-            <MenuItem value='inside'>{words_he['inside']}</MenuItem>
-            <MenuItem value='photo_shot'>{words_he['photo_shot']}</MenuItem>
+            <MenuItem value='private'>{dictionary['private']}</MenuItem>
+            <MenuItem value='public'>{dictionary['public']}</MenuItem>
+            <MenuItem value='inside'>{dictionary['inside']}</MenuItem>
+            <MenuItem value='photo_shot'>{dictionary['photo_shot']}</MenuItem>
           </Select>
         </Grid>
         <Grid item xs={10}>
           <Grid container justifyContent='center'>
             <Grid item>
               <button type='button' className='btn btn-success m-2' onClick={handle_save} disabled={!enable_send}>
-                {words_he['save']}
+                {dictionary['save']}
               </button>
             </Grid>
           </Grid>
@@ -200,30 +226,3 @@ const UpdateEvent = (props) => {
 }
 
 export default UpdateEvent
-
-const convert_status = (status) => {
-  switch (status) {
-    case words_he['pending']:
-      return 'pending'
-    case words_he['approved']:
-      return 'approved'
-    case words_he['canceled']:
-      return 'canceled'
-    default:
-      break
-  }
-}
-const convert_type = (type) => {
-  switch (type) {
-    case words_he['private']:
-      return 'private'
-    case words_he['public']:
-      return 'public'
-    case words_he['inside']:
-      return 'inside'
-    case words_he['photo_shot']:
-      return 'photo_shot'
-    default:
-      break
-  }
-}

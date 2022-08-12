@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import moment from 'moment'
-const words_he = require('../../utils/words_he').words_he
+import Dictionary from '../../utils/dictionary'
 
 const MyDatePicker = ({ from_date, setFromDate, to_date, setToDate }) => {
   const classes = useStyles()
   const [end_after_start, setEndAfterStart] = useState(true)
+
+  const dictionary = Dictionary()
 
   const handle_start_date = (date) => {
     if (!to_date || moment(to_date).isAfter(date)) {
@@ -26,7 +28,7 @@ const MyDatePicker = ({ from_date, setFromDate, to_date, setToDate }) => {
   }
   return (
     <form className={classes.container} noValidate>
-      <span>{words_he['from_date']} </span>
+      <span>{dictionary['from_date']} </span>
       <TextField
         id='date'
         type='date'
@@ -37,7 +39,7 @@ const MyDatePicker = ({ from_date, setFromDate, to_date, setToDate }) => {
         }}
         onChange={(e) => handle_start_date(e.target.value)}
       />
-      <span className={classes.to_date}>{words_he['to_date']} </span>
+      <span className={classes.to_date}>{dictionary['to_date']} </span>
       <TextField
         id='date'
         type='date'
@@ -48,7 +50,7 @@ const MyDatePicker = ({ from_date, setFromDate, to_date, setToDate }) => {
         }}
         onChange={(e) => handle_end_date(e.target.value)}
       />
-      {!end_after_start && <span style={{ color: 'red' }}> {words_he['end_date_after_start']}</span>}
+      {!end_after_start && <span style={{ color: 'red' }}> {dictionary['end_date_after_start']}</span>}
     </form>
   )
 }

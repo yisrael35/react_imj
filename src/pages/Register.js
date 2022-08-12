@@ -5,19 +5,17 @@ import { useDispatch } from 'react-redux'
 import * as userActions from '../redux/User/action'
 import * as actionSnackBar from '../redux/SnackBar/action'
 
-
+import Dictionary from '../utils/dictionary'
 const { invalid_email_characters, invalid_phone, all_fields_filled } = require('../utils/validate_helper')
-const words_he = require('../utils/words_he').words_he
 
 const Register = () => {
   const dispatch = useDispatch()
-
+  const dictionary = Dictionary()
   const [first_name, setFirstName] = useState('')
   const [last_name, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [enable_send, setEnableSend] = useState(false)
-
 
   useEffect(() => {
     if (validate_fields()) {
@@ -30,11 +28,11 @@ const Register = () => {
 
   const validate_fields = () => {
     if (email && invalid_email_characters(email + '@imj.org.il')) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['invalid_character']} ${email} `, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${dictionary['invalid_character']} ${email} `, 3000))
       return false
     }
     if (phone && invalid_phone(phone)) {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['type_number']} ${phone} `, 3000))
+      dispatch(actionSnackBar.setSnackBar('error', `${dictionary['type_number']} ${phone} `, 3000))
       return false
     }
     if (all_fields_filled([first_name, email, last_name, phone])) {
@@ -59,17 +57,17 @@ const Register = () => {
 
   return (
     <form onSubmit={submit} className='form-signin'>
-      <h1 className='h3 mb-3 fw-normal'> {words_he['create_new_user']}</h1>
+      <h1 className='h3 mb-3 fw-normal'> {dictionary['create_new_user']}</h1>
       <FaUserPlus style={{ fontSize: '60px', margin: '10px', textAlign: 'center' }} />
       <div style={{ textAlign: 'center' }}>
-        <input style={{ textAlign: 'center' }} className='form-control' placeholder={words_he['first_name']} required onChange={(e) => setFirstName(e.target.value)} />
-        <input style={{ textAlign: 'center' }} className='form-control' placeholder={words_he['last_name']} required onChange={(e) => setLastName(e.target.value)} />
-        <input style={{ textAlign: 'center' }} type='text' className='form-control' placeholder={words_he['phone']} required onChange={(e) => setPhone(e.target.value)} />
+        <input style={{ textAlign: 'center' }} className='form-control' placeholder={dictionary['first_name']} required onChange={(e) => setFirstName(e.target.value)} />
+        <input style={{ textAlign: 'center' }} className='form-control' placeholder={dictionary['last_name']} required onChange={(e) => setLastName(e.target.value)} />
+        <input style={{ textAlign: 'center' }} type='text' className='form-control' placeholder={dictionary['phone']} required onChange={(e) => setPhone(e.target.value)} />
         <input
           style={{ textAlign: 'center' }}
           type='text'
           className='form-control'
-          placeholder={words_he['email']}
+          placeholder={dictionary['email']}
           required
           onChange={(e) => {
             setEmail(e.target.value)
@@ -78,7 +76,7 @@ const Register = () => {
       </div>
       <div style={{ padding: '6px', direction: 'ltr' }}>{email + process.env.REACT_APP_IMJ_EMAIL} </div>
       <button className='w-100 btn btn-lg btn-success' type='submit' disabled={!enable_send}>
-        {words_he['register']}
+        {dictionary['register']}
       </button>
     </form>
   )

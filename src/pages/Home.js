@@ -20,7 +20,7 @@ import Event from '@material-ui/icons/Event'
 
 //services
 import workerInstances from '../services'
-import { words_he } from '../utils/words_he'
+import Dictionary from '../utils/dictionary'
 
 const localizer = momentLocalizer(moment)
 
@@ -31,6 +31,7 @@ const Home = (props) => {
   const token = useSelector((state) => state.auth.token)
   const saved_date = useSelector((state) => state.home.saved_date)
   const permissions = useSelector((state) => state.auth.permissions)
+  const dictionary = Dictionary()
 
   //connect to the ws
   useEffect(() => {
@@ -42,7 +43,7 @@ const Home = (props) => {
   useEffect(() => {
     const receiveData = (message) => {
       if (message?.data?.type === 'login' && !message?.data?.error) {
-        dispatch(actionSnackBar.setSnackBar('success', words_he['login_success'], 2000))
+        dispatch(actionSnackBar.setSnackBar('success', dictionary['login_success'], 2000))
       } else if (message?.data?.type === 'events' && !message?.data?.error) {
         const response = { ...message.data }
         dispatch(action_home.set_events(response.content))
@@ -69,27 +70,27 @@ const Home = (props) => {
 
   //translate calender values to hebrew
   const messages = {
-    date: words_he['date'],
-    time: words_he['time'],
-    event: words_he['event'],
-    allDay: words_he['allDay'],
-    week: words_he['week'],
-    work_week: words_he['work_week'],
-    day: words_he['day'],
-    month: words_he['month'],
-    previous: words_he['previous'],
-    next: words_he['next'],
-    yesterday: words_he['yesterday'],
-    tomorrow: words_he['tomorrow'],
-    today: words_he['today'],
-    agenda: words_he['agenda'],
-    showMore: (total) => `${words_he['show_more']}  ${total}+`,
-    noEventsInRange: words_he['noEventsInRange'],
+    date: dictionary['date'],
+    time: dictionary['time'],
+    event: dictionary['event'],
+    allDay: dictionary['allDay'],
+    week: dictionary['week'],
+    work_week: dictionary['work_week'],
+    day: dictionary['day'],
+    month: dictionary['month'],
+    previous: dictionary['previous'],
+    next: dictionary['next'],
+    yesterday: dictionary['yesterday'],
+    tomorrow: dictionary['tomorrow'],
+    today: dictionary['today'],
+    agenda: dictionary['agenda'],
+    showMore: (total) => `${dictionary['show_more']}  ${total}+`,
+    noEventsInRange: dictionary['noEventsInRange'],
   }
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <h3 className='text-muted'>{words_he['welcome']}</h3>
+      <h3 className='text-muted'>{dictionary['welcome']}</h3>
       <Calendar
         messages={messages}
         onDoubleClickEvent={(event) => {

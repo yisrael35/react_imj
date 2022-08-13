@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { PLATFORM_TOKEN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGOUT_SUCCESS, UPDATE_TWO_FA_STATUS, UPDATE_TYPE } from './constants'
+import { PLATFORM_TOKEN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGOUT_SUCCESS, UPDATE_TWO_FA_STATUS, UPDATE_TYPE, UPDATE_LANGUAGE } from './constants'
 
 const initialState = {
   token: '',
@@ -8,8 +8,8 @@ const initialState = {
   isAuthenticated: false,
   currentRoute: window.location.pathname || '/Home',
   type: '',
-  language: 'en',
-  language_direction: 'rtl',
+  language: process.env.REACT_APP_DEFAULT_LANGUAGE, //'he'
+  language_direction: process.env.REACT_APP_DEFAULT_LANGUAGE_DIRECTION,
   phone: undefined,
   email: undefined,
   two_fa_status: true,
@@ -50,6 +50,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         type: action.payload.type,
+      }
+    }
+    case UPDATE_LANGUAGE: {
+      return {
+        ...state,
+        language: action.payload.language,
+        language_direction: action.payload.language_direction,
       }
     }
     case LOGOUT_SUCCESS:

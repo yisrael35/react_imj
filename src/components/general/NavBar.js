@@ -6,7 +6,7 @@ import * as authActions from '../../redux/Auth/action'
 import * as action_popUp from '../../redux/PopUp/action'
 import Reports from '../../pages/Reports'
 
-import { AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip, MenuItem, FormControlLabel, Switch } from '@mui/material/'
+import { AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip, MenuItem, FormControlLabel, Switch, ToggleButton, ToggleButtonGroup } from '@mui/material/'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -32,6 +32,9 @@ const Nav = (props) => {
   const logout = async () => {
     dispatch(authActions.logout())
   }
+  const [anchorElNav, setAnchorElNav] = useState(null)
+  const [anchorElUser, setAnchorElUser] = useState(null)
+  const [language, setLanguage] = useState(process.env.REACT_APP_DEFAULT_LANGUAGE)
 
   useEffect(() => {
     const token = localStorage.getItem('TokenAccess')
@@ -42,8 +45,16 @@ const Nav = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [anchorElNav, setAnchorElNav] = useState(null)
-  const [anchorElUser, setAnchorElUser] = useState(null)
+  const handleLanguageChange = (event, language) => {
+    setLanguage(language)
+    let language_direction
+    if (language === 'he') {
+      language_direction = 'ltr'
+    } else {
+      language_direction = 'rtl'
+    }
+    dispatch(authActions.update_language(language, language_direction))
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -99,6 +110,10 @@ const Nav = (props) => {
   let settings = []
   if (permissions === 1 && isAuthenticated) {
     settings.push(
+      <ToggleButtonGroup color='primary' value={language} exclusive onChange={handleLanguageChange}>
+        <ToggleButton value='he'> {dictionary['hebrew']}</ToggleButton>
+        <ToggleButton value='en'> {dictionary['english']}</ToggleButton>
+      </ToggleButtonGroup>,
       <FormControlLabel control={<Switch checked={two_fa_status} onChange={handle_switch_2fa} />} label='2FA' />,
       <Link to='/Users' key={'Users'} className='navbar_links' onClick={handleCloseNavMenu}>
         {dictionary['users']}

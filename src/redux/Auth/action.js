@@ -1,4 +1,4 @@
-import { PLATFORM_TOKEN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGOUT_SUCCESS, UPDATE_TWO_FA_STATUS, UPDATE_TYPE } from './constants'
+import { PLATFORM_TOKEN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGOUT_SUCCESS, UPDATE_TWO_FA_STATUS, UPDATE_TYPE, UPDATE_LANGUAGE } from './constants'
 import axios from 'axios'
 import { setAuthToken } from '../../utils/constans'
 import * as actionSnackBar from '../SnackBar/action'
@@ -114,6 +114,9 @@ export const update_2fa_status = (two_fa_status) => async (dispatch) => {
 
 export const update_type = (type) => async (dispatch) => {
   dispatch({ type: UPDATE_TYPE, payload: { type } })
+}
+export const update_language = (language, language_direction) => async (dispatch) => {
+  dispatch({ type: UPDATE_LANGUAGE, payload: { language, language_direction } })
 }
 
 export const send_six_digits_to =

@@ -20,7 +20,7 @@ const words_he = {
   file_created: 'הקובץ נוצר בהצלחה',
   two_fa_title: 'אימות דו שלבי',
   select_your_choice: 'קוד ישלח אל האפשרות שתיבחר:',
-  go_back:'חזור לדף הקודם',
+  go_back: 'חזור לדף הקודם',
   update_2fa_success: 'אימות דו שלבי עודכן בהצלחה',
   update_2fa_failed: 'עדכון אימות דו שלבי נכשל',
   six_digits_sent_success: '6 ספרות נשלחו בהצלחה',
@@ -28,7 +28,7 @@ const words_he = {
   six_digits_validation_failed: 'אימות 6 ספרות נכשל, אנא נסה שוב',
   identity_verification: 'אימות הזהות',
   verification_message1: 'על מנת לאשר את הזהות שלך, שלחנו לך קוד של 6 ספרות',
-  to:'ל:',
+  to: 'ל:',
   verification_message2: 'אנא הכנס את הספרות מתחת כדי להמשיך',
   six_digits_verification: 'אימות 6 ספרות',
   hello: 'שלום',
@@ -201,6 +201,7 @@ const words_he = {
   code_404: 'לא נמצא מידע',
   new_event_type: 'סוג אירוע חדש',
   event_type_created: 'סוג האירוע נוצר',
+  username_exist: 'שם משתמש כבר קיים',
 }
 
 module.exports = {

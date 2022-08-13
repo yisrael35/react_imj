@@ -201,4 +201,5 @@ module.exports = {
   code_404: "didn't find data",
   new_event_type: 'new event type',
   event_type_created: 'event type created',
+  username_exist: 'username already exist',
 }

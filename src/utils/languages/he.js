@@ -201,4 +201,5 @@ module.exports = {
   code_404: 'לא נמצא מידע',
   new_event_type: 'סוג אירוע חדש',
   event_type_created: 'סוג האירוע נוצר',
+  username_exist: 'שם משתמש כבר קיים',
 }

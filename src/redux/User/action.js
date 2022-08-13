@@ -67,7 +67,11 @@ export const create_user = (data) => (dispatch) => {
       dispatch(actionSnackBar.setSnackBar('success', words_he['user_created'], 2000))
     })
     .catch((error) => {
-      dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']}`, 3000))
+      if (error.response?.status === 409) {
+        dispatch(actionSnackBar.setSnackBar('error', `${words_he['username_exist']}`, 3000))
+      } else {
+        dispatch(actionSnackBar.setSnackBar('error', `${words_he['server_error']}`, 3000))
+      }
     })
 }
 
